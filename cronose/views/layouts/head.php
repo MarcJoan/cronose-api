@@ -20,6 +20,7 @@
   <script src="/assets/plugin/jquery/jquery.md5.min.js"></script>
   <script src="/assets/plugin/leaflet/leaflet.js"></script>
   <script src="/assets/plugin/D3JS/d3.min.js"></script>
+  <script src="/assets/plugin/D3JS/d3.v3.min.js"></script>
 
 </head>
 <body>
