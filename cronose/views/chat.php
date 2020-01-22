@@ -115,10 +115,10 @@
 
     // Show chat 
     
-    setInterval(function () {
-      show();
-      showChats();
-    },1000);
+    // setInterval(function () {
+    //   show();
+    //   showChats();
+    // },1000);
 
     let lastMsg;
 

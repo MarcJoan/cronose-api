@@ -4,7 +4,7 @@ require_once '../models/User.model.php';
 
 class UserController {
 
-  public static function getProfileInfo($username) {
+  /*public static function getProfileInfo($username) {
     $profile = UserModel::getUserByUsername($username);
     if ($profile) $achievement = AchievementController::getAllByUser($profile['id']);
     
@@ -17,7 +17,7 @@ class UserController {
       "status" => "error",
       "msg" => "That profile doesn't exists!"
     ];
-  }
+  }*/
 
   public static function getUserByInitialsAndTag($initials, $tag) {
     $profile = UserModel::getUserByInitialsAndTag($initials, $tag);

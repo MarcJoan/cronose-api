@@ -1,6 +1,7 @@
 <?php
 
 require_once '../models/Chat.model.php';
+require_once 'Achievement.controller.php';
 
 class ChatController {
 
@@ -18,11 +19,16 @@ class ChatController {
 
   public static function sendMSG($sender, $reciver, $msg) {
     $response = ChatModel::sendMSG($sender, $reciver, $msg);
+    $achi_id = 2;
+    if ( !AchievementController::haveAchi($sender, $achi_id) ) {
+      AchievementController::setAchievement($sender, $achi_id);
+    }
     return json_encode($response);
   }
 
   public static function showChats($reciver) {
     $response = ChatModel::showChats($reciver);
+
     if ($response) return [
       "status" => "success",
       "users" => $response

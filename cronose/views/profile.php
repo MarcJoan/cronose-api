@@ -30,6 +30,19 @@
           if (data.status == 'success') {
             $('#search').hide();
 
+
+            let veterany;
+            $.ajax({
+              type: 'get',
+              url: "/api/veterany",
+              dataType: 'json',
+              data: {},
+              async: false,
+              success: function (data) {
+                veterany = data;
+              }
+            });
+
             let profile = data.profile;
             let achievements = data.achievement;
 
@@ -37,17 +50,20 @@
 
             let name = profile.name + " " + profile.surname + " " + profile.surname_2;
 
+
             let cardBody = $("<div/>",{class:"card-body"});
             let cardName = $("<h4/>",{class:"card-title", text:name});
             let cardP = $("<p/>",{class:"card-text"});
             let cardEmailTitle = $("<b/>",{class:"card-text", text:"Email: "});
             let cardEmail = $("<span/>",{class:"card-text", text:profile.email});
+            let cardLevelTitle = $("<b/>",{class:"card-text", text:"<?= $lang[$displayLang]['level']; ?>: "});
+            let cardLevel = $("<span/>",{text:veterany.veteranity_level});
             let cardCoinsTitle = $("<b/>",{class:"card-text", text:"Coins: "});
             let cardCoins = $("<span/>",{class:"card-text", text:profile.coins});
             let cardPointsTitle = $("<b/>",{class:"card-text", text:"Points: "});
             let cardPoints = $("<span/>",{class:"card-text", text:profile.points});
 
-            cardP.append(cardEmailTitle, cardEmail, $("<br/>"), cardCoinsTitle, cardCoins, $("<br/>"), cardPointsTitle, cardPoints);
+            cardP.append(cardEmailTitle, cardEmail, $("<br/>"), cardCoinsTitle, cardCoins, $("<br/>"), cardPointsTitle, cardPoints, $("<br/>"), cardLevelTitle, cardLevel);
             cardBody.append(cardName, cardP);
 
             let array = [];
@@ -59,7 +75,7 @@
             let description;
             $.ajax({
               type: 'get',
-              url: "/api/achievements/description",
+              url: "/api/achievements",
               dataType: 'json',
               data: {},
               async: false,
@@ -68,7 +84,7 @@
               }
             });
 
-
+            console.log(description);
             let i = 0;
             let newDIV2 = $("<div/>",{class:'row h-10 col-5'});
 
@@ -125,6 +141,7 @@
             showUsers();
           }
 
+          //llamada al método para mostrar los tooltip sobre los logros
           $('[data-toggle="tooltip"]').tooltip();
         }
       });

@@ -38,7 +38,8 @@ $lang = [
         'seeWork' => 'See Work',
         'work' => 'Work',
         'newPublication' => 'New Publication',
-        'editPublication' => 'Edit Publication'
+        'editPublication' => 'Edit Publication',
+        'level' => 'Level'
     ],
     'es' => [
         'logIn' => 'Inicia sesión',
@@ -78,7 +79,8 @@ $lang = [
         'seeWork' => 'Ver Trabajo',
         'work' => 'Trabajo',
         'newPublication' => 'Nueva Publicación',
-        'editPublication' => 'Editar Publicación'
+        'editPublication' => 'Editar Publicación',
+        'level' => 'Nivel'
     ],
     'ca' => [
         'logIn' => 'Inicia sessió',
@@ -118,6 +120,7 @@ $lang = [
         'seeWork' => 'Veure Treball',
         'work' => 'Treball',
         'newPublication' => 'Nova Publicació',
-        'editPublication' => 'Editar Publicació'
+        'editPublication' => 'Editar Publicació',
+        'level' => 'Nivell'
     ]
 ];
