@@ -109,11 +109,11 @@ create table if not exists DNI_Photo (
 
 create table if not exists User (
     id int auto_increment primary key,
-    dni varchar(9) not null,
+    dni varchar(9) not null unique,
     name varchar(45) not null,
     surname varchar(45) not null,
     surname_2 varchar(45),
-    email varchar(32) not null,
+    email varchar(32) not null unique,
     password varchar(255) not null,
     tag int(4) not null,
     initials varchar(5) not null,
