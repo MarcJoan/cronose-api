@@ -8,6 +8,7 @@ require_once '../controllers/User.controller.php';
 require_once '../controllers/Chat.controller.php';
 require_once '../controllers/Achievement.controller.php';
 require_once '../controllers/Category.controller.php';
+require_once '../controllers/Veterany.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -56,7 +57,7 @@ if ($uri[0] == 'api') {
 
     case 'user':
       if ($method == 'get') {
-        if (count($uri) == 2) echo json_encode(UserController::getProfileInfo($user->name));
+        if (count($uri) == 2) echo json_encode(UserController::getUserByInitialsAndTag($user->initials, $user->tag));
         if (count($uri) == 3) echo json_encode(UserController::getUsersBySearch($uri[2]));
         if (count($uri) == 4) echo json_encode(UserController::getUserByInitialsAndTag($uri[2], $uri[3]));
         if (count($uri) == 6) echo json_encode(UserController::getId($uri[4], $uri[5]));;
@@ -65,7 +66,7 @@ if ($uri[0] == 'api') {
 
     case 'profile':
       if ($method == 'get') {
-        if (count($uri) == 2) echo json_encode(UserController::getProfileInfo($user->name));
+        if (count($uri) == 2) echo json_encode(UserController::getUserByInitialsAndTag($user->initials, $user->tag));
         if (count($uri) == 3) echo json_encode(UserController::getProfileInfo($uri[2]));
       }
       break;
@@ -111,9 +112,34 @@ if ($uri[0] == 'api') {
       break;
 
     case 'achievements':
-      if ($uri[2] == 'description') {
-        echo json_encode(AchievementController::getDescription($displayLang));
+
+      if ($method == 'get') {
+
+        switch(count($uri)){
+          case 2:
+            echo json_encode(AchievementController::getAll($displayLang));
+            break;
+
+          case 3:
+            echo json_encode(AchievementController::getById($uri[2], $displayLang));
+            break;
+
+          case 5:
+            $user_id = UserController::getId($uri[3], $uri[4]);
+            echo json_encode(AchievementController::haveAchi($user_id['user']['id'], $uri[2]));
+            break;
+
+        }
       }
+
+      if ($method == 'post') {
+        $user_id = UserController::getId($uri[2], $uri[3]);
+        echo json_encode(AchievementController::setAchievement($user_id['user']['id'], $uri[4]));
+      }
+      break;
+
+    case 'veterany':
+      echo json_encode(VeteranyController::getVet($user->id));
       break;
 
     default:

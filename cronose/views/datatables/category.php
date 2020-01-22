@@ -126,7 +126,7 @@
   $(document).ready( function () {
     let table = $('#table').DataTable( {
       ajax: {
-        url: 'http://api.local.cronose/views/datatables/categoryTable.php',
+        url: 'http://cronose.test/cronose/views/datatables/categoryTable.php',
         dataSrc: '',
         type:"POST",
       },
@@ -147,7 +147,7 @@
       $.ajax({
         type:'POST',
         data:{coin_price:coin_price},
-        url:"http://api.local.cronose/views/datatables/insertCategory.php" //php page URL where we post this data to save in databse
+        url:"http://cronose.test/cronose/views/datatables/insertCategory.php" //php page URL where we post this data to save in databse
       });
     });
 
@@ -164,7 +164,7 @@
         $.ajax({
          type:'POST',
          data:{id: id, coin_price:coin_price},
-         url:"http://api.local.cronose/views/datatables/updateCategory.php" //php page URL where we post this data to save in databse
+         url:"http://cronose.test/cronose/views/datatables/updateCategory.php" //php page URL where we post this data to save in databse
         });
       });
     });
@@ -174,7 +174,7 @@
       $.ajax({
        type:'POST',
         data:{id: id},
-      url:"http://api.local.cronose/views/datatables/deleteCategory.php"
+      url:"http://cronose.test/cronose/views/datatables/deleteCategory.php"
       });
     });
 
