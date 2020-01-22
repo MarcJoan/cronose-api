@@ -67,15 +67,15 @@ hr {/*BARRA HORIZONTAL */
 }
 /*------- CHART -------*/
 .bar{
-  fill: steelblue;
+  fill: #242633;
 }
 
 .bar:hover{
-  fill: brown;
+  fill: #F09A24;
 }
 
 .axis {
-  font: 10px sans-serif;
+  font: 8px;
 }
 
 .axis path,

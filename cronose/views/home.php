@@ -1,9 +1,9 @@
 <?php require 'layouts/head.php';?>
 
-<h1>Home</h1>
+<h1 class="mb-4 mt-4">HOME</h1>
 
-<div id="chart"></div>
-
+<div class="container wrap row justify-content-center mt-4" id="chart">
+</div>
 <script>
 
   $(document).ready(function(){
@@ -19,17 +19,26 @@
         success: (data) => {
           if (data.status == 'success') {
 
-            var margin = {top: 20, right: 20, bottom: 70, left: 40},
-                width = 600 - margin.left - margin.right,
+            var max=0;
+            data.offers.forEach(function(d) {
+                d.name = d.name;
+                d.SpecializationCount = +d.SpecializationCount;
+                if (max<d.SpecializationCount) {
+                  max = d.SpecializationCount;
+                }
+            });
+
+            var margin = {top: 20, right: 20, bottom: 140, left: 40},
+                width = 700 - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom;
 
 
-            // set the ranges
+            // Definimos los rangos
             var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
 
             var y = d3.scale.linear().range([height, 0]);
 
-            // define the axis
+            // Definimos los ejes
             var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
@@ -38,9 +47,9 @@
             var yAxis = d3.svg.axis()
                 .scale(y)
                 .orient("left")
-                .ticks(10);
+                .ticks(max);
 
-            // add the SVG element
+            // Añadimos los elementos SVG
             var svg = d3.select("#chart").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -48,18 +57,11 @@
                 .attr("transform",
                       "translate(" + margin.left + "," + margin.top + ")");
 
-            data.offers.forEach(function(d) {
-                d.name = d.name;
-                d.SpecializationCount = +d.SpecializationCount;
-            });
-
-            console.log(function(d) { return d.name; });
-
-            // scale the range of the data
+            // Escalamos los rangos con nuestros datos
             x.domain(data.offers.map(function(d) { return d.name; }));
             y.domain([0, d3.max(data.offers, function(d) { return d.SpecializationCount; })]);
 
-            // add axis
+            // Añadimos los ejes
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
@@ -78,11 +80,10 @@
                 .attr("y", 5)
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
-                .text("Frequency");
+                // .text("Nº de Trabajos");
 
 
-            // Add bar chart
-            console.log(data.offers);
+            // Agregamos las barras al grafico
             svg.selectAll("bar")
                 .data(data.offers)
               .enter().append("rect")
@@ -92,8 +93,6 @@
                 .attr("y", function(d) { return y(d.SpecializationCount); })
                 .attr("height", function(d) { return height - y(d.SpecializationCount); });
 
-            // $.each (data.offers, function(key, value) {
-            // });
           };
         },
         error: ((data) => {
