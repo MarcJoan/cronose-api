@@ -47,10 +47,10 @@ insert into Media(extension, url) values ('.jpg','profesor'),('.jpg','fontanero'
 
 INSERT INTO Load_Media (user_id, specialization_id, media_id) VALUES ('1', '1', '3'), ('1', '2', '4');
 
-INSERT INTO `achievement` VALUES (),(),(),(),();
+INSERT INTO `Achievement` VALUES (),(),(),(),();
 
 
-INSERT INTO `achievement_language` (`language_id`, `achievement_id`, `name`, `description`) VALUES
+INSERT INTO `Achievement_Language` (`language_id`, `achievement_id`, `name`, `description`) VALUES
 ('ca', 1, 'a1', 'Registrarse a la pàgina'),
 ('ca', 2, 'a2', 'Xatetja amb algú'),
 ('ca', 3, 'a3', 'Publica una oferta'),
@@ -67,7 +67,7 @@ INSERT INTO `achievement_language` (`language_id`, `achievement_id`, `name`, `de
 ('es', 4, 'a4', 'Realiza tu primer trabajo'),
 ('es', 5, 'a5', 'Contrata a alguien');
 
-INSERT INTO `obtain` (`achievement_id`, `user_id`, `obtained_at`) VALUES
+INSERT INTO `Obtain` (`achievement_id`, `user_id`, `obtained_at`) VALUES
 (1, '1', '2020-01-08'),
 (3, '1', '2020-01-02');
 
