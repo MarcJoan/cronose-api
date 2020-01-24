@@ -11,13 +11,9 @@ class OfferController {
     $offers = OfferModel::getAllOffers();
   }
 
-
-
 // -----------------------------------------------
 
-
-
-  public static function getAllOffersGroupByLang($lang) {
+  public static function getAllOffersOrderedByLang($lang) {
     $offers = OfferModel::getAllOffers();
     $list = [];
     
@@ -37,8 +33,19 @@ class OfferController {
     foreach ($offers as $key => $value) {
       $list = self::setOffers($value, $value['user_id'], $value['specialization_id'], $list);
     }
-    var_dump($list);
 
+    foreach ($list as $key => $value) {
+      $list[$key] = self::orderByLang($lang, $value);
+    }
+
+    if ($list) return [
+      "status" => "success",
+      "offers" => $list
+    ];
+    else return [
+      "status" => "error",
+      "msg" => "Something went wrong!"
+    ];
   }
 
   public static function setOffers($offer, $userId, $specializationId, $array) {
@@ -61,7 +68,17 @@ class OfferController {
     return false;
   }
 
-
+  public static function orderByLang($lang, $array) {
+    for ($i = 0; $i < count($array['offer']); $i++) { 
+      if ($array['offer'][$i]['language_id'] == $lang) {
+        $aux = $array['offer'][$i];
+        unset($array['offer'][$i]);
+        array_unshift($array['offer'], $aux);
+      }
+    }
+    return $array;
+    // var_dump($array);
+  }
 
 // -----------------------------------------------------
 

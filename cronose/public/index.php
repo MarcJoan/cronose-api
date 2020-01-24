@@ -90,7 +90,7 @@ if ($uri[0] == 'api') {
     case 'works':
       if ($method == 'get') {
         if (count($uri) == 2) echo json_encode(OfferController::getAllOffers());
-        if (count($uri) == 3) echo json_encode(OfferController::getAllOffersGroupByLang($uri[2]));
+        if (count($uri) == 3) echo json_encode(OfferController::getAllOffersOrderedByLang($uri[2]));
         // if (count($uri) == 3) echo json_encode(OfferController::getOffersByLang($uri[2]));
       }
       break;
