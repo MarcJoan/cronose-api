@@ -11,7 +11,7 @@ class VeteranyDAO extends DAO {
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
-}  public static function getRange($id){
+  public static function getRange($id){
     $sql = "SELECT Change_Veteranity.veteranity_level, Veteranity.points FROM Change_Veteranity,Veteranity WHERE user_id = " . $id . "
     AND Change_Veteranity.veteranity_level = Veteranity.level;";
     $statement = self::$DB->prepare($sql);

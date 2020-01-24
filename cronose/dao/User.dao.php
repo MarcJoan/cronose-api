@@ -58,7 +58,6 @@ class UserDAO extends DAO {
     $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
     $tag = mt_rand(1000, 9999);
     $words = preg_split("/\s+/", "${user['name']} ${user['surname']} ${user['surname_2']}");
-    $initials = "";
     foreach ($words as $w) {
       $initials .= $w[0];
     }
