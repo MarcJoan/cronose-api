@@ -191,6 +191,19 @@ if ($uri[0] == 'api') {
       header('Location: ' . $displayLang . '/home');
       break;
 
+    case 'statistics':
+      if (isset($_SESSION['user']) && $user->name =="Admin"){
+        include '../views/statistics.php';
+      }else{
+        include '../views/loginStatistics.php';
+      }
+      break;
+
+    case 'loginStatistics':
+      include '../views/loginStatistics.php';
+      break;
+
+
     case 'login':
       $title = $lang[$displayLang]['logIn'];
       include '../views/login.php';
