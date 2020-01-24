@@ -89,16 +89,18 @@ if ($uri[0] == 'api') {
 
     case 'works':
       if ($method == 'get') {
-        if (count($uri) == 2) echo json_encode(OfferController::getOffersByLang($_SESSION['displayLang']));
+        if (count($uri) == 2) echo json_encode(OfferController::getAllOffers());
+        if (count($uri) == 3) echo json_encode(OfferController::getAllOffersGroupByLang($uri[2]));
+        // if (count($uri) == 3) echo json_encode(OfferController::getOffersByLang($uri[2]));
       }
       break;
 
-      case 'work':
-         if ($method == 'get') {
-           if (count($uri) == 2) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
-           if (count($uri) == 5) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
-        }
-      break;
+    case 'work':
+       if ($method == 'get') {
+         if (count($uri) == 2) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
+         if (count($uri) == 5) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
+      }
+    break;
 
     case 'myWorks':
       if ($method == 'get') {
