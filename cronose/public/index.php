@@ -164,6 +164,10 @@ if ($uri[0] == 'api') {
       echo json_encode(VeteranyController::getVet($user->id));
       break;
 
+    case 'veteranyRange':
+      echo json_encode(VeteranyController::getRange($user->id));
+      break;
+
     default:
       echo "Nothing";
       break;
