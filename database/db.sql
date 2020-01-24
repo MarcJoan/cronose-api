@@ -6,12 +6,16 @@ CREATE TABLE IF NOT EXISTS Language (
     id varchar(2) PRIMARY KEY NOT NULL
 )ENGINE = InnoDB;
 
-create table if not exists Language_Translation (
+CREATE TABLE IF NOT EXISTS Languages_Offerted (
+    id varchar(2) PRIMARY KEY NOT NULL
+)ENGINE = InnoDB;
+
+create table if not exists Languages_Translation (
     language_id varchar(2) not null,
     language_translated varchar(2) not null,
     translation varchar(25) not null,
     foreign key (language_id) references Language(id),
-    foreign key (language_translated) references Language(id)
+    foreign key (language_translated) references Languages_Offerted(id)
 ) ENGINE = InnoDB;
 
 create table if not exists Province (
@@ -109,11 +113,11 @@ create table if not exists DNI_Photo (
 
 create table if not exists User (
     id int auto_increment primary key,
-    dni varchar(9) not null,
+    dni varchar(9) not null unique,
     name varchar(45) not null,
     surname varchar(45) not null,
     surname_2 varchar(45),
-    email varchar(32) not null,
+    email varchar(32) not null unique,
     password varchar(255) not null,
     tag int(4) not null,
     initials varchar(5) not null,
@@ -274,7 +278,7 @@ create table if not exists Offer_Language(
     specialization_id int not null,
     title varchar(45) not null,
     description varchar(255) not null,
-    foreign key (language_id) references Language(id),
+    foreign key (language_id) references Languages_Offerted(id),
     foreign key (user_id) references Offer(user_id),
     foreign key (specialization_id) references Offer(specialization_id),
     primary key(language_id, user_id, specialization_id)
@@ -334,6 +338,15 @@ create table if not exists Card (
     foreign key (worker_id) references Demands(worker_id),
     foreign key (specialization_id) references Demands(specialization_id),
     foreign key (demand_date) references Demands(demanded_at)
+)ENGINE = InnoDB;
+
+
+create table if not exists Changes_Suggested (
+    id double(3,2) primary key not null,
+    id_card int not null,
+    old_date timestamp not null,
+    suggested_date timestamp not null,
+    foreign key (id_card) references Card(id)
 )ENGINE = InnoDB;
 
 
@@ -403,7 +416,7 @@ create table if not exists Comment_Language(
     language_id varchar(2) not null,
     comment_id int not null,
     text varchar(255) not null,
-    foreign key (language_id) references Language(id),
+    foreign key (language_id) references Languages_Offerted(id),
     foreign key (comment_id) references Comment(id),
     primary key(language_id, comment_id)
 )ENGINE = InnoDB;

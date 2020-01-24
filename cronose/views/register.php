@@ -173,7 +173,6 @@
           } else if (response.status == 'error') {
             $("#errorAlertMessage").html( response.message );
             $("#errorAlert").show();
-            console.log(response);
           };
         }
       });

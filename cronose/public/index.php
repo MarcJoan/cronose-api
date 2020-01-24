@@ -166,6 +166,10 @@ if ($uri[0] == 'api') {
       echo json_encode(VeteranyController::getVet($user->id));
       break;
 
+    case 'veteranyRange':
+      echo json_encode(VeteranyController::getRange($user->id));
+      break;
+
     default:
       echo "Nothing";
       break;
@@ -188,6 +192,19 @@ if ($uri[0] == 'api') {
     case '':
       header('Location: ' . $displayLang . '/home');
       break;
+
+    case 'statistics':
+      if (isset($_SESSION['user']) && $user->name =="Admin"){
+        include '../views/statistics.php';
+      }else{
+        include '../views/loginStatistics.php';
+      }
+      break;
+
+    case 'loginStatistics':
+      include '../views/loginStatistics.php';
+      break;
+
 
     case 'login':
       $title = $lang[$displayLang]['logIn'];

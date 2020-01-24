@@ -9,4 +9,9 @@ class VeteranyController {
     return $achievements;
   }
 
+  public static function getRange($id) {
+    $range = VeteranyModel::getRange($id);
+    return $range;
+  }
+
 }
