@@ -54,7 +54,7 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('es', 'vasco', 'eu'), ('es', 'persa', 'fa'), ('es', 'finlandés', 'fi'), ('es', 'Fiji', 'fj'), ('es', 'faeroese', 'fo'),
 ('es', 'francés', 'fr'), ('es', 'frisón', 'fy'), ('es', 'irlandés', 'ga'), ('es', 'escocés / gaélico', 'gd'), ('es', 'gallego', 'gl'),
 ('es', 'guaraní', 'gn'), ('es', 'gujarati', 'gu'), ('es', 'hausa', 'ha'), ('es', 'hindi', 'hi'), ('es', 'croata', 'hr'),
-('es', 'húngaro', 'hu'), ('es', 'armenio', 'hy'), ('es', 'interlingua', 'ia'), ('es', 'interlingue', 'es decir'), ('es', 'inupiak', 'ik'),
+('es', 'húngaro', 'hu'), ('es', 'armenio', 'hy'), ('es', 'interlingua', 'ia'), ('es', 'interlingue', 'ie'), ('es', 'inupiak', 'ik'),
 ('es', 'indonesio', 'in'), ('es', 'islandés', 'is'), ('es', 'italiano', 'it'), ('es', 'hebreo', 'iw'), ('es', 'japonés', 'ja'),
 ('es', 'yiddish', 'ji'), ('es', 'javanés', 'jw'), ('es', 'georgiano', 'ka'), ('es', 'kazajo', 'kk'), ('es', 'groenlandés', 'kl'),
 ('es', 'camboyano', 'km'), ('es', 'kannada', 'kn'), ('es', 'coreano', 'ko'), ('es', 'Kashmiri', 'ks'), ('es', 'kurdo', 'ku'),
@@ -83,7 +83,7 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('ca', 'basc', 'eu'), ('ca', 'persa', 'fa'), ('ca', 'finès', 'fi'), ('ca', 'Fiji', 'fj'), ('ca', 'faeroès', 'fo'),
 ('ca', 'francès', 'fr'), ('ca', 'frisó', 'fy'), ('ca', 'irlandès', 'ga'), ('ca', 'escocès / gaèlic', 'gd'), ('ca', 'gallec', 'gl'),
 ('ca', 'Guarani', 'gn'), ('ca', 'gujarat', 'gu'), ('ca', 'Hausa', 'ha'), ('ca', 'hindi', 'hi'), ('ca', 'croat', 'hr'),
-('ca', 'hongarès', 'hu'), ('ca', 'armeni', 'hy'), ('ca', 'interlingua', 'ia'), ('ca', 'Interlingue', 'és a dir'), ('ca', 'Inupiak', 'ik'),
+('ca', 'hongarès', 'hu'), ('ca', 'armeni', 'hy'), ('ca', 'interlingua', 'ia'), ('ca', 'Interlingue', 'ie'), ('ca', 'Inupiak', 'ik'),
 ('ca', 'indonèsia', 'in'), ('ca', 'islandès', 'is'), ('ca', 'italià', 'it'), ('ca', 'hebreu', 'iw'), ('ca', 'japonès', 'ja'),
 ('ca', 'yidis', 'ji'), ('ca', 'javanès', 'jw'), ('ca', 'georgià', 'ka'), ('ca', 'kazakh', 'kk'), ('ca', 'groenlandès', 'kl'),
 ('ca', 'cambodjana', 'km'), ('ca', 'Kannada', 'kn'), ('ca', 'coreà', 'ko'), ('ca', 'Caixmir', 'ks'), ('ca', 'kurd', 'ku'),
@@ -102,6 +102,9 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('ca', 'Twi', 'tw'), ('ca', 'ucraïnès', 'uk'), ('ca', 'urdu', 'ur'), ('ca', 'uzbek', 'uz'), ('ca', 'vietnamita', 'vi'),
 ('ca', 'Volapuk', 'vo'), ('ca', 'wolof', 'wo'), ('ca', 'Xhosa', 'xh'), ('ca', 'ioruba', 'yo'), ('ca', 'xinès', 'zh'),
 ('ca', 'zulu', 'zu');
+
+UPDATE Languages_Translation
+SET translation = CONCAT(UCASE(LEFT(translation, 1)), SUBSTRING(translation, 2));
 
 insert into Province(name) values ('Illes Balears');
 

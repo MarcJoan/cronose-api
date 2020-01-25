@@ -54,6 +54,7 @@ hr {/*BARRA HORIZONTAL */
   height: auto;
   margin: 0;
 }
+
 #logo svg {
   width: 100%;
 }
@@ -63,7 +64,7 @@ hr {/*BARRA HORIZONTAL */
 }
 
 .opacity{
-  opacity: .1;
+  opacity: .2;
 }
 /*------- CHART -------*/
 .bar{
@@ -91,4 +92,9 @@ hr {/*BARRA HORIZONTAL */
     display: block;
     height: 50vh;
    overflow: auto;
+}
+
+.workForm.show {
+  /*background-image: url("/assets/img/working.svg");*/
+  background-color: green;
 }
