@@ -168,6 +168,12 @@ if ($uri[0] == 'api') {
       echo json_encode(VeteranyController::getRange($user->id));
       break;
 
+    case 'langs':
+      if ($method == 'get' && count($uri) == 2){
+        echo json_encode(LanguageController::getAll($displayLang));
+      }
+      break;
+
     default:
       echo "Nothing";
       break;

@@ -85,3 +85,10 @@ hr {/*BARRA HORIZONTAL */
   shape-rendering: crispEdges;
 }
 /*------------------------*/
+
+
+.dropdown-menu.show {
+    display: block;
+    height: 50vh;
+   overflow: auto;
+}
