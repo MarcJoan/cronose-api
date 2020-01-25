@@ -1,46 +1,22 @@
 <?php
 
 require_once '../models/Offer.model.php';
-// require_once $_SERVER['DOCUMENT_ROOT'].'/controllers/Language.controller.php';
-// require_once $_SERVER['DOCUMENT_ROOT'].'/controllers/Offer_Language.controller.php';
 require_once '../controllers/User.controller.php';
 
 class OfferController {
 
+
+// ----------------Get Offers--------------------
+
   public static function getAllOffers() {
     $offers = OfferModel::getAllOffers();
-  }
-
-// -----------------------------------------------
-
-  public static function getAllOffersOrderedByLang($lang) {
-    $offers = OfferModel::getAllOffers();
-    $list = [];
-    
     foreach ($offers as $key => $value) {
-      $userId = self::inArray($value['user_id'], $list);
-      $specializationId = self::inArray($value['specialization_id'], $list);
-
-      if (!$userId && !$specializationId) {;
-        $list[$key]["user_id"]= $value['user_id'];
-        $list[$key]["specialization_id"]= $value['specialization_id'];
-        $list[$key]['offer'] = [];
-      }
+      $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
 
-    $list = array_values($list);
-
-    foreach ($offers as $key => $value) {
-      $list = self::setOffers($value, $value['user_id'], $value['specialization_id'], $list);
-    }
-
-    foreach ($list as $key => $value) {
-      $list[$key] = self::orderByLang($lang, $value);
-    }
-
-    if ($list) return [
+    if ($offers) return [
       "status" => "success",
-      "offers" => $list
+      "offers" => $offers
     ];
     else return [
       "status" => "error",
@@ -48,45 +24,54 @@ class OfferController {
     ];
   }
 
-  public static function setOffers($offer, $userId, $specializationId, $array) {
-
-    foreach ($array as $key => $value) {
-      if ($value['user_id'] == $userId) {
-        array_push($array[$key]['offer'], $offer);
-      }
+  public static function getOffers($limit) {
+    $offers = OfferModel::getOffers($limit);
+    foreach ($offers as $key => $value) {
+      $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
-    return $array;
 
+    if ($offers) return [
+      "status" => "success",
+      "offers" => $offers
+    ];
+    else return [
+      "status" => "error",
+      "msg" => "Something went wrong!"
+    ];
   }
 
-  public static function inArray($val, $array) {
-    foreach ($array as $key => $value) {
-      foreach ($value as $key2 => $value2) {
-        if ($value2 == $val) return true;
-      };
-    };
-    return false;
-  }
+  public static function getOffersByLang($limit,$lang) {
+    $offers = OfferModel::getOffersByLang($limit, $lang);
 
-  public static function orderByLang($lang, $array) {
-    for ($i = 0; $i < count($array['offer']); $i++) { 
-      if ($array['offer'][$i]['language_id'] == $lang) {
-        $aux = $array['offer'][$i];
-        unset($array['offer'][$i]);
-        array_unshift($array['offer'], $aux);
-      }
+    foreach ($offers as $key => $value) {
+      $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
-    return $array;
-    // var_dump($array);
+
+    foreach ($offers as $key => $value) {
+      $offers[$key]['Offers'] = self::orderByLang($lang, $value['Offers']);
+    }
+
+    if ($offers) return [
+      "status" => "success",
+      "offers" => $offers
+    ];
+    else return [
+      "status" => "error",
+      "msg" => "Something went wrong!"
+    ];
   }
 
-// -----------------------------------------------------
+  public static function getOffersDefaultLang($limit,$lang) {
+    $offers = OfferModel::getOffers($limit);
 
+    foreach ($offers as $key => $value) {
+      $offers[$key]['translation'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+    }
 
+    foreach ($offers as $key => $value) {
+      $offers[$key]['translation'] = self::orderByLang($lang, $value['translation']);
+    }
 
-  public static function getOffersByLang($lang) {
-    if (!LanguageController::langExist($lang)) return null;
-    $offers = OfferModel::getOffersByLang($lang);
     if ($offers) return [
       "status" => "success",
       "offers" => $offers
@@ -120,5 +105,30 @@ class OfferController {
       "msg" => "Something went wrong!"
     ];
   }
+
+
+  // --------------------------------
+
+  public static function orderByLang($lang, $array) {
+    foreach ($array as $key => $value) {
+      if ($value['language_id'] == $lang) {
+        $aux = $value;
+        unset($array[$key]);
+        array_unshift($array, $aux);
+      }
+    }
+    return $array;
+  }
+
+
+  public static function getOfferLangs($user_id, $specialization_id) {
+    return OfferModel::getOfferLangs($user_id, $specialization_id);
+  }
+
+// -----------------------------------------------------
+
+  
+
+  
 
 }

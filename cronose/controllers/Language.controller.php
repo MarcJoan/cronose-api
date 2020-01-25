@@ -1,9 +1,13 @@
 <?php
+require_once '../models/Language.model.php';
 
 class LanguageController {
 
-  public static function getAllLangs() {
-    return LanguageModel::getAll();
+  public static function getOfferLangs() {
+    $lang = LanguageModel::getOfferLangs();
+    return [
+      'lang' => $lang
+    ];
   }
 
   static $langAvailable = ['en','es','ca'];
