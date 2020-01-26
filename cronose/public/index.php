@@ -11,6 +11,7 @@ require_once '../controllers/Category.controller.php';
 require_once '../controllers/Province.controller.php';
 require_once '../controllers/City.controller.php';
 require_once '../controllers/Veterany.controller.php';
+require_once '../controllers/Specialization.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -44,6 +45,12 @@ if ($uri[0] == 'api') {
     case 'categories':
       echo json_encode(CategoryController::getAllByLang($displayLang));
       break;
+
+    case 'specializations':
+      if(isset($uri[2]))
+        echo json_encode(SpecializationController::getByCategoryId($uri[2], $displayLang));
+      else
+        echo json_encode(SpecializationController::getAll($displayLang));
 
     case 'provinces':
       echo json_encode(ProvinceController::getAll());

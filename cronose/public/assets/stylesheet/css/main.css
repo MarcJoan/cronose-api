@@ -89,12 +89,14 @@ hr {/*BARRA HORIZONTAL */
 
 
 .dropdown-menu.show {
-    display: block;
-    height: 50vh;
-   overflow: auto;
+  display: block;
+  height: 50vh;
+  overflow: auto;
 }
 
-.workForm.show {
-  /*background-image: url("/assets/img/working.svg");*/
-  background-color: green;
+#workForm2 {
+  background-image: url(/assets/img/working.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }

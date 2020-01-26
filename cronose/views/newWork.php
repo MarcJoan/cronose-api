@@ -10,14 +10,37 @@
 	</button>
   <div id="langsAvaliable" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
 
-  <div class="container" >
+  <div id="workForm2" class="container text-left">
+  	<hr/>
 
   	<form>
+  		<div class="row">
+	  		<div class="form-group col">
+	  			<select class="form-control" id="dropdownCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  <option disabled selected>Categoría</option>
+					</select>
+					<small class="form-text text-muted">Elige la categoría que mejor se ajuste al trabajo que deseas publicar</small>
+	  		</div>
+
+	  		<div class="form-group col">
+	  			<select class="form-control" id="dropdownSpecialization" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  <option>Especialización</option>
+					</select>
+					<small class="form-text text-muted">Elige la categoría que mejor se ajuste al trabajo que deseas publicar</small>
+	  		</div>
+
+			</div>
+
   		<div class="form-group">
   			<label for="workTitle">Título</label>
-  			<input type="email" class="form-control" id="workTitle" aria-describedby="emailHelp" placeholder="Introduce tu título">
+  			<input type="text" class="form-control" id="workTitle" aria-describedby="emailHelp" placeholder="Introduce tu título...">
+  			<small id="workSubtitle" class="form-text text-muted">Utiliza un título lo más descriptivo posible</small>
   		</div>
-  		<small id="workSubtitle" class="form-text text-muted">Utiliza un título lo más descriptivo posible</small>
+			<div class="form-group">
+  			<label for="workTitle">Descripción</label>
+  			<textarea type="text" class="form-control" id="workDescription" aria-describedby="emailHelp" placeholder="Describe tu actividad..." rows="5"></textarea>
+  			<small id="workSubtitle" class="form-text text-muted">Indica lo que puedes ofrecer y otra información que quieres que sepan los demás usuarios.</small>
+  		</div>  		
   	</form>
   </div>
 
@@ -74,6 +97,7 @@
       let lang = $(".dropdown-item").val();
 			
       loadFile();
+      loadCategories();
     });
 
     $(".dropdown-item").click(function(){
@@ -94,6 +118,56 @@
 	        }
 	    });
 		}
+
+		let categorie;
+		function loadCategories(){
+			$.ajax({
+				type: 'get',
+				url: '/api/categories',
+				dataType: 'json',
+				async: false,
+				success: function(data){
+					categorie = data;
+
+					for (cat in categorie){
+						let name = categorie[cat].name;
+						let val = categorie[cat].id;
+						let item2 = $("<option/>", {
+							text:name,
+							value:val});
+						$("#dropdownCategory").append(item2);
+					}
+				}
+			});
+		}
+
+		let cat;
+    $("#dropdownCategory").change(function(){
+    	cat = $("#dropdownCategory").val();
+			
+      loadSpecialization(cat);
+    }); 
+    let specialization;
+    function loadSpecialization($cat){
+    	$.ajax({
+				type: 'get',
+				url: '/api/specializations/'+$cat,
+				dataType: 'json',
+				async: false,
+				success: function(data){
+					specialization = data;
+					console.log(specialization);
+					for (spe in specialization){
+						let name = specialization[spe].name;
+						let val = specialization[spe].id;
+						let item3 = $("<option/>", {
+							text:name,
+							value:val});
+						$("#dropdownSpecialization").append(item3);
+					}
+				}
+			});
+    }
 
 	});
 

@@ -1,29 +1,11 @@
 <?php
 
-require_once 'Model.php';
+require_once '../dao/Specialization.dao.php';
 
-class SpecializationModel extends Model
-{
+class SpecializationModel {
 
-  public function __construct($specialization_id,$category_id) {
-    $this->schema = array(
-      'specialization_id' => $specialization_id,
-      'category_id' => $category_id
-    );
-    parent::__construct();
-  }
-
-  public static function modelValidation($body) {
-    $body = json_decode($body);
-    return true;
-  }
-
-  public static function getAll() {
-    $sql = "SELECT * FROM Specialization";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-    var_dump($statement);
-    return $statement->fetchAll();
+  public static function getAll($lang) {
+    return SpecializationDAO::getAll($lang);
   }
 
   public static function getAllByLanguage($language) {
@@ -40,11 +22,8 @@ class SpecializationModel extends Model
     return $statement->fetchAll();
   }
 
-  public static function getByCategoryId($category_id) {
-    $sql = "SELECT * FROM  Specialization WHERE category_id = '" . $category_id . "';";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-    return $statement->fetchAll();
+  public static function getByCategoryId($id, $lang) {
+    return SpecializationDAO::getByCategoryId($id, $lang);
   }
 
 }
