@@ -24,8 +24,8 @@ class OfferController {
     ];
   }
 
-  public static function getOffers($limit) {
-    $offers = OfferModel::getOffers($limit);
+  public static function getOffers($limit, $offset) {
+    $offers = OfferModel::getOffers($limit, $offset);
     foreach ($offers as $key => $value) {
       $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
@@ -40,8 +40,8 @@ class OfferController {
     ];
   }
 
-  public static function getOffersByLang($limit,$lang) {
-    $offers = OfferModel::getOffersByLang($limit, $lang);
+  public static function getOffersByLang($limit, $offset, $lang) {
+    $offers = OfferModel::getOffersByLang($limit, $offset, $lang);
 
     foreach ($offers as $key => $value) {
       $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
@@ -50,7 +50,7 @@ class OfferController {
     foreach ($offers as $key => $value) {
       $offers[$key]['Offers'] = self::orderByLang($lang, $value['Offers']);
     }
-
+    
     if ($offers) return [
       "status" => "success",
       "offers" => $offers
@@ -61,8 +61,8 @@ class OfferController {
     ];
   }
 
-  public static function getOffersDefaultLang($limit,$lang) {
-    $offers = OfferModel::getOffers($limit);
+  public static function getOffersDefaultLang($limit, $offset, $lang) {
+    $offers = OfferModel::getOffers($limit, $offset);
 
     foreach ($offers as $key => $value) {
       $offers[$key]['translation'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
@@ -104,6 +104,28 @@ class OfferController {
       "status" => "error",
       "msg" => "Something went wrong!"
     ];
+  }
+
+  public static function getFilteredOffers($filter) {
+    $offers = OfferModel::getFilteredOffers($filter);
+
+    foreach ($offers as $key => $value) {
+      $offers[$key]['translation'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+    }
+
+    foreach ($offers as $key => $value) {
+      $offers[$key]['translation'] = self::orderByLang($filter['defaultLang'], $value['translation']);
+    }
+
+    if ($offers) return [
+      "status" => "success",
+      "offers" => $offers
+    ];
+    else return [
+      "status" => "error",
+      "msg" => "Something went wrong!"
+    ];
+
   }
 
 

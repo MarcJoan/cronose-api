@@ -25,16 +25,20 @@ class OfferModel extends Model {
     return OfferDAO::getAllOffers();
   }
 
-  public static function getOffers($limit) {
-    return OfferDAO::getOffers($limit);
+  public static function getOffers($limit, $offset) {
+    return OfferDAO::getOffers($limit, $offset);
   }
 
-  public static function getOffersByLang($limit, $lang) {
-    return OfferDAO::getOffersByLang($limit, $lang);
+  public static function getOffersByLang($limit, $offset, $lang) {
+    return OfferDAO::getOffersByLang($limit, $offset, $lang);
   }
 
   public static function getOfferLangs($user_id, $specialization_id) {
     return OfferDAO::getOfferLangs($user_id, $specialization_id);
+  }
+  
+  public static function getFilteredOffers($filter) {
+    return OfferDAO::getFilteredOffers($filter);
   }
 
 }

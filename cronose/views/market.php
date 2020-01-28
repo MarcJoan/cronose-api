@@ -11,30 +11,35 @@
 					<span class="input-group-btn">
 						<button class="btn btn-secondary" type="button"><i class="fas fa-search"></i></button>
 					</span>
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" id="serch">
 				</div>
 			</div>
 			<div class="col-12">
         <div class="form-group row">
         	<div class="col-2">
-				    <label for="province">Language</label>
+				    <label for="language">Language</label>
 				    <select class="" id="lang">
 				    </select>
-				    <ul class="list-group list-group-horizontal" id="selectLangs">
-					  </ul>
 				  </div> 
 			  	<div class="col-2">
-				    <label for="province">Selected Languages</label>
+				    <label for="myLangs">Selected Languages</label>
 				    <select class="" id="myLangs">
+				    	<option disabled selected="selected">My Langs</option>
 				    </select>
-				    <ul class="list-group list-group-horizontal" id="selectedLangs">
-					  </ul>
 				  </div>
 				  <div class="col-2">
-				    Start date<input class=""  id="startDate">
+				    <label for="category">Category</label>
+				    <select class="" id="category">
+				    </select>
 				  </div>
 				  <div class="col-2">
-				    End date<input class=""  id="endDate">
+				    <label for="specialization">Specialization</label>
+				    <select class="" id="specialization">
+				    	<option disabled selected="selected" value="null">Specializations</option>
+				    </select>
+				  </div>
+				  <div class="col-2">
+				    <button id="reset">Reset Filter</button>
 				  </div>
 				</div>
 			<div class="card-deck w-100" id="works">
@@ -46,67 +51,19 @@
   <script>
   $(document).ready(function(){
 		// const works;
+		const defaultLang = window.location.pathname.split('/')[1];
 
-		//---------------Filter---------------
-		
-    $("#startDate").datepicker({
-		  dateFormat: "dd-mm-yy",
-		});
 
-		$("#endDate").datepicker({
-		  dateFormat: "dd-mm-yy",
-		});
+		// GET LANGS, CATEGORY AND SPECIALIZATION
 
 		let langs = [];
-		let myLangs = [];
+		let categories = [];
+		let specializations = [];
 
-		showLangs();
+		getLangs();
+		getCategories();
 
-		$("#lang").change(function() {
-			myLangs.push($("#lang").val());
-			for( var i = 0; i < langs.length; i++){ 
-			  if ( langs[i] === $("#lang").val()) {
-			  	langs.splice(i,1);
-			  	langs.sort();
-			  }
-			}
-			renderSelect();
-			renderSelectedLangs();
-		})
-
-		$("#myLangs").change(function() {
-			langs.push($("#myLangs").val());
-			for( var i = 0; i < myLangs.length; i++){
-			  if ( myLangs[i] === $("#myLangs").val()) {
-			  	myLangs.splice(i,1);
-			  	myLangs.sort();
-			  }
-			}
-			renderSelect();
-			renderSelectedLangs();
-		})
-
-		function renderSelect() {
-			$("#lang")
-				.empty()
-				.append('<option disabled selected="selected">Choose Langs</option>');
-			$.each(langs, function(key,value) {
-    		$("#lang").append(new Option(value, value));
-    	})
-		}
-
-		function renderSelectedLangs() {
-			myLangs.sort();
-			$("#myLangs")
-				.empty()
-				.append('<option disabled selected="selected">My Langs</option>');
-			$.each(myLangs, function(key,value) {
-    		$("#myLangs").append(new Option(value, value));
-    	})
-		}
-
-
-    function showLangs() {
+    function getLangs() {
     	const url = '/api/lang/offers';
     	$.ajax({
 	      type: 'get',
@@ -117,23 +74,166 @@
 	      	$.each(data.lang, function(key,value) {
 	      		langs.push(value.language_id);
 	      	})
-	      	renderSelect();
-					renderSelectedLangs();
+	      	renderLangs();
+					renderMyLangs();
 	      },
 	      error: ((data) => {
 	        console.log(data)
 	      })
 	    });
     }
+
+    function getCategories() {
+    	const url = '/api/categories/'+defaultLang;
+    	$.ajax({
+	      type: 'get',
+	      url: url,
+	      dataType: 'json',
+	      data: {},
+	      success: (data) => {
+	      	categories = data;	 
+    			renderCategory();     	
+	      },
+	      error: ((data) => {
+	        console.log(data)
+	      })
+	    });
+    }
+
+    function getSpecializations(category_id) {
+    	const url = '/api/specialization/' + category_id + '/' + defaultLang;
+    	$.ajax({
+	      type: 'get',
+	      url: url,
+	      dataType: 'json',
+	      data: {},
+	      success: (data) => {
+	      	specializations = data;
+	      	renderSpecializations();
+	      },
+	      error: ((data) => {
+	        console.log(data)
+	      })
+	    });
+    }
+
+
+    // RENDER LANGS, CATEGORY AND SPECIALIZATION
+
+
+    function renderLangs() {
+			$("#lang")
+				.empty()
+				.append('<option disabled selected="selected">Choose Langs</option>');
+			$.each(langs, function(key,value) {
+    		$("#lang").append(new Option(value, value));
+    	})
+		}
+
+		function renderMyLangs() {
+			filter['langs'].sort();
+			$("#myLangs")
+				.empty()
+				.append('<option disabled selected="selected">My Langs</option>');
+			$.each(filter['langs'], function(key,value) {
+    		$("#myLangs").append(new Option(value, value));
+    	})
+		}
+
+		function renderCategory() {
+			$("#category")
+				.empty()
+				.append('<option disabled selected="selected" value="null">Categories</option>');
+			$.each(categories, function(key,value) {
+    		$("#category").append(new Option(value.name, value.id));
+    	})
+		}
+
+		function renderSpecializations() {
+			$("#specialization")
+				.empty()
+				.append('<option disabled selected="selected" value="null">Specializations</option>');
+			$.each(specializations, function(key,value) {
+    		$("#specialization").append(new Option(value.name, value.id));
+    	})
+		}
+
+
+
+		// -------
+
+		$("#lang").change(function() {
+			filter['langs'].push($("#lang").val());
+			for( var i = 0; i < langs.length; i++){ 
+			  if ( langs[i] === $("#lang").val()) {
+			  	langs.splice(i,1);
+			  }
+			}
+			renderLangs();
+			renderMyLangs();
+			getFilteredWorks();
+		})
+
+		$("#myLangs").change(function() {
+			langs.push($("#myLangs").val());
+			for( var i = 0; i < filter['langs'].length; i++){
+			  if ( filter['langs'][i] === $("#myLangs").val()) {
+			  	filter['langs'].splice(i,1);
+			  	filter['langs'].sort();
+			  	langs.sort();
+			  }
+			}
+			renderLangs();
+			renderMyLangs();
+			getFilteredWorks();
+		})
+
+		$("#category").change(function() {
+			filter['specialization'] = null;
+			filter['category'] = $("#category").val()
+			getSpecializations($("#category").val());
+			getFilteredWorks();
+		})
+
+		$("#specialization").change(function() {
+			filter['specialization'] = $("#specialization").val()
+			getFilteredWorks();
+		})
+
+		$('#serch').on('input',function(e){
+			filter['string'] = $('#serch').val();
+			getFilteredWorks();
+    });
+
+		$("#reset").click(function() {
+			filter = {langs: [], defaultLang: defaultLang, category: null, specialization: null, string: null};
+			renderCategory();
+			$("#specialization")
+				.empty()
+				.append('<option disabled selected="selected" value="null">Specializations</option>');
+			$('#serch').val('');
+			getAllWorks();
+		})
+
+		
+
+		
+
+		//---------------Filter---------------
+
+		let filter = {langs: [], defaultLang: defaultLang, category: null, specialization: null, string: null};
+		
+
     //---------------FILTER---------------
 
 
-    showAllWorks();
     let offers;
+    let limit = 10;
+		let offset = 0;
+    getAllWorks();
 
-		function showAllWorks() {
-	    const url =  '/api/offers/10/default/'+window.location.pathname.split('/')[1];
-	    console.log(url);
+		function getAllWorks() {
+	    const url =  '/api/offers/' + limit + '/' + offset + '/default/'+defaultLang;
 	    $.ajax({
 	      type: 'get',
 	      url: url,
@@ -151,8 +251,26 @@
 	    });
     };
 
+    function getFilteredWorks() {
+	    const url =  '/api/offers/'+limit+'/filter/';
+	    $.ajax({
+	      type: 'get',
+	      url: url,
+	      dataType: 'json',
+	      data: {filter},
+	      success: (response) => {
+	        	offers = response.offers;
+	        	renderOffers();
+	      },
+	      error: ((response) => {
+	        console.log(response)
+	      })
+	    });
+    };
+
     function renderOffers () {
     	let body =  "";
+			document.getElementById("works").innerHTML = body;
 			$.each (offers, function(key, value) {
 				body+='<div class="row w-100"><div class="container wrap row justify-content-center mt-4"><div class="container py-3"><div class="card"><div class="row"><div class="col-md-4">';
 				body+='<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid" style="height: 222.8px;"> ';
