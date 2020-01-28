@@ -8,6 +8,7 @@ require_once '../controllers/User.controller.php';
 require_once '../controllers/Chat.controller.php';
 require_once '../controllers/Achievement.controller.php';
 require_once '../controllers/Category.controller.php';
+require_once '../controllers/Specialization.controller.php';
 require_once '../controllers/Province.controller.php';
 require_once '../controllers/City.controller.php';
 require_once '../controllers/Veterany.controller.php';
@@ -42,7 +43,14 @@ if ($uri[0] == 'api') {
   switch ($uri[1]) {
 
     case 'categories':
-      echo json_encode(CategoryController::getAllByLang($displayLang));
+      if (count($uri) == 2) echo json_encode(CategoryController::getAllByLang($displayLang));
+      if (count($uri) == 3) echo json_encode(CategoryController::getAllByLang($uri[2]));
+      break;
+
+    case 'specialization':
+      if (count($uri) == 2) echo json_encode(SpecializationController::getAll());
+      if (count($uri) == 3) echo json_encode(SpecializationController::getAllByLang($uri[2]));
+      if (count($uri) == 4) echo json_encode(SpecializationController::getAllByIDAndLang($uri[2], $uri[3]));
       break;
 
     case 'provinces':
@@ -87,18 +95,23 @@ if ($uri[0] == 'api') {
       }
       break;
 
-    case 'works':
+    case 'offers':
       if ($method == 'get') {
-        if (count($uri) == 2) echo json_encode(OfferController::getOffersByLang($_SESSION['displayLang']));
+        if (count($uri) == 2) echo json_encode(OfferController::getAllOffers());
+        if (count($uri) == 4 && $uri[2] > 0 && $uri[3] >= 0) echo json_encode(OfferController::getOffers($uri[2], $uri[3]));
+        if (count($uri) == 5 && $uri[2] > 0 && $uri[3] >= 0 && $uri[3] != 'filter' ) echo json_encode(OfferController::getOffersByLang($uri[2], $uri[3], $uri[4]));
+        if (count($uri) == 6 && $uri[4] == 'default') echo json_encode(OfferController::getOffersDefaultLang($uri[2], $uri[3], $uri[4]));
+        if (count($uri) == 5 && $uri[3] == 'filter') echo json_encode(OfferController::getFilteredOffers($_REQUEST['filter']));
+        //if (count($uri) == 4 && $uri[2] == 'lang') echo json_encode(OfferController::getAllOffersOrderedByLang($uri[3]));
       }
       break;
 
-      case 'work':
-         if ($method == 'get') {
-           if (count($uri) == 2) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
-           if (count($uri) == 5) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
-        }
-      break;
+    case 'work':
+       if ($method == 'get') {
+         if (count($uri) == 2) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
+         if (count($uri) == 5) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
+      }
+    break;
 
     case 'myWorks':
       if ($method == 'get') {
@@ -168,6 +181,10 @@ if ($uri[0] == 'api') {
       echo json_encode(VeteranyController::getRange($user->id));
       break;
 
+    case 'lang':
+      if ($method == 'get' && count($uri) == 3 && $uri[2] == 'offers') echo json_encode(LanguageController::getOfferLangs());
+      break;
+
     default:
       echo "Nothing";
       break;
@@ -225,7 +242,7 @@ if ($uri[0] == 'api') {
 
     case 'market':
       $title = $lang[$displayLang]['market'];
-      $offers = OfferController::getOffersByLang($displayLang);
+      // $offers = OfferController::getOffersByLang($displayLang);
       include '../views/market.php';
       break;
 

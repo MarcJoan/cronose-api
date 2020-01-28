@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/assets/stylesheet/css/main.css">
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="/assets/plugin/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/assets/plugin/jquery/jquery-ui.min.css">
   <!-- SCRIPTS -->
   <script src="/assets/plugin/jquery/jquery-3.4.1.min.js"></script>
   <script src="/assets/plugin/js/popper.min.js"></script>
@@ -21,6 +22,7 @@
   <script src="/assets/plugin/leaflet/leaflet.js"></script>
   <script src="/assets/plugin/D3JS/d3.min.js"></script>
   <script src="/assets/plugin/D3JS/d3.v3.min.js"></script>
+  <script src="/assets/plugin/jquery/jquery-ui.min.js"></script>
 
 </head>
 <body>
