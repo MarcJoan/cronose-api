@@ -42,6 +42,10 @@ if ($uri[0] == 'api') {
 
   switch ($uri[1]) {
 
+    case 'Offer':
+      if($method == 'post')
+        echo json_encode(OfferController::setNewOffer($_POST['offer']);
+
     case 'categories':
       echo json_encode(CategoryController::getAllByLang($displayLang));
       break;
@@ -51,6 +55,7 @@ if ($uri[0] == 'api') {
         echo json_encode(SpecializationController::getByCategoryId($uri[2], $displayLang));
       else
         echo json_encode(SpecializationController::getAll($displayLang));
+      break;
 
     case 'provinces':
       echo json_encode(ProvinceController::getAll());
@@ -178,6 +183,8 @@ if ($uri[0] == 'api') {
     case 'langs':
       if ($method == 'get' && count($uri) == 2){
         echo json_encode(LanguageController::getAll($displayLang));
+      } else if ( $method == 'get' && $uri[2] == 'default'){
+        echo json_encode(LanguageController::getDefaultLangs());
       }
       break;
 

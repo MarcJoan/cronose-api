@@ -94,9 +94,6 @@ hr {/*BARRA HORIZONTAL */
   overflow: auto;
 }
 
-#workForm2 {
-  background-image: url(/assets/img/working.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+#rating {
+  font-size: 30px;
 }

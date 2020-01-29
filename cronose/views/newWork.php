@@ -30,7 +30,10 @@
 	  		</div>
 
 			</div>
-
+			<div class="form-group bg-secondary text-white p-2">
+				<label for="rating">¿Cuál es tu nivel de profesionalidad en este sector?</label>
+  			<div class="rating" id="rating"></div>
+  		</div>
   		<div class="form-group">
   			<label for="workTitle">Título</label>
   			<input type="text" class="form-control" id="workTitle" aria-describedby="emailHelp" placeholder="Introduce tu título...">
@@ -40,7 +43,8 @@
   			<label for="workTitle">Descripción</label>
   			<textarea type="text" class="form-control" id="workDescription" aria-describedby="emailHelp" placeholder="Describe tu actividad..." rows="5"></textarea>
   			<small id="workSubtitle" class="form-text text-muted">Indica lo que puedes ofrecer y otra información que quieres que sepan los demás usuarios.</small>
-  		</div>  		
+  		</div>  
+  		<button class="btn btn-primary" type="submit">Enviar</button>		
   	</form>
   </div>
 
@@ -48,47 +52,73 @@
 
 <a href="preview-work">Preview Work</a>
 
+<!--Carga el script de estrellas para autoevaluarse-->
+<script src="/assets/plugin/js/rater.min.js"></script>
+
 <script>
 
-	$(document).ready(function(){
+	$(document).ready(async function(){
+
+		$(".rating").rate();
 
 		let langs;
-		loadLangs();
+		langs = await getLangs();
+		console.log(langs);
+		let defaultLangs;
+		defaultLangs = await getDefaultLangs();
+		console.log(defaultLangs);
+		renderLangs(langs);
 
-		//cogemos todos los idiomas disponibles
-		function loadLangs(){
-			
-			$.ajax({
-				type:'get',
-				url: "/api/langs",
-				dataType: 'json',
-				async: false,
-				success: function(data) {
-					langs = data;
-				}
-			});
+		async function getLangs(){
+			if(!langs) return await loadLangs();
+			else return langs;
+		}
 
-			sortLangs('translation', true);
-			
-			for (lang in langs){
-
-				const newLang = langs[lang].translation;
-				const val = langs[lang].language_translated;
+		function renderLangs(langs){
+			langs.forEach(function(lang){
 				const item = $("<a/>",{
 					class:'dropdown-item',
-					text:newLang, 
-					'data-value':val
+					text:lang.translation,
+					'data-value':lang.language_translated
 				});
 
 				//Si es uno de los idiomas oficiales de la página lo ponemos al inicio del dropdown
-				if(langs[lang].language_translated != 'ca' && langs[lang].language_translated != 'es' && langs[lang].language_translated != 'en' ) {
-					$("#langsAvaliable").append(item);
-				}else{
-					$("#langsAvaliable").prepend(item);
-				}
-			}
+				if(defaultLangs.includes(lang.language_translated))
+					$('#langsAvaliable').prepend(item);
+				else
+					$('#langsAvaliable').append(item);
+
+			});
 		}
 
+		//cogemos todos los idiomas disponibles
+		async function loadLangs(){
+			return $.ajax({
+				type:'get',
+				url: "/api/langs",
+				dataType: 'json',
+				success: function(data) {
+					sortArray(data, 'translation');
+					return data;
+				}
+			});
+		}
+
+		async function getDefaultLangs(){
+			if(!defaultLangs) return await loadDefaultLangs();
+			else return defaultLangs;
+		}
+
+		async function loadDefaultLangs(){
+			return $.ajax({
+				type:'get',
+				url: "/api/langs/default",
+				dataType: 'json',
+				success: function(data) {
+					return data;
+				}
+			});
+		}
 
 		//Cambia el texto del botón al seleccionar idioma
     $("#langsAvaliable a").click(function(){
@@ -96,21 +126,21 @@
       $("#dropdownMenuButton").val($(this).text());
       let lang = $(".dropdown-item").val();
 			
-      loadFile();
       loadCategories();
     });
 
+
     $(".dropdown-item").click(function(){
   		let lang = $(this).data("value");
-    })
+    });
 
 		function loadFile(){
 			$("#formBackground").addClass("opacity");
 		}
 
 		//Ordena el json por el valor indicado al llamarlo
-		function sortLangs(prop, asc) {
-	    langs.sort(function(a, b) {
+		function sortArray(array, prop, asc = true) {
+	    return array.sort(function(a, b) {
 	        if (asc) {
 	            return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
 	        } else {
@@ -125,10 +155,10 @@
 				type: 'get',
 				url: '/api/categories',
 				dataType: 'json',
-				async: false,
 				success: function(data){
 					categorie = data;
 
+					$("#dropdownCategory").empty();
 					for (cat in categorie){
 						let name = categorie[cat].name;
 						let val = categorie[cat].id;
@@ -147,16 +177,17 @@
 			
       loadSpecialization(cat);
     }); 
+
+
     let specialization;
     function loadSpecialization($cat){
     	$.ajax({
 				type: 'get',
 				url: '/api/specializations/'+$cat,
 				dataType: 'json',
-				async: false,
 				success: function(data){
 					specialization = data;
-					console.log(specialization);
+					$("#dropdownSpecialization").empty();
 					for (spe in specialization){
 						let name = specialization[spe].name;
 						let val = specialization[spe].id;
@@ -168,7 +199,22 @@
 				}
 			});
     }
+    
+    //Aquí recopilamos la información del formulario
+    function generateData(){
 
+    }
+
+    function submit(data){
+    	$.ajax({
+				type: 'post',
+				url: '/api/offer',
+				dataType: 'json',
+				data: { 'offer' : data }
+				success: function(data){
+				}
+    	});
+		}
 	});
 
 

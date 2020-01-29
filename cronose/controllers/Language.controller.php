@@ -11,6 +11,10 @@ class LanguageController {
   static $langAvailable = ['en','es','ca'];
   static $defaultLang = 'es';
 
+  public function getDefaultLangs(){
+    return self::$langAvailable;
+  }
+
   public function getLang() {
     $clientLang = $_SESSION['displayLang'] ?? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     $lang = in_array($clientLang, self::$langAvailable) ? $clientLang : self::$defaultLang;
