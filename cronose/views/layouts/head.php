@@ -23,6 +23,7 @@
   <script src="/assets/plugin/D3JS/d3.min.js"></script>
   <script src="/assets/plugin/D3JS/d3.v3.min.js"></script>
   <script src="/assets/plugin/jquery/jquery-ui.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat|Work+Sans&display=swap" rel="stylesheet"> 
 
 </head>
 <body>

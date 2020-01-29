@@ -3,6 +3,10 @@
     cursor: pointer;
 }
 
+*{
+    font-family: 'Montserrat','Lato','Work Sans', sans-serif;
+}
+
 #language_selector {
     margin-right: 40px;
 }
