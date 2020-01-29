@@ -37,9 +37,7 @@
 <?php require '../views/components/nav.php'; ?>
 
 <?php if (isset($_SESSION['user'])):?>
-  <div  class="col-10 p-0">
-    <main class="container">
+    <main class="container-fluid vertical">
 <?php else :?>
-  <div class="col-12">
-    <main class="container">
+    <main class="container horizontal">
 <?php endif ?>
