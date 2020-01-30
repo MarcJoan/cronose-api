@@ -44,13 +44,11 @@
   			<textarea type="text" class="form-control" id="workDescription" aria-describedby="emailHelp" placeholder="Describe tu actividad..." rows="5"></textarea>
   			<small id="workSubtitle" class="form-text text-muted">Indica lo que puedes ofrecer y otra información que quieres que sepan los demás usuarios.</small>
   		</div>  
-  		<button class="btn btn-primary" type="submit">Enviar</button>		
+  		<input type="button" class="btn btn-primary" id="generateData" value="Enviar">		
   	</form>
   </div>
 
 </div>
-
-<a href="preview-work">Preview Work</a>
 
 <!--Carga el script de estrellas para autoevaluarse-->
 <script src="/assets/plugin/js/rater.min.js"></script>
@@ -61,13 +59,17 @@
 
 		$(".rating").rate();
 
+		let data = new Array();
+		let array = {lang: null, category: null, specialization: null, title: null, description: null, valoration: null };
 		let langs;
+		let newOffer; //Array con toda la información
 		langs = await getLangs();
-		console.log(langs);
 		let defaultLangs;
 		defaultLangs = await getDefaultLangs();
-		console.log(defaultLangs);
 		renderLangs(langs);
+		let langSelected;
+		let cat;
+		let category;
 
 		async function getLangs(){
 			if(!langs) return await loadLangs();
@@ -124,14 +126,13 @@
     $("#langsAvaliable a").click(function(){
       $("#dropdownMenuButton").text($(this).text());
       $("#dropdownMenuButton").val($(this).text());
-      let lang = $(".dropdown-item").val();
 			
       loadCategories();
-    });
+		});
 
 
     $(".dropdown-item").click(function(){
-  		let lang = $(this).data("value");
+			langSelected = $(this).data("value");
     });
 
 		function loadFile(){
@@ -149,19 +150,19 @@
 	    });
 		}
 
-		let categorie;
+		
 		function loadCategories(){
 			$.ajax({
 				type: 'get',
 				url: '/api/categories',
 				dataType: 'json',
 				success: function(data){
-					categorie = data;
+					category = data;
 
 					$("#dropdownCategory").empty();
-					for (cat in categorie){
-						let name = categorie[cat].name;
-						let val = categorie[cat].id;
+					for (cat in category){
+						let name = category[cat].name;
+						let val = category[cat].id;
 						let item2 = $("<option/>", {
 							text:name,
 							value:val});
@@ -171,7 +172,6 @@
 			});
 		}
 
-		let cat;
     $("#dropdownCategory").change(function(){
     	cat = $("#dropdownCategory").val();
 			
@@ -198,25 +198,36 @@
 					}
 				}
 			});
-    }
+		}
+		
+		function checkLang(){
+			$.each(data, function(key,value){
+				if(langSelected == value){
+					return false;
+				}
+				return true;
+			});
+		}
     
     //Aquí recopilamos la información del formulario
-    function generateData(){
+		$("#generateData").click(function(){
+			if(checkLang()){
+				array.lang = langSelected;
+				data.push(array);
+			}
+			array = {lang: null, category: null, specialization: null, title: null, description: null, valoration: null };
+			console.log(data);
+    });
 
-    }
-
-    function submit(data){
+    /*function submit(data){
     	$.ajax({
 				type: 'post',
 				url: '/api/offer',
 				dataType: 'json',
 				data: { 'offer' : data }
-				success: function(data){
-				}
     	});
-		}
+		}*/
 	});
-
 
 
 </script>

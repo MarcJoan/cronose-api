@@ -44,7 +44,7 @@ if ($uri[0] == 'api') {
 
     case 'Offer':
       if($method == 'post')
-        echo json_encode(OfferController::setNewOffer($_POST['offer']);
+        echo json_encode(OfferController::setNewOffer($_POST['offer']));
 
     case 'categories':
       echo json_encode(CategoryController::getAllByLang($displayLang));

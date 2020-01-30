@@ -1,7 +1,7 @@
 </main>
 
   <?php if (isset($_SESSION['user'])):?>
-
+<!--
   <footer class="py-4 text-white-50">
     <div class="container text-center text-md-left mt-3">
       <div class="container text-center">
@@ -53,6 +53,7 @@
   </footer>
 </div>
 </div>
+-->
   <?php endif; ?>
   <script>
     const selector = document.getElementById('language_selector');
