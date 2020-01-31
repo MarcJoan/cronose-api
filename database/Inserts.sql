@@ -1,22 +1,24 @@
-use Cronose;
+USE `Cronose`;
 
-insert into Language values ('es'),('ca'),('en');
+INSERT INTO `Language` VALUES ('es'),('ca'),('en');
 
-INSERT INTO Languages_Offerted (`id`) VALUES ('en'),('aa'),('ab'),('af'),('am'),('ar'),
-('as'),('ay'),('az'),('ba'),('be'),('bg'),('bh'),('bi'),('bn'),('bo'),('br'),
-('ca'),('co'),('cs'),('cy'),('da'),('de'),('dz'),('el'),('eo'),('es'),('et'),
-('eu'),('fa'),('fi'),('fj'),('fo'),('fr'),('fy'),('ga'),('gd'),('gl'),('gn'),
-('gu'),('ha'),('hi'),('hr'),('hu'),('hy'),('ia'),('ie'),('ik'),('in'),('is'),
-('it'),('iw'),('ja'),('ji'),('jw'),('ka'),('kk'),('kl'),('km'),('kn'),('ko'),
-('ks'),('ku'),('ky'),('la'),('ln'),('lo'),('lt'),('lv'),('mg'),('mi'),('mk'),
-('ml'),('mn'),('mo'),('mr'),('ms'),('mt'),('my'),('na'),('ne'),('nl'),('no'),
-('oc'),('om'),('pa'),('pl'),('ps'),('pt'),('qu'),('rm'),('rn'),('ro'),('ru'),
-('rw'),('sa'),('sd'),('sg'),('sh'),('si'),('sk'),('sl'),('sm'),('sn'),('so'),
-('sq'),('sr'),('ss'),('st'),('su'),('sv'),('sw'),('ta'),('te'),('tg'),('th'),
-('ti'),('tk'),('tl'),('tn'),('to'),('tr'),('ts'),('tt'),('tw'),('uk'),('ur'),
-('uz'),('vi'),('vo'),('wo'),('xh'),('yo'),('zh'),('zu');
+INSERT INTO `Languages_Offerted`(`id`) VALUES 
+('en'),('aa'),('ab'),('af'),('am'),('ar'),('as'),('ay'),('az'),('ba'),('be'),
+('bg'),('bh'),('bi'),('bn'),('bo'),('br'),('ca'),('co'),('cs'),('cy'),('da'),
+('de'),('dz'),('el'),('eo'),('es'),('et'),('eu'),('fa'),('fi'),('fj'),('fo'),
+('fr'),('fy'),('ga'),('gd'),('gl'),('gn'),('gu'),('ha'),('hi'),('hr'),('hu'),
+('hy'),('ia'),('ie'),('ik'),('in'),('is'),('it'),('iw'),('ja'),('ji'),('jw'),
+('ka'),('kk'),('kl'),('km'),('kn'),('ko'),('ks'),('ku'),('ky'),('la'),('ln'),
+('lo'),('lt'),('lv'),('mg'),('mi'),('mk'),('ml'),('mn'),('mo'),('mr'),('ms'),
+('mt'),('my'),('na'),('ne'),('nl'),('no'),('oc'),('om'),('pa'),('pl'),('ps'),
+('pt'),('qu'),('rm'),('rn'),('ro'),('ru'),('rw'),('sa'),('sd'),('sg'),('sh'),
+('si'),('sk'),('sl'),('sm'),('sn'),('so'),('sq'),('sr'),('ss'),('st'),('su'),
+('sv'),('sw'),('ta'),('te'),('tg'),('th'),('ti'),('tk'),('tl'),('tn'),('to'),
+('tr'),('ts'),('tt'),('tw'),('uk'),('ur'),('uz'),('vi'),('vo'),('wo'),('xh'),
+('yo'),('zh'),('zu');
 
-insert into Languages_Translation (language_id, translation, language_translated) values ('en', 'English', 'en'),
+INSERT INTO `Languages_Translation`(language_id, translation, language_translated) VALUES 
+('en', 'English', 'en'),('en', 'Xhosa', 'xh'),('en', 'Yoruba', 'yo'),('en', 'Chinese', 'zh'),
 ('en', 'Afar', 'aa'), ('en', 'Abkhazian', 'ab'),('en', 'Azerbaijani', 'az'), ('en', 'Bashkir', 'ba'),
 ('en', 'Belarusian', 'be'), ('en', 'Bulgarian', 'bg'),('en', 'Bihari', 'bh'), ('en', 'Bislama', 'bi'),
 ('en', 'Bengali/Bangla', 'bn'), ('en', 'Tibetan', 'bo'),('en', 'Breton', 'br'), ('en', 'Catalan', 'ca'),
@@ -42,10 +44,10 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('en', 'Tajik', 'tg'),('en', 'Thai', 'th'),('en', 'Tigrinya', 'ti'),('en', 'Turkmen', 'tk'),('en', 'Tagalog', 'tl'),
 ('en', 'Setswana', 'tn'),('en', 'Tonga', 'to'),('en', 'Turkish', 'tr'),('en', 'Tsonga', 'ts'),('en', 'Tatar', 'tt'),
 ('en', 'Twi', 'tw'),('en', 'Ukrainian', 'uk'),('en', 'Urdu', 'ur'),('en', 'Uzbek', 'uz'),('en', 'Vietnamese', 'vi'),
-('en', 'Volapuk', 'vo'),('en', 'Wolof', 'wo'),('en', 'Xhosa', 'xh'),('en', 'Yoruba', 'yo'),('en', 'Chinese', 'zh'),
-('en', 'Zulu', 'zu');
+('en', 'Volapuk', 'vo'),('en', 'Wolof', 'wo'),('en', 'Zulu', 'zu');
 
-insert into Languages_Translation (language_id, translation, language_translated) values  ('es', 'inglés', 'en'),
+INSERT INTO `Languages_Translation`(language_id, translation, language_translated) VALUES  
+('es', 'inglés', 'en'), ('es', 'Wolof', 'wo'), ('es', 'Xhosa', 'xh'), ('es', 'Yoruba', 'yo'),
 ('es', 'Afar', 'aa'), ('es', 'abjasio', 'ab'), ('es', 'azerbaiyano', 'az'), ('es', 'Bashkir', 'ba'),
 ('es', 'bielorruso', 'be'), ('es', 'búlgaro', 'bg'), ('es', 'Bihari', 'bh'), ('es', 'Bislama', 'bi'),
 ('es', 'bengalí / bengalí', 'bn'), ('es', 'tibetano', 'bo'), ('es', 'bretón', 'br'), ('es', 'catalán', 'ca'),
@@ -54,7 +56,7 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('es', 'vasco', 'eu'), ('es', 'persa', 'fa'), ('es', 'finlandés', 'fi'), ('es', 'Fiji', 'fj'), ('es', 'faeroese', 'fo'),
 ('es', 'francés', 'fr'), ('es', 'frisón', 'fy'), ('es', 'irlandés', 'ga'), ('es', 'escocés / gaélico', 'gd'), ('es', 'gallego', 'gl'),
 ('es', 'guaraní', 'gn'), ('es', 'gujarati', 'gu'), ('es', 'hausa', 'ha'), ('es', 'hindi', 'hi'), ('es', 'croata', 'hr'),
-('es', 'húngaro', 'hu'), ('es', 'armenio', 'hy'), ('es', 'interlingua', 'ia'), ('es', 'interlingue', 'es decir'), ('es', 'inupiak', 'ik'),
+('es', 'húngaro', 'hu'), ('es', 'armenio', 'hy'), ('es', 'interlingua', 'ia'), ('es', 'interlingue', 'ie'), ('es', 'inupiak', 'ik'),
 ('es', 'indonesio', 'in'), ('es', 'islandés', 'is'), ('es', 'italiano', 'it'), ('es', 'hebreo', 'iw'), ('es', 'japonés', 'ja'),
 ('es', 'yiddish', 'ji'), ('es', 'javanés', 'jw'), ('es', 'georgiano', 'ka'), ('es', 'kazajo', 'kk'), ('es', 'groenlandés', 'kl'),
 ('es', 'camboyano', 'km'), ('es', 'kannada', 'kn'), ('es', 'coreano', 'ko'), ('es', 'Kashmiri', 'ks'), ('es', 'kurdo', 'ku'),
@@ -71,10 +73,10 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('es', 'tayiko', 'tg'), ('es', 'tailandés', 'th'), ('es', 'Tigrinya', 'ti'), ('es', 'turcomano', 'tk'), ('es', 'tagalo', 'tl'),
 ('es', 'Setswana', 'tn'), ('es', 'Tonga', 'to'), ('es', 'turco', 'tr'), ('es', 'Tsonga', 'ts'), ('es', 'tártaro', 'tt'),
 ('es', 'Twi', 'tw'), ('es', 'ucraniano', 'uk'), ('es', 'urdu', 'ur'), ('es', 'uzbeko', 'uz'), ('es', 'vietnamita', 'vi'),
-('es', 'Volapuk', 'vo'), ('es', 'Wolof', 'wo'), ('es', 'Xhosa', 'xh'), ('es', 'Yoruba', 'yo'), ('es', 'chino', 'zh'),
-('es', 'zulú', 'zu');
+('es', 'Volapuk', 'vo'), ('es', 'chino', 'zh'), ('es', 'zulú', 'zu');
 
-insert into Languages_Translation (language_id, translation, language_translated) values  ('ca', 'anglès', 'en'),
+INSERT INTO `Languages_Translation`(language_id, translation, language_translated) VALUES  
+('ca', 'anglès', 'en'), ('ca', 'Xhosa', 'xh'), ('ca', 'ioruba', 'yo'), ('ca', 'xinès', 'zh'),
 ('ca', 'Afar', 'aa'), ('ca', 'Abkhazian', 'ab'), ('ca', 'Azerbaidjan', 'az'), ('ca', 'Bashkir', 'ba'),
 ('ca', 'bielorús', 'be'), ('ca', 'búlgar', 'bg'), ('ca', 'Bihari', 'bh'), ('ca', 'Bislama', 'bi'),
 ('ca', 'bengalí / Bangla', 'bn'), ('ca', 'tibetà', 'bo'), ('ca', 'bretó', 'br'), ('ca', 'català', 'ca'),
@@ -83,7 +85,7 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('ca', 'basc', 'eu'), ('ca', 'persa', 'fa'), ('ca', 'finès', 'fi'), ('ca', 'Fiji', 'fj'), ('ca', 'faeroès', 'fo'),
 ('ca', 'francès', 'fr'), ('ca', 'frisó', 'fy'), ('ca', 'irlandès', 'ga'), ('ca', 'escocès / gaèlic', 'gd'), ('ca', 'gallec', 'gl'),
 ('ca', 'Guarani', 'gn'), ('ca', 'gujarat', 'gu'), ('ca', 'Hausa', 'ha'), ('ca', 'hindi', 'hi'), ('ca', 'croat', 'hr'),
-('ca', 'hongarès', 'hu'), ('ca', 'armeni', 'hy'), ('ca', 'interlingua', 'ia'), ('ca', 'Interlingue', 'és a dir'), ('ca', 'Inupiak', 'ik'),
+('ca', 'hongarès', 'hu'), ('ca', 'armeni', 'hy'), ('ca', 'interlingua', 'ia'), ('ca', 'Interlingue', 'ie'), ('ca', 'Inupiak', 'ik'),
 ('ca', 'indonèsia', 'in'), ('ca', 'islandès', 'is'), ('ca', 'italià', 'it'), ('ca', 'hebreu', 'iw'), ('ca', 'japonès', 'ja'),
 ('ca', 'yidis', 'ji'), ('ca', 'javanès', 'jw'), ('ca', 'georgià', 'ka'), ('ca', 'kazakh', 'kk'), ('ca', 'groenlandès', 'kl'),
 ('ca', 'cambodjana', 'km'), ('ca', 'Kannada', 'kn'), ('ca', 'coreà', 'ko'), ('ca', 'Caixmir', 'ks'), ('ca', 'kurd', 'ku'),
@@ -100,58 +102,66 @@ insert into Languages_Translation (language_id, translation, language_translated
 ('ca', 'Tajik', 'tg'), ('ca', 'tailandès', 'th'), ('ca', 'tigrinya', 'ti'), ('ca', 'turcomani', 'tk'), ('ca', 'tagalog', 'tl'),
 ('ca', 'Setswana', 'tn'), ('ca', 'Tonga', 'to'), ('ca', 'turc', 'tr'), ('ca', 'Tsonga', 'ts'), ('ca', 'tàtar', 'tt'),
 ('ca', 'Twi', 'tw'), ('ca', 'ucraïnès', 'uk'), ('ca', 'urdu', 'ur'), ('ca', 'uzbek', 'uz'), ('ca', 'vietnamita', 'vi'),
-('ca', 'Volapuk', 'vo'), ('ca', 'wolof', 'wo'), ('ca', 'Xhosa', 'xh'), ('ca', 'ioruba', 'yo'), ('ca', 'xinès', 'zh'),
-('ca', 'zulu', 'zu');
+('ca', 'Volapuk', 'vo'), ('ca', 'wolof', 'wo'), ('ca', 'zulu', 'zu');
 
-insert into Province(name) values ('Illes Balears');
+UPDATE `Languages_Translation`
+SET translation = CONCAT(UCASE(LEFT(translation, 1)), SUBSTRING(translation, 2));
 
-insert into City values(07500,1,'Manacor',3.20142,39.57434);
+INSERT INTO `Province`(name) VALUES ('Illes Balears');
 
-insert into Veteranity values (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
+INSERT INTO `City` VALUES(07500,1,'Manacor',3.20142,39.57434);
 
-insert into Media(extension,url) values('.jpg','admmin_avatar');
-insert into Media(extension,url) values('.jpg','admmin_dni');
+INSERT INTO `Media`(extension,url) VALUES('.jpg','admmin_avatar');
+INSERT INTO `Media`(extension,url) VALUES('.jpg','admmin_dni');
 
-insert into DNI_Photo(status,media_id) values ('accepted',2);
+INSERT INTO `DNI_Photo`(status,media_id) VALUES ('accepted',2);
 
-insert into User(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id) values ('12345678A','Admin','Cronose','Cronose','admin@cronose.dawman.info','202cb962ac59075b964b07152d234b70',1254,'ACC',0.00,date(now()),200,0,07500,1,1,1);
-insert into User(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id) values ('87654321Z','Anastasia','Guiterrez','Marcos','Anastasi@cgmail.com','202cb962ac59075b964b07152d234b70',9875, 'AGC' ,0.00,date(now()),80,0,07500,1,1,1);
-insert into User(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id) values ('45612387J','Josep','Oliver','Sanso','josep.oliverr@gmail.com','202cb962ac59075b964b07152d234b70',1313, 'JOS',3.00,date(now()),999,0,07500,1,1,1);
+INSERT INTO `User`(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id) 
+  VALUES ('12345678A','Admin','Cronose','Cronose','admin@cronose.dawman.info','202cb962ac59075b964b07152d234b70',1254,'ACC',0.00,date(now()),0,0,07500,1,1,1);
+INSERT INTO `User`(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id) 
+  VALUES ('87654321Z','Anastasia','Guiterrez','Marcos','Anastasi@cgmail.com','202cb962ac59075b964b07152d234b70',9875, 'AGC' ,0.00,date(now()),0,0,07500,1,1,1);
+INSERT INTO `User`(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id) 
+  VALUES ('45612387J','Josep','Oliver','Sanso','josep.oliverr@gmail.com','202cb962ac59075b964b07152d234b70',1313, 'JOS',3.00,date(now()),0,0,07500,1,1,1);
 
-insert into Change_Veteranity values (2,1,date(now())),(1,2,date(now())),(5,3,date(now()));
+SELECT * FROM `User`;
 
-select * from User;
+INSERT INTO `Category`(coin_price) VALUES (1.2),(1);
 
-insert into Category(coin_price) values (1.2),(1);
+INSERT INTO `Category_Language` VALUES 
+('es',1,'Educación'),
+('ca',1,'Educació'),
+('en',1,'Education'),
+('es',2,'Mantenimiento'),
+('ca',2,'Manteniment'),
+('en',2,'Maintenance');
 
-insert into Category_Language values ('es',1,'Educación'),('ca',1,'Educació'),('en',1,'Education'),('es',2,'Mantenimiento'),('ca',2,'Manteniment'),('en',2,'Maintenance');
+SELECT * FROM `Category`;
 
-select * from Category;
+INSERT INTO `Specialization`(category_id) VALUES (1),(2);
 
-insert into Specialization(category_id) values (1),(2);
-
-insert into Specialization_Language 
-values ('es',1,'Profesor Programación'),('ca',1,'Professor Programació'),('en',1,'Programming Professor'),
+INSERT INTO `Specialization_Language` VALUES 
+('es',1,'Profesor Programación'),('ca',1,'Professor Programació'),('en',1,'Programming Professor'),
 ('es',2,'Fontanero'),('ca',2,'Lampista'),('en',2,'Plumber');
 
-INSERT INTO Offer(user_id, specialization_id, valoration_avg, personal_valoration, coin_price, offered_at, visibility) VALUES 
+INSERT INTO `Offer`(user_id, specialization_id, valoration_avg, personal_valoration, coin_price, offered_at, visibility) VALUES 
 ('1', '1', '90', '70', '1.2', '2019-12-21', '1'),
 ('2', '2', '50', '50', '1', '2019-12-22', '1');
-INSERT INTO Offer_Language (language_id, user_id, specialization_id, title, description) 
-VALUES ('es', '1', '1', 'Profesor de programación', 'Programación básica de c++, Programación avanzada de Java, '),
+
+INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES 
+('es', '1', '1', 'Profesor de programación', 'Programación básica de c++, Programación avanzada de Java, '),
 ('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, '),
 ('en', '1', '1', 'Programming Professor', 'Basic programming of c++, Advanced programming of Java, ');
-INSERT INTO Offer_Language (language_id, user_id, specialization_id, title, description) 
-VALUES ('es', '2', '2', 'Fontanero', 'No hay ni uno igual ');
 
-insert into Media(extension, url) values ('.jpg','profesor'),('.jpg','fontanero');
+INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES 
+('es', '2', '2', 'Fontanero', 'No hay ni uno igual ');
 
-INSERT INTO Load_Media (user_id, specialization_id, media_id) VALUES ('1', '1', '3'), ('1', '2', '4');
+INSERT INTO `Media`(extension, url) VALUES ('.jpg','profesor'),('.jpg','fontanero');
+
+INSERT INTO `Load_Media`(user_id, specialization_id, media_id) VALUES ('1', '1', '3'), ('1', '2', '4');
 
 INSERT INTO `Achievement` VALUES (),(),(),(),();
 
-
-INSERT INTO `Achievement_Language` (`language_id`, `achievement_id`, `name`, `description`) VALUES
+INSERT INTO `Achievement_Language`(`language_id`, `achievement_id`, `name`, `description`) VALUES
 ('ca', 1, 'a1', 'Registrarse a la pàgina'),
 ('ca', 2, 'a2', 'Xatetja amb algú'),
 ('ca', 3, 'a3', 'Publica una oferta'),
@@ -168,7 +178,160 @@ INSERT INTO `Achievement_Language` (`language_id`, `achievement_id`, `name`, `de
 ('es', 4, 'a4', 'Realiza tu primer trabajo'),
 ('es', 5, 'a5', 'Contrata a alguien');
 
-INSERT INTO `Obtain` (`achievement_id`, `user_id`, `obtained_at`) VALUES
+INSERT INTO `Obtain`(`achievement_id`, `user_id`, `obtained_at`) VALUES
 (1, '1', '2020-01-08'),
 (3, '1', '2020-01-02');
 
+
+
+INSERT INTO `Category`(`id`, `coin_price`) VALUES
+(1, 1.2),
+(2, 1.0),
+(3, 1.2),
+(4, 1.0),
+(5, 1.1),
+(6, 1.0),
+(7, 1.0),
+(8, 1.0),
+(9, 0.8);
+
+INSERT INTO `Category_language`(`language_id`, `category_id`, `name`) VALUES
+('ca', 1, 'Educació'),
+('en', 1, 'Education'),
+('es', 1, 'Educación'),
+('ca', 2, 'Manteniment'),
+('en', 2, 'Maintenance'),
+('es', 2, 'Mantenimiento'),
+('en', 3, 'Sanity'),
+('es', 3, 'Sanidad'),
+('ca', 3, 'Sanitat'),
+('es', 4, 'Social'),
+('ca', 4, 'Social'),
+('en', 4, 'Social'),
+('es', 5, 'Administración'),
+('en', 5, 'Administration'),
+('ca', 5, 'Administració'),
+('en', 6, 'Estetic'),
+('es', 6, 'Estética'),
+('ca', 6, 'Estètica'),
+('es', 7, 'Alimentación'),
+('ca', 7, 'Alimentació'),
+('en', 7, 'Nutrition'),
+('ca', 8, 'Moda'),
+('en', 8, 'Fashion'),
+('es', 8, 'Moda'),
+('ca', 9, 'Recats'),
+('en', 9, 'Errands'),
+('es', 9, 'Recados');
+
+INSERT INTO `Specialization`(`id`, `category_id`) VALUES
+(1, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(2, 2),
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 3),
+(10, 4),
+(11, 4),
+(12, 4),
+(13, 4),
+(14, 4),
+(15, 5),
+(16, 5),
+(17, 6),
+(18, 6),
+(19, 6),
+(20, 7),
+(21, 7),
+(26, 8),
+(27, 8),
+(22, 9),
+(23, 9),
+(24, 9),
+(25, 9);
+
+INSERT INTO `specialization_language`(`language_id`, `specialization_id`, `name`) VALUES
+('ca', 1, 'Professor Programació'),
+('es', 1, 'Profesor Programación'),
+('en', 1, 'Programming Professor'),
+('ca', 2, 'Lampista'),
+('es', 2, 'Fontanero'),
+('en', 2, 'Plumber'),
+('es', 3, 'Profesor de repaso'),
+('en', 3, 'Review teacher'),
+('ca', 3, 'Professor de repàs'),
+('ca', 4, 'Professor d\'anglès'),
+('en', 4, 'English teacher'),
+('es', 4, 'Profesor de inglés'),
+('es', 5, 'Profesor de música'),
+('en', 5, 'Music teacher'),
+('ca', 5, 'Professor de música'),
+('ca', 6, 'Jardineria'),
+('en', 6, 'Gardening'),
+('es', 6, 'Jardinería'),
+('en', 7, 'Brickwork'),
+('es', 7, 'Albañilería'),
+('ca', 7, 'Obres de paleta'),
+('es', 8, 'Mecánica'),
+('en', 8, 'Mechanics'),
+('ca', 8, 'Mecànica'),
+('es', 9, 'Enfermería'),
+('en', 9, 'Nursing'),
+('ca', 9, 'Enfermeria'),
+('en', 10, 'Paperwork Assistant'),
+('ca', 10, 'Ajudant de tràmits'),
+('es', 10, 'Ayudante de trámites'),
+('ca', 11, 'Educador social'),
+('en', 11, 'Social educator'),
+('es', 11, 'Educador social'),
+('en', 12, 'Senior care'),
+('es', 12, 'Atención de personas mayores'),
+('ca', 12, 'Atenció de personas majors'),
+('es', 13, 'Atención de menores'),
+('ca', 13, 'Atenció de menors'),
+('en', 13, 'Child care'),
+('es', 14, 'Atención de discapacitados'),
+('en', 14, 'Disabled Care'),
+('ca', 14, 'Atenció de discapacitats'),
+('en', 15, 'Notary'),
+('ca', 15, 'Notari'),
+('es', 15, 'Notario'),
+('ca', 16, 'Consultes d\'advocacia'),
+('es', 16, 'Consultas de abogacía'),
+('en', 16, 'Advocacy consultations'),
+('en', 17, 'Hairdressing'),
+('es', 17, 'Peluquería'),
+('ca', 17, 'Perruqueria'),
+('es', 18, 'Maquillaje'),
+('ca', 18, 'Maquillatge'),
+('en', 18, 'Makeup'),
+('ca', 19, 'Esteticien'),
+('es', 19, 'Esteticién'),
+('en', 19, 'Esthetician'),
+('es', 20, 'Nutricionista'),
+('ca', 20, 'Nutricionista'),
+('en', 20, 'Nutritionist'),
+('ca', 21, 'Cuiner'),
+('es', 21, 'Cocinero'),
+('en', 21, 'Chef'),
+('ca', 22, 'Passejador de gossos'),
+('es', 22, 'Paseador de perros'),
+('en', 22, 'Dog walker'),
+('es', 23, 'Recadero'),
+('en', 23, 'Office boy'),
+('ca', 23, 'Recader'),
+('en', 24, 'Accompaniment'),
+('es', 24, 'Acompañamiento'),
+('ca', 24, 'Acompanyament'),
+('en', 25, 'Driver'),
+('es', 25, 'Chofer'),
+('ca', 25, 'Xofer'),
+('ca', 26, 'Costura'),
+('en', 26, 'Sewing'),
+('es', 26, 'Costura'),
+('ca', 27, 'Estilista'),
+('en', 27, 'Stylist'),
+('es', 27, 'Estilista');
