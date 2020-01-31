@@ -30,10 +30,8 @@
 						data: {},
 						success: (data) => {
 							if (data.status == 'success') {
-								console.log(data.direction);
 								$.each (data.direction, function(key, value) {
-									console.log(value.latitude);
-									 var point = L.marker([value.latitude,value.longitude]).addTo(map);
+									 var point = L.marker([value.latitude,value.longitude]).addTo(map).bindPopup("<b>"+value.name+"</b>");
 								});
 							};
 						},
