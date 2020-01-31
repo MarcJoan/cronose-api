@@ -129,6 +129,7 @@ if ($uri[0] == 'api') {
       if ($method == 'get') {
         if (count($uri) == 2) echo json_encode(UserController::getAllDirections());
       }
+    break;
 
     case 'chat':
     // var_dump($uri);
