@@ -7,7 +7,7 @@ class UserController {
   /*public static function getProfileInfo($username) {
     $profile = UserModel::getUserByUsername($username);
     if ($profile) $achievement = AchievementController::getAllByUser($profile['id']);
-    
+
     if ($profile) return [
       "status" => "success",
       "profile" => $profile,
@@ -96,7 +96,14 @@ class UserController {
 
   public static function getAllDirections() {
     $directions = UserModel::getAllDirections();
-    return $directions;
+    if ($directions) return [
+      "status" => "success",
+      "direction" => $directions
+    ];
+    else return [
+      "status" => "error",
+      "msg" => "Something went wrong!"
+    ];
   }
 
 }

@@ -105,7 +105,7 @@ insert into Languages_Translation (language_id, translation, language_translated
 
 insert into Province(name) values ('Illes Balears');
 
-insert into City values(07500,1,'Manacor',3.20142,39.57434);
+insert into City values(07500,1,'Manacor',3.20142,39.57434),(07000,1,'Palma',2.6474500,39.5695100),(07300,1,'Inca', 2.90588378 ,39.7186751 );
 
 insert into Veteranity values (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
 
