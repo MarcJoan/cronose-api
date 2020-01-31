@@ -74,15 +74,10 @@
         window.location.replace("/"+lang+"/<?= $auxUriString; ?>");
       }
 
-
       function loadNav() {
-        if (!getCookie('nav-expanded'))setCookie('nav-expanded', '250px', 15);
+        if (!getCookie('nav-expanded'))setCookie('nav-expanded', '100px', 15);
         document.documentElement.style.setProperty('--nav-width', getCookie('nav-expanded'));
-      }
-
-      
-
-      
+      }     
 
     });
 

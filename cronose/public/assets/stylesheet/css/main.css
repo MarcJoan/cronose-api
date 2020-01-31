@@ -1,5 +1,7 @@
 :root {
-  --nav-width: 250px;
+  --nav-width: 100px;
+  /* --primary-color: #242633; */
+  --primary-color: red;
 }
 
 
@@ -11,26 +13,80 @@ body {
   margin: 0;
 }
 
+/* MENU ICON */
+.menu-icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 35px;
+  transform: translateX(var(--nav-width));
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+}
+.hamburger, .hamburger::before, .hamburger::after {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 85%;
+  height: 5px;
+  margin: 10px 0;
+  background-color: black;
+  transition: height 150ms ease-in-out;
+  transition: transform 250ms ease-in-out;
+  cursor: pointer;
+}
+.hamburger::before, .hamburger::after {
+  content: "";
+  position: absolute;
+}
+.hamburger::before {
+  top: 0;
+}
+.hamburger::after {
+  bottom: 0;
+}
+
+
+/* SIDEBAR TOGGLE */
+#sidebar-toggle {
+  display: none;
+  position: absolute;
+  z-index: 100;
+}
+#sidebar-toggle:checked ~ * {
+  --nav-width: 250px;
+}
+
+#sidebar-toggle:checked ~ .vertical-nav {
+  background-color: grey;
+}
+
+
 
 /* NAV */
 
   /* Verical NAV */
 
   .vertical-nav {
-    background-color: #242633;
+    background-color: red;
     position: fixed;
     width: var(--nav-width);
     height: 100%;
+    transition: all 250ms ease-in-out;
   }
 
   main.vertical {
     width: 100%;
     height: 100%;
     margin-left: var(--nav-width);
+    transition: all 250ms ease-in-out;
   }
 
-   
 
+
+  /*----------------------*/
 
 #language_selector {
     margin-right: 40px;
