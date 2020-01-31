@@ -84,7 +84,7 @@ class UserDAO extends DAO {
     $sql = "select distinct City.name,City.longitude,City.latitude  from City,User";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
 }
