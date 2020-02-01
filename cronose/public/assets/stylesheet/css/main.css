@@ -83,9 +83,24 @@ body {
     margin-left: var(--nav-width);
     transition: all 250ms ease-in-out;
   }
+  /*----------------------*/
 
+  /* JOB FILTER*/
+#jobFilter{
+  position: fixed;
+  height: 100%;
+  right:0;
+}
 
+#filterButtonHide{
+position: fixed;
+  right:0;
+}
 
+#filterButtonShow{
+  position: fixed;
+  right:0;
+}
   /*----------------------*/
 
 #language_selector {
