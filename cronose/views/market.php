@@ -2,7 +2,65 @@
 	require '../views/layouts/head.php';
 ?>
 
-<div class="container wrap row justify-content-center mt-4">
+<!-- <div class="align-self-center text-center mt-4">
+	<h1><?= $lang[$displayLang]['market'];?></h1>
+</div> -->
+
+<div class="row">
+  <div class="col-10">
+		<div class="container justify-content-center mt-4">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-secondary"  type="button"><i class="fas fa-search"></i></button>
+				</span>
+				<input type="text" class="form-control" id="serch">
+			</div>
+			<div class="card-deck" id="works"></div>
+		</div>
+	</div>
+
+	<button class="btn btn-primary" id='hide' type="button"><i class="fas fa-angle-right"></i></button>
+
+  <div class="col-2 border-left pl-4" id="jobFilter">
+    <h2 class="p-3 pt-4">Job Filter</h2>
+    <div class="input-group p-2">
+    <div class="p-2 pt-4">
+      <label for="language">Language</label>
+			<br>
+      <select class="" id="lang">
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4">
+      <label for="myLangs">Selected Languages</label>
+			<br>
+      <select class="" id="myLangs">
+        <option disabled selected="selected">My Langs</option>
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4">
+      <label for="category">Category</label>
+			<br>
+      <select class="" id="category">
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4">
+      <label for="specialization">Specialization</label>
+			<br>
+      <select class="" id="specialization">
+        <option disabled selected="selected" value="null">Specializations</option>
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4 pl-4">
+      <button id="reset">Reset Filter</button>
+    </div>
+  </div>
+<!-- </div> -->
+
+<!-- <div class="container wrap row justify-content-center mt-4">
 	<h1><?= $lang[$displayLang]['market'];?></h1>
 	<div class="container">
 		<div class="row p-2">
@@ -20,7 +78,7 @@
 				    <label for="language">Language</label>
 				    <select class="" id="lang">
 				    </select>
-				  </div> 
+				  </div>
 			  	<div class="col-2">
 				    <label for="myLangs">Selected Languages</label>
 				    <select class="" id="myLangs">
@@ -46,10 +104,24 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
   <script>
   $(document).ready(function(){
+
+		$(".oculto").hide();              
+	    $("#inf").click(function(){
+	          var nodo = $(this).attr("href");
+
+	          if ($(nodo).is(":visible")){
+	               $(nodo).hide();
+	               return false;
+	          }else{
+	        $(".oculto").hide("slow");
+	        $(nodo).fadeToggle("fast");
+	        return false;
+	          }
+	    });
 		// const works;
 		const defaultLang = window.location.pathname.split('/')[1];
 
@@ -91,8 +163,8 @@
 	      dataType: 'json',
 	      data: {},
 	      success: (data) => {
-	      	categories = data;	 
-    			renderCategory();     	
+	      	categories = data;
+    			renderCategory();
 	      },
 	      error: ((data) => {
 	        console.log(data)
@@ -164,7 +236,7 @@
 
 		$("#lang").change(function() {
 			filter['langs'].push($("#lang").val());
-			for( var i = 0; i < langs.length; i++){ 
+			for( var i = 0; i < langs.length; i++){
 			  if ( langs[i] === $("#lang").val()) {
 			  	langs.splice(i,1);
 			  }
@@ -215,14 +287,14 @@
 			getAllWorks();
 		})
 
-		
 
-		
+
+
 
 		//---------------Filter---------------
 
 		let filter = {langs: [], defaultLang: defaultLang, category: null, specialization: null, string: null};
-		
+
 
     //---------------FILTER---------------
 
@@ -273,9 +345,9 @@
 			document.getElementById("works").innerHTML = body;
 			$.each (offers, function(key, value) {
 				body+='<div class="row w-100"><div class="container wrap row justify-content-center mt-4"><div class="container py-3"><div class="card"><div class="row"><div class="col-md-4">';
-				body+='<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid" style="height: 222.8px;"> ';
+				body+='<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid p-3 rounded" style="height: 222.8px;"> ';
 				body+='</div><div class="col-md-8 px-3"><div class="card-block px-3"><div class="d-flex justify-content-end px-4 pt-2">';
-				
+
 				$.each(value.translation, function(key,val) {
 					body+='<p class="pr-4"><strong>'+val.language_id+'</strong><p>';
 				})
