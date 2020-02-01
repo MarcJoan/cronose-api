@@ -20,7 +20,7 @@
 				    <label for="language">Language</label>
 				    <select class="" id="lang">
 				    </select>
-				  </div> 
+				  </div>
 			  	<div class="col-2">
 				    <label for="myLangs">Selected Languages</label>
 				    <select class="" id="myLangs">
@@ -41,6 +41,33 @@
 				  <div class="col-2">
 				    <button id="reset">Reset Filter</button>
 				  </div>
+				</div>
+				<div class="card-deck w-100">
+					<div class="row w-100"><div class="container wrap row justify-content-center mt-4"><div class="container py-3">
+						<div class="card">
+							<div class="row">
+								<div class="col-md-4">
+									<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid" style="height: 222.8px;">
+									</div>
+										<div class="col-md-8 px-3">
+											<div class="card-block px-3">
+												<div class="d-flex justify-content-end px-4 pt-2">
+													<p class="pr-4"><strong>ES</strong><p>
+													<p class="pr-4">PV : <strong>70</strong><p>
+													<p>GV : <strong>'80</strong><p></div>
+													<h4 class="card-title "><strong>Fontanero</strong> (<em>Admin</em>)</h4>
+													<p class="card-text">El mejor fontanero que puedes encontra en toda mallorca.</p>
+													<p><?= $lang[$displayLang]['price'];?> : <strong>2</strong></p>
+												<div class="d-flex justify-content-end  pb-3 pr-3">
+													<a href="/<?=$displayLang;?>/work/'+value.initials+'/'+value.tag+'/'+value.specialization_id+'/'+value.title+'" class="btn btn-primary"><?= $lang[$displayLang]['seeWork'];?></a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			<div class="card-deck w-100" id="works">
 			</div>
@@ -91,8 +118,8 @@
 	      dataType: 'json',
 	      data: {},
 	      success: (data) => {
-	      	categories = data;	 
-    			renderCategory();     	
+	      	categories = data;
+    			renderCategory();
 	      },
 	      error: ((data) => {
 	        console.log(data)
@@ -164,7 +191,7 @@
 
 		$("#lang").change(function() {
 			filter['langs'].push($("#lang").val());
-			for( var i = 0; i < langs.length; i++){ 
+			for( var i = 0; i < langs.length; i++){
 			  if ( langs[i] === $("#lang").val()) {
 			  	langs.splice(i,1);
 			  }
@@ -215,14 +242,14 @@
 			getAllWorks();
 		})
 
-		
 
-		
+
+
 
 		//---------------Filter---------------
 
 		let filter = {langs: [], defaultLang: defaultLang, category: null, specialization: null, string: null};
-		
+
 
     //---------------FILTER---------------
 
@@ -275,7 +302,7 @@
 				body+='<div class="row w-100"><div class="container wrap row justify-content-center mt-4"><div class="container py-3"><div class="card"><div class="row"><div class="col-md-4">';
 				body+='<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid" style="height: 222.8px;"> ';
 				body+='</div><div class="col-md-8 px-3"><div class="card-block px-3"><div class="d-flex justify-content-end px-4 pt-2">';
-				
+
 				$.each(value.translation, function(key,val) {
 					body+='<p class="pr-4"><strong>'+val.language_id+'</strong><p>';
 				})
