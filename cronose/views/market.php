@@ -2,7 +2,61 @@
 	require '../views/layouts/head.php';
 ?>
 
-<div class="container wrap row justify-content-center mt-4">
+<div class="row">
+
+  <div class="col-10">
+		<div class="container justify-content-center mt-4">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-secondary"  type="button"><i class="fas fa-search"></i></button>
+				</span>
+				<input type="text" class="form-control" id="serch">
+			</div>
+			<div class="card-deck" id="works"></div>
+		</div>
+	</div>
+
+  <div class="col-2 border-left pl-4" id="jobFilter">
+		<button class="btn btn-primary" id='hide' type="button"><i class="fas fa-angle-right"></i></button>
+    <h2 class="p-3 pt-4">Job Filter</h2>
+    <div class="input-group p-2">
+    <div class="p-2 pt-4">
+      <label for="language">Language</label>
+			<br>
+      <select class="" id="lang">
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4">
+      <label for="myLangs">Selected Languages</label>
+			<br>
+      <select class="" id="myLangs">
+        <option disabled selected="selected">My Langs</option>
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4">
+      <label for="category">Category</label>
+			<br>
+      <select class="" id="category">
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4">
+      <label for="specialization">Specialization</label>
+			<br>
+      <select class="" id="specialization">
+        <option disabled selected="selected" value="null">Specializations</option>
+      </select>
+    </div>
+    <br>
+    <div class="p-2 pt-4 pl-4">
+      <button id="reset">Reset Filter</button>
+    </div>
+  </div>
+<!-- </div> -->
+
+<!-- <div class="container wrap row justify-content-center mt-4">
 	<h1><?= $lang[$displayLang]['market'];?></h1>
 	<div class="container">
 		<div class="row p-2">
@@ -42,38 +96,11 @@
 				    <button id="reset">Reset Filter</button>
 				  </div>
 				</div>
-				<div class="card-deck w-100">
-					<div class="row w-100"><div class="container wrap row justify-content-center mt-4"><div class="container py-3">
-						<div class="card">
-							<div class="row">
-								<div class="col-md-4">
-									<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid" style="height: 222.8px;">
-									</div>
-										<div class="col-md-8 px-3">
-											<div class="card-block px-3">
-												<div class="d-flex justify-content-end px-4 pt-2">
-													<p class="pr-4"><strong>ES</strong><p>
-													<p class="pr-4">PV : <strong>70</strong><p>
-													<p>GV : <strong>'80</strong><p></div>
-													<h4 class="card-title "><strong>Fontanero</strong> (<em>Admin</em>)</h4>
-													<p class="card-text">El mejor fontanero que puedes encontra en toda mallorca.</p>
-													<p><?= $lang[$displayLang]['price'];?> : <strong>2</strong></p>
-												<div class="d-flex justify-content-end  pb-3 pr-3">
-													<a href="/<?=$displayLang;?>/work/'+value.initials+'/'+value.tag+'/'+value.specialization_id+'/'+value.title+'" class="btn btn-primary"><?= $lang[$displayLang]['seeWork'];?></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			<div class="card-deck w-100" id="works">
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
   <script>
   $(document).ready(function(){
@@ -300,7 +327,7 @@
 			document.getElementById("works").innerHTML = body;
 			$.each (offers, function(key, value) {
 				body+='<div class="row w-100"><div class="container wrap row justify-content-center mt-4"><div class="container py-3"><div class="card"><div class="row"><div class="col-md-4">';
-				body+='<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid" style="height: 222.8px;"> ';
+				body+='<img src="https://thumbs.dreamstime.com/b/uso-en-l%C3%ADnea-de-trabajo-de-la-red-de-internet-del-negocio-de-la-gente-46666160.jpg" class="img-fluid p-3 rounded" style="height: 222.8px;"> ';
 				body+='</div><div class="col-md-8 px-3"><div class="card-block px-3"><div class="d-flex justify-content-end px-4 pt-2">';
 
 				$.each(value.translation, function(key,val) {
