@@ -2,14 +2,12 @@
 
 <?php if (isset($_SESSION['user'])):?>
 
-
-<nav class="vertical-nav">
-  <section class="navbar">
-    <label for="sidebar-toggle" class="menu-icon"><i class="hamburger"></i></label>
-    <!-- <div class="btn-group pl-3">
-      <button type="button" class="btn bg-white dropdown-toggle ml-1 mt-1 pt-1 pb-1 pl-1 pr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="col-2 p-0" id="vericalNav">
+  <div class="vertical-nav min-vh-100">
+    <div class="btn-group pl-3">
+      <!-- <button type="button" class="btn bg-white dropdown-toggle ml-1 mt-1 pt-1 pb-1 pl-1 pr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <?= $_SESSION['lang'] ?? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) ?>
-      </button> 
+      </button> -->
       <div class="form-group">
         <label for="language_selector">Language</label>
         <select class="form-control" id="language_selector">
@@ -49,14 +47,9 @@
             <a href="/logout"><button type="btn" class="btn btn-danger ml-4  pt-2 pb-2 pr-4 pl-4"><?=strtoupper($lang[$displayLang]['logOut']);?></button></a>
         </li>
       </ul>
-    </div> -->
-  </section>
-</nav>
-<!-- 
-<nav class="vertical-nav">
-  <button onclick="toogleNav()"><i class="fas fa-bars"></i></button>
-
-</nav> -->
+    </div>
+  </div>
+  </div>
 
 <?php else :?>
 

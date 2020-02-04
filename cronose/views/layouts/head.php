@@ -28,18 +28,18 @@
 </head>
 <body>
 
-<?php
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
-?>
+  <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+  ?>
 
-<?php require '../views/components/nav.php'; ?>
+  <input type="checkbox" name="toggle" id="sidebar-toggle">
+  
+  <?php require '../views/components/nav.php'; ?>
 
-<?php if (isset($_SESSION['user'])):?>
-  <div  class="col-10 p-0">
-    <main class="container">
-<?php else :?>
-  <div class="col-12">
-    <main class="container">
-<?php endif ?>
+  <?php if (isset($_SESSION['user'])):?>
+    <main class="vertical container-fluid">
+  <?php else :?>
+    <main class="container horizontal">
+  <?php endif ?>
