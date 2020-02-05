@@ -21,6 +21,10 @@ class OfferModel extends Model {
     return OfferDAO::getOffer($userInitials,$userTag,$offerEsp);
   }
 
+  public static function setNewOffer($offer, $user){
+    return OfferDAO::setNewOffer($offer, $user);
+  }
+
 //   public static function getOffersByUsername($username) {
 //     $statement = self::query("select Language_Translation.translation,User.name,Offer_Language.title,Offer_Language.description,concat(Media.url,Media.extension) as media
 // from Offer,Offer_Language,User,Language,Language_Translation,Media,Load_Media

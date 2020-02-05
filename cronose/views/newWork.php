@@ -44,7 +44,7 @@
   			<textarea type="text" class="form-control" id="workDescription" aria-describedby="emailHelp" placeholder="Describe tu actividad..." rows="5"></textarea>
   			<small id="workSubtitle" class="form-text text-muted">Indica lo que puedes ofrecer y otra información que quieres que sepan los demás usuarios.</small>
   		</div>  
-  		<input type="button" class="btn btn-primary" id="generateData" value="Enviar">		
+  		<input type="button" class="btn btn-primary" id="generateData" value="Previsualizar">		
   	</form>
   </div>
 
@@ -60,7 +60,15 @@
 		$(".rating").rate();
 
 		let data = new Array();
-		let array = {lang: null, category: null, specialization: null, title: null, description: null, valoration: null };
+		let newJob = {
+			lang: null, 
+			category: null, 
+			specialization: null, 
+			title: null, 
+			description: null, 
+			valoration: null 
+		};
+
 		let langs;
 		let newOffer; //Array con toda la información
 		langs = await getLangs();
@@ -126,6 +134,7 @@
     $("#langsAvaliable a").click(function(){
       $("#dropdownMenuButton").text($(this).text());
       $("#dropdownMenuButton").val($(this).text());
+			newJob["lang"] = $(this).data("value");
 			
       loadCategories();
 		});
@@ -211,22 +220,48 @@
     
     //Aquí recopilamos la información del formulario
 		$("#generateData").click(function(){
-			if(checkLang()){
-				array.lang = langSelected;
-				data.push(array);
+			
+			newJob["category"] = $("#dropdownCategory").val();
+			newJob["specialization"] = $("#dropdownSpecialization").val();
+			newJob["valoration"] = $(".rating").data("rate").value;
+			newJob["title"] = $("#workTitle").val();
+			newJob["description"] = $("#workDescription").val();
+
+			
+			if(checkForm(newJob)){
+				submit(newJob);
+			}else{
+				alert("Todos los campos son obligatorios.");
 			}
-			array = {lang: null, category: null, specialization: null, title: null, description: null, valoration: null };
-			console.log(data);
+
     });
 
-    /*function submit(data){
+		function checkForm(data){
+
+			for (var i in data) {
+				if (data[i] == null || data[i] == "" ) {
+						return false;
+				}
+			}
+
+			return true;
+		}
+
+    function submit(data){
     	$.ajax({
 				type: 'post',
 				url: '/api/offer',
 				dataType: 'json',
-				data: { 'offer' : data }
+				data: { 'offer' : data },
+				success: (data) => {
+          //if (data) window.location.href = '/api/offer';
+					console.log(data);
+        },
+        error: (data) => {
+          console.log(data);
+        }
     	});
-		}*/
+		}
 	});
 
 

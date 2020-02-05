@@ -49,4 +49,12 @@ class OfferController {
     ];
   }
 
+  public static function setNewOffer($offer, $user){
+    return OfferModel::setNewOffer($offer, $user);
+  }
+
+  public static function getNewOffer($offer){
+    return $offer;
+  }
+
 }

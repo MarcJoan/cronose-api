@@ -45,4 +45,13 @@ and Offer_Language.language_id='$lang' and User.id = '$id'";
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
+  public static function setNewOffer($offer, $user){
+    $sp = $offer['specialization'];
+    $lang = $offer['lang'];
+    $sql = "INSERT INTO `Offer` 
+    (`user_id`, `specialization_id`, `valoration_avg`, `personal_valoration`, `coin_price`, `offered_at`, `visibility`) 
+    VALUES ($user->id, $sp ); ";
+    return $sql;
+  }
+
 }
