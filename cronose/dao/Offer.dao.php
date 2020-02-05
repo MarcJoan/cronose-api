@@ -59,8 +59,10 @@ class OfferDAO extends DAO {
       FROM User,Offer 
       WHERE User.id = Offer.user_id 
       AND Offer.visibility = true 
-      LIMIT ${limit} OFFSET ${offset} ";
+      LIMIT :limit OFFSET :offset";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
@@ -72,9 +74,12 @@ class OfferDAO extends DAO {
       AND User.id = Offer.user_id 
       AND Offer.user_id = Offer_Language.user_id 
       AND Offer.specialization_id = Offer_Language.specialization_id 
-      AND Offer_Language.language_id = '${lang}' 
-      LIMIT ${limit} OFFSET ${offset}";
+      AND Offer_Language.language_id = :lang 
+      LIMIT :limit OFFSET :offset";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':lang', $lang, PDO::PARAM_STR);
+    $statement->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
@@ -84,9 +89,11 @@ class OfferDAO extends DAO {
       FROM Offer,Offer_Language 
       WHERE Offer.user_id = Offer_Language.user_id
       AND Offer.specialization_id = Offer_Language.specialization_id 
-      AND Offer.user_id = ${user_id} 
-      AND Offer.specialization_id = ${specialization_id};";
+      AND Offer.user_id = :user_id 
+      AND Offer.specialization_id = :specialization_id;";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+    $statement->bindParam(':specialization_id', $specialization_id, PDO::PARAM_STR);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
