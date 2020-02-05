@@ -56,10 +56,15 @@
   <script>
 
     $(document).ready(function(){
+
       const selector = document.getElementById('language_selector');
-      // selector.value = "<?= isset($displayLang) ? $displayLang : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>";
+      selector.value = "<?= isset($displayLang) ? $displayLang : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>";
 
       loadNav();
+
+      $('.menu-icon').click(function() {
+        toogleNav();
+      })
 
       $(document).ready(function(){
 
@@ -75,16 +80,15 @@
       }
 
       function loadNav() {
-        if (!getCookie('nav-expanded'))setCookie('nav-expanded', '100px', 15);
-        document.documentElement.style.setProperty('--nav-width', getCookie('nav-expanded'));
+        if (!getCookie('nav-expanded'))setCookie('nav-expanded', 'false', 15);
+        if (getCookie('nav-expanded') == 'true') $('#sidebar-toggle').prop("checked", true);
       }     
 
     });
 
     function toogleNav() {
-      let width = (getCookie('nav-expanded') == '250px') ? '100px' : '250px'; 
-      setCookie('nav-expanded', width, 15)
-      document.documentElement.style.setProperty('--nav-width', getCookie('nav-expanded'));
+      let cookie = (getCookie('nav-expanded') == 'false') ? 'true' : 'false'; 
+      setCookie('nav-expanded', cookie, 15);
     }
 
     // COOKIES

@@ -259,8 +259,8 @@
 	      dataType: 'json',
 	      data: {filter},
 	      success: (response) => {
-	        	offers = response.offers;
-	        	renderOffers();
+					offers = response.offers;
+					renderOffers();
 	      },
 	      error: ((response) => {
 	        console.log(response)
