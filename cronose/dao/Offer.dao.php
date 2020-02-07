@@ -46,12 +46,38 @@ and Offer_Language.language_id='$lang' and User.id = '$id'";
   }
 
   public static function setNewOffer($offer, $user){
+
+    self::setNewOfferLang($offer, $user);
+
     $sp = $offer['specialization'];
-    $lang = $offer['lang'];
+    $val = $offer['valoration'] * 20;
+    $coin_price = self::getCoinPrice($sp);
+    $coin_price = $coin_price['coin_price'];
+
     $sql = "INSERT INTO `Offer` 
-    (`user_id`, `specialization_id`, `valoration_avg`, `personal_valoration`, `coin_price`, `offered_at`, `visibility`) 
-    VALUES ($user->id, $sp ); ";
-    return $sql;
+    (`user_id`, `specialization_id`, `valoration_avg`, `personal_valoration`, `coin_price`, `offered_at`, `visibility`)
+    VALUES ($user->id, $sp, 0, $val, $coin_price, now(), 1 ); ";
+    $statement = self::$DB->prepare($sql);
+    $statement->execute();
+  }
+
+  public static function getCoinPrice($sp){
+    $sql = "SELECT coin_price FROM Category, Specialization WHERE $sp = Specialization.id AND Specialization.category_id = Category.id;";
+    $statement = self::$DB->prepare($sql);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public static function setNewOfferLang($offer, $user){
+    $id = $user->id;
+    $lang = $offer['lang'];
+    $sp = $offer['specialization'];
+    $title = $offer['title'];
+    $description = $offer['description'];
+
+    $sql = "INSERT into Offer_language VALUES ('$lang', $id, $sp, '$title','$description');";
+    $statement = self::$DB->prepare($sql);
+    $statement->execute();
   }
 
 }
