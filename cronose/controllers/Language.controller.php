@@ -3,6 +3,10 @@ require_once '../models/Language.model.php';
 
 class LanguageController {
 
+  public static function getAll($lang) {
+    return LanguageModel::getAll($lang);
+  }
+
   public static function getOfferLangs() {
     $lang = LanguageModel::getOfferLangs();
     return [

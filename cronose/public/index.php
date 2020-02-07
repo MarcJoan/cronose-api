@@ -194,6 +194,14 @@ if ($uri[0] == 'api') {
       if ($method == 'get' && count($uri) == 3 && $uri[2] == 'offers') echo json_encode(LanguageController::getOfferLangs());
       break;
 
+    case 'langs':
+      if ($method == 'get' && count($uri) == 2){
+        echo json_encode(LanguageController::getAll($displayLang));
+      } else if ( $method == 'get' && $uri[2] == 'default'){
+        echo json_encode(LanguageController::getDefaultLangs());
+      }
+    break;
+
     default:
       echo "Nothing";
       break;

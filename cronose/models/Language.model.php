@@ -3,7 +3,11 @@
 require_once 'Model.php';
 require_once '../dao/Language.dao.php';
 
-class LanguageModel extends Model {
+class LanguageModel  {
+
+  public static function getAll($lang) {
+    return LanguageDAO::getAll($lang);
+  }
 
   public static function getOfferLangs() {
     return LanguageDAO::getOfferLangs();
