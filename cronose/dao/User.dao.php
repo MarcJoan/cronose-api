@@ -52,7 +52,7 @@ class UserDAO extends DAO {
     $user['private'] = $user['private'] ?? true;
     $user['avatar_id'] = $user['avatar_id'] ?? null;
     /* SAVE FILES */
-    
+
     /* SQL BEGIN CONSTRUCTION */
     $fields = "dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id";
     $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
@@ -84,7 +84,7 @@ class UserDAO extends DAO {
     $sql = "select distinct City.name,City.longitude,City.latitude  from City,User";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
-    return $statement->fetchAll();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
 }

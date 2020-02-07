@@ -1,7 +1,8 @@
 </main>
 
-  <?php if (isset($_SESSION['user'])):?>
-<!--
+
+  <!-- <?php if (isset($_SESSION['user'])):?>
+
   <footer class="py-4 text-white-50">
     <div class="container text-center text-md-left mt-3">
       <div class="container text-center">
@@ -51,26 +52,70 @@
       </div>
     </div>
   </footer>
-</div>
-</div>
--->
-  <?php endif; ?>
+  <?php endif; ?> -->
   <script>
-    const selector = document.getElementById('language_selector');
-    selector.value = "<?= isset($displayLang) ? $displayLang : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>";
 
     $(document).ready(function(){
 
-      $("#language_selector").change(function(){
-        let lang = $("#language_selector").val();
-        changeLang(lang);
+      const selector = document.getElementById('language_selector');
+      selector.value = "<?= isset($displayLang) ? $displayLang : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>";
+
+      loadNav();
+
+      $('.menu-icon').click(function() {
+        toogleNav();
+      })
+
+      $(document).ready(function(){
+
+        $("#language_selector").change(function(){
+          let lang = $("#language_selector").val();
+          changeLang(lang);
+        });
+
       });
+
+      function changeLang(lang) {
+        window.location.replace("/"+lang+"/<?= $auxUriString; ?>");
+      }
+
+      function loadNav() {
+        if (!getCookie('nav-expanded'))setCookie('nav-expanded', 'false', 15);
+        if (getCookie('nav-expanded') == 'true') $('#sidebar-toggle').prop("checked", true);
+      }     
 
     });
 
-    function changeLang(lang) {
-      window.location.replace("/"+lang+"/<?= $auxUriString; ?>");
+    function toogleNav() {
+      let cookie = (getCookie('nav-expanded') == 'false') ? 'true' : 'false'; 
+      setCookie('nav-expanded', cookie, 15);
     }
+
+    // COOKIES
+
+  function setCookie(cname,cvalue,exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires=" + d.toGMTString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
 
   </script>
 </body>

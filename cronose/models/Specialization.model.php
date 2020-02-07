@@ -2,28 +2,18 @@
 
 require_once '../dao/Specialization.dao.php';
 
-class SpecializationModel {
+class SpecializationModel{
 
-  public static function getAll($lang) {
-    return SpecializationDAO::getAll($lang);
+  public static function getAll() {
+    return SpecializationDAO::getAll();
   }
 
-  public static function getAllByLanguage($language) {
-    $sql = "SELECT * FROM Specialization_Language WHERE language_id = ".$language."";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-    return $statement->fetchAll();
+  public static function getAllByLang($lang) {
+    return SpecializationDAO::getAllByLang($lang);
   }
 
-  public static function getById($specialization_id) {
-    $sql = "SELECT * FROM  Specialization WHERE id = '" . $specialization_id . "';";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-    return $statement->fetchAll();
-  }
-
-  public static function getByCategoryId($id, $lang) {
-    return SpecializationDAO::getByCategoryId($id, $lang);
+  public static function getAllByIDAndLang($id, $lang) {
+    return SpecializationDAO::getAllByIDAndLang($id, $lang);
   }
 
 }

@@ -1,19 +1,17 @@
 <?php
-
 require_once '../models/Language.model.php';
 
 class LanguageController {
 
-  public static function getAll($lang) {
-    return LanguageModel::getAll($lang);
+  public static function getOfferLangs() {
+    $lang = LanguageModel::getOfferLangs();
+    return [
+      'lang' => $lang
+    ];
   }
 
   static $langAvailable = ['en','es','ca'];
   static $defaultLang = 'es';
-
-  public function getDefaultLangs(){
-    return self::$langAvailable;
-  }
 
   public function getLang() {
     $clientLang = $_SESSION['displayLang'] ?? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
