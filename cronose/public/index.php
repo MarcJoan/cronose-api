@@ -75,7 +75,7 @@ if ($uri[0] == 'api') {
 
     case 'login':
       if ($method == 'post') {
-        echo json_encode(UserController::userLogin($_POST['username'], $_POST['password']), JSON_PRETTY_PRINT);
+        echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']), JSON_PRETTY_PRINT);
       }
       break;
 

@@ -2,6 +2,9 @@
 
 require_once '../models/User.model.php';
 
+// Logger
+require_once '../utilities/Logger.php';
+
 class UserController {
 
   /*public static function getProfileInfo($username) {
@@ -70,22 +73,23 @@ class UserController {
     ];
   }
 
-  public static function isValid($username, $password) {
-    $user = UserModel::getUserByUsername($username);
+  public static function isValid($email, $password) {
+    $user = UserModel::getUserByEmail($email);
     if (!$user) return false;
     if ($user['password'] != $password) return false;
     $_SESSION['user'] = json_encode($user);
-    return true;
+    return $user;
   }
 
-  public static function userLogin($username, $password) {
-    $response = self::isValid($username, $password);
-    if (!$response) return [
+  public static function userLogin($email, $password) {
+    $user = self::isValid($email, $password);
+    if (!$user) return [
       "status" => "error",
       "msg" => "Something go wrong!"
     ];
 
-    self::sendMailTo("Hello From Server", "Hello ${username}", "", "josep.oliverr@gmail.com", "From: josep@grup-c.c.daw-1819.internal");
+    $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
+    self::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email);
 
     return [
       "status" => "success",
@@ -109,7 +113,7 @@ class UserController {
     ];
   }
 
-  private static function sendMailTo($subject, $message, $from, $to, $headers = "") {
+  private static function sendMailTo($subject, $message, $to, $headers = "") {
     $message = wordwrap($message, 70);
     mail($to, $subject, $message, $headers);
   }

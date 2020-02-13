@@ -18,6 +18,14 @@ class UserDAO extends DAO {
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
+  public static function getUserByEmail($email) {
+    $sql = "SELECT * FROM User WHERE email = :email;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
   public static function getUserByTag($tag) {
     $sql = "SELECT * FROM User WHERE tag = ${tag};";
     $statement = self::$DB->prepare($sql);
@@ -47,10 +55,11 @@ class UserDAO extends DAO {
   }
 
   public static function saveUser($user) {
+    Logger::log("DEBUG", $user['avatar']);
     /* DEFAULT VALUES */
     $user['surname_2'] = $user['surname_2'] ?? "";
     $user['private'] = $user['private'] ?? true;
-    $user['avatar_id'] = $user['avatar_id'] ?? null;
+    $user['avatar'] = $user['avatar'] ?? null;
     /* SAVE FILES */
 
     /* SQL BEGIN CONSTRUCTION */
@@ -62,7 +71,7 @@ class UserDAO extends DAO {
       $initials .= $w[0];
     }
     $date = date("Y-m-d H:i:s");
-    $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ${user['avatar_id']}, ${user['dni_photo_id']}";
+    $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ${user['avatar']}, ${user['dni_photo_id']}";
     $sql = "INSERT INTO User (${fields}) VALUES (${values})";
     Logger::log("DEBUG", $sql);
     /* SQL END CONSTRUCTION */

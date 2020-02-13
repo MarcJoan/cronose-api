@@ -9,6 +9,10 @@ class UserModel extends Model {
     return UserDAO::getUserByUsername($username);
   }
 
+  public static function getUserByEmail($email) {
+    return UserDAO::getUserByEmail($email);
+  }
+
   public static function getUserByInitialsAndTag($initials, $tag) {
     return UserDAO::getUserByInitialsAndTag($initials, $tag);
   }

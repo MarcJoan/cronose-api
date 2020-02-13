@@ -15,7 +15,7 @@
           <h5 class="card-title text-center"><?=$lang[$displayLang]['logIn'];?></h5>
           <form id="login-form" method="post" target="_self" class="form-signin">
             <div class="form-label-group">
-              <input id="username" type="text" name="username" class="form-control" placeholder="<?=$lang[$displayLang]['name'];?>" required autofocus>
+              <input id="email" type="email" name="email" class="form-control" placeholder="<?=$lang[$displayLang]['email'];?>" required autofocus>
               <br>
             </div>
             <div class="form-label-group">
@@ -45,16 +45,14 @@
     // Send form via ajax request to Login
     function login() {
       const url = '/api/login';
-      const username = $("#username").val();
+      const email = $("#email").val();
       const password = $.md5($("#password").val());
       $.ajax({
         type: 'POST',
         url: url,
         dataType: 'json',
-        data: { username, password },
+        data: { email, password },
         success: (data) => {
-          console.log(data);
-
           if (data.status == 'success') window.location.href = '/<?= $displayLang; ?>/market';
         },
         error: (data) => {
