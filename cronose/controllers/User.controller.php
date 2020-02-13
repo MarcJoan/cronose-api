@@ -80,13 +80,16 @@ class UserController {
 
   public static function userLogin($username, $password) {
     $response = self::isValid($username, $password);
-    if ($response) return [
-      "status" => "success",
-      "msg" => "Successfully logged!"
-    ];
-    else return [
+    if (!$response) return [
       "status" => "error",
       "msg" => "Something go wrong!"
+    ];
+
+    self::sendMailTo("Hello From Server", "Hello ${username}", "", "josep.oliverr@gmail.com", "From: josep@grup-c.c.daw-1819.internal");
+
+    return [
+      "status" => "success",
+      "msg" => "Successfully logged!"
     ];
   }
 
@@ -104,6 +107,11 @@ class UserController {
       "status" => "error",
       "msg" => "Something went wrong!"
     ];
+  }
+
+  private static function sendMailTo($subject, $message, $from, $to, $headers = "") {
+    $message = wordwrap($message, 70);
+    mail($to, $subject, $message, $headers);
   }
 
 }
