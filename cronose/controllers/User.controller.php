@@ -89,7 +89,7 @@ class UserController {
     ];
 
     $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
-    self::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email);
+    self::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email, "From: cronose@cronose.dawman.info\r\n");
 
     return [
       "status" => "success",
