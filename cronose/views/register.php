@@ -173,7 +173,7 @@
         success: function(response) {
           // return console.log(response);
           if (response.status == 'success') {
-            login(response.profile.email, response.profile.password);
+            login(response.user.email, response.user.password);
           } else if (response.status == 'error') {
             $("#errorAlertMessage").html( response.message );
             $("#errorAlert").show();
