@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title"><?=$lang[$displayLang]['register'];?></h4>
-          <form method="POST" class="my-login-validation" id="register" name="registration">
+          <form method="POST" class="my-login-validation" id="register" name="registration" action="#" enctype="multipart/form-data">
             <div class="form-group">
               <label for="dni"><?=$lang[$displayLang]['dni'];?></label>
               <input id="dni" type="text" class="form-control" name="dni" required autofocus>
@@ -58,7 +58,7 @@
               <input id="dni_photo" type="hidden" class="form-control" name="dni_photo_id" value="1">
             </div>
             <div class="form-group">
-              <input id="avatar" type="hidden" class="form-control" name="avatar_id" value="1">
+              <input type="file" class="form-control" name="avatar" id="avatar" accept="image/png, image/jpg, image/jpeg, .jpg, .png">
             </div>
             <div class="form-group">
               <div class="custom-checkbox custom-control">
@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="form-group m-0">
-              <input id="btnSubmit" type="submit" class="btn btn-primary btn-block text-uppercase" value="<?=$lang[$displayLang]['register'];?>"/>
+              <input id="btnSubmit" type="submit" class="btn btn-primary btn-block text-uppercase" value="<?=$lang[$displayLang]['register'];?>" name="user" />
             </div>
           </form>
         </div>
@@ -155,8 +155,7 @@
       const formData = new FormData(form);
       formData.set( 'password', $.md5(formData.get('password')) );
       formData.delete('c_password');
-      const data = Object.fromEntries(formData);
-      register(data);
+      register(formData);
     });
 
     // Send form via ajax request to Register
@@ -165,15 +164,23 @@
       $.ajax({
         type: 'POST',
         url: url,
-        dataType: 'json',
-        data: { 'user' : data },
+        data: { 'user': data},
+        enctype: 'multipart/form-data',
+        contentType: false,
+        processData: false,
+        cache: false,
         success: function(response) {
+          return console.log(response);
           if (response.status == 'success') {
             login(response.profile.name, response.profile.password);
           } else if (response.status == 'error') {
             $("#errorAlertMessage").html( response.message );
             $("#errorAlert").show();
           };
+        },
+        error: function(xhr, textStatus, thrownError, data) {
+          alert("Error: " + thrownError);
+          console.log(data);
         }
       });
     }
