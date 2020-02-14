@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title"><?=$lang[$displayLang]['register'];?></h4>
-          <form method="POST" class="my-login-validation" id="register" name="registration" action="#" enctype="multipart/form-data">
+          <form method="POST" class="my-login-validation" id="register" name="registration" action="#">
             <div class="form-group">
               <label for="dni"><?=$lang[$displayLang]['dni'];?></label>
               <input id="dni" type="text" class="form-control" name="dni" required autofocus>
@@ -55,11 +55,11 @@
               <select name="city_cp" id="city"></select>
             </div>
             <div class="form-group">
-              <input id="dni_photo" type="hidden" class="form-control" name="dni_photo_id" value="1">
+              <input id="dni_photo" type="hidden" name="dni_photo_id" value="1">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <input type="file" class="form-control" name="avatar" id="avatar" accept="image/png, image/jpg, image/jpeg, .jpg, .png">
-            </div>
+            </div> -->
             <div class="form-group">
               <div class="custom-checkbox custom-control">
                 <input id="private" type="checkbox" name="private" class="custom-control-input">
@@ -155,7 +155,7 @@
       const formData = new FormData(form);
       formData.set( 'password', $.md5(formData.get('password')) );
       formData.delete('c_password');
-      register(formData);
+      register(Object.fromEntries(formData));
     });
 
     // Send form via ajax request to Register
@@ -165,14 +165,15 @@
         type: 'POST',
         url: url,
         data: { 'user': data},
-        enctype: 'multipart/form-data',
-        contentType: false,
-        processData: false,
-        cache: false,
+        dataType: 'json',
+        // enctype: 'multipart/form-data',
+        // contentType: false,
+        // processData: false,
+        // cache: false,
         success: function(response) {
-          return console.log(response);
+          // return console.log(response);
           if (response.status == 'success') {
-            login(response.profile.name, response.profile.password);
+            login(response.profile.email, response.profile.password);
           } else if (response.status == 'error') {
             $("#errorAlertMessage").html( response.message );
             $("#errorAlert").show();
@@ -191,7 +192,7 @@
         type: 'POST',
         url: '/api/login',
         dataType: 'json',
-        data: { 'username' : name, password },
+        data: { 'user' : email, password },
         success: (data) => {
           if (data.status == 'success') window.location.href = '/<?= $displayLang; ?>/market';
         },
