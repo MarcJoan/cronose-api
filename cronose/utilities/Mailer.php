@@ -2,7 +2,7 @@
 
 class Mailer {
   
-  private $defaultFrom = "cronose@cronose.dawman.info";
+  private static $defaultFrom = "cronose@cronose.dawman.info";
 
   public static function sendMailTo($subject, $message, $to, $from = null, $headers = "") {
     $from = $from || self::$defaultFrom;
