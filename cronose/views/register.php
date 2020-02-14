@@ -192,7 +192,7 @@
         type: 'POST',
         url: '/api/login',
         dataType: 'json',
-        data: { 'user' : email, password },
+        data: { email, password },
         success: (data) => {
           if (data.status == 'success') window.location.href = '/<?= $displayLang; ?>/market';
         },
