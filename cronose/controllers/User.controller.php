@@ -2,7 +2,8 @@
 
 require_once '../models/User.model.php';
 
-// Logger
+// Utilities
+require_once '../utilities/Mailer.php';
 require_once '../utilities/Logger.php';
 
 class UserController {
@@ -62,14 +63,19 @@ class UserController {
 
 
   public static function register($user) {
-    $profile = UserModel::saveUser($user);
-    if ($profile) return [
-      "status" => "success",
-      "profile" => $profile
-    ];
-    else return [
+    $user = UserModel::saveUser($user);
+    if (!$user) return [
       "status" => "error",
       "msg" => "Something went wrong!"
+    ];
+
+    $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
+    $message = "Hello ${fullName},\nNice to see you on our platform, I hope you make some profit with it!";
+    Mailer::sendMailTo("Welcome to Cronose", $message, $user['email']);
+
+    return [
+      "status" => "success",
+      "user" => $user
     ];
   }
 
@@ -89,7 +95,7 @@ class UserController {
     ];
 
     $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
-    self::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email, "From: cronose@cronose.dawman.info\r\n");
+    Mailer::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email);
 
     return [
       "status" => "success",
@@ -111,11 +117,6 @@ class UserController {
       "status" => "error",
       "msg" => "Something went wrong!"
     ];
-  }
-
-  private static function sendMailTo($subject, $message, $to, $headers = "") {
-    $message = wordwrap($message, 70);
-    mail($to, $subject, $message, $headers);
   }
 
 }
