@@ -1,4 +1,7 @@
 <?php
+// Headers
+header('Access-Control-Allow-Origin: *');
+
 session_start();
 
 // Controllers
@@ -75,7 +78,7 @@ if ($uri[0] == 'api') {
 
     case 'login':
       if ($method == 'post') {
-        echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']), JSON_PRETTY_PRINT);
+        echo json_encode(UserController::userLogin($_POST['username'], $_POST['password']), JSON_PRETTY_PRINT);
       }
       break;
 
@@ -95,7 +98,7 @@ if ($uri[0] == 'api') {
       }
       break;
 
-    case 'offers':
+    case 'works':
       if ($method == 'get') {
         if (count($uri) == 2) echo json_encode(OfferController::getAllOffers());
         if (count($uri) == 4 && $uri[2] > 0 && $uri[3] >= 0) echo json_encode(OfferController::getOffers($uri[2], $uri[3]));
@@ -105,14 +108,6 @@ if ($uri[0] == 'api') {
         //if (count($uri) == 4 && $uri[2] == 'lang') echo json_encode(OfferController::getAllOffersOrderedByLang($uri[3]));
       }
       break;
-
-    case 'offer':
-      if($method == 'post')
-        echo json_encode(OfferController::setNewOffer($_POST['offer'], $user));
-
-      if($method == 'get')
-        echo json_encode(OfferController::getNewOffer());
-    break;
 
     case 'work':
        if ($method == 'get') {
@@ -137,7 +132,6 @@ if ($uri[0] == 'api') {
       if ($method == 'get') {
         if (count($uri) == 2) echo json_encode(UserController::getAllDirections());
       }
-    break;
 
     case 'chat':
     // var_dump($uri);
@@ -193,14 +187,6 @@ if ($uri[0] == 'api') {
     case 'lang':
       if ($method == 'get' && count($uri) == 3 && $uri[2] == 'offers') echo json_encode(LanguageController::getOfferLangs());
       break;
-
-    case 'langs':
-      if ($method == 'get' && count($uri) == 2){
-        echo json_encode(LanguageController::getAll($displayLang));
-      } else if ( $method == 'get' && $uri[2] == 'default'){
-        echo json_encode(LanguageController::getDefaultLangs());
-      }
-    break;
 
     default:
       echo "Nothing";
