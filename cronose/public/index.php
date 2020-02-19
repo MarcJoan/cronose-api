@@ -122,11 +122,11 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
 $router->get('/chats/{user_id}', function($user_id) {
   echo json_encode(ChatController::showChats($user_id));
 });
-$router->get('/chat/{sender_id}/{reciver_id}', function($sender_id, $reciver_id) {
-  echo json_encode(ChatController::showChat($sender_id, $reciver_id));
+$router->get('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
+  echo json_encode(ChatController::showChat($sender_id, $receiver_id));
 });
-$router->post('/chat/{sender_id}/{reciver_id}', function($sender_id, $reciver_id) {
-  ChatController::sendMSG($sender_id, $reciver_id, $_POST['msg']);
+$router->post('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
+  ChatController::sendMSG($sender_id, $receiver_id, $_POST['msg']);
 });
 
 // Error 404
