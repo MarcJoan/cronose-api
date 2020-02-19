@@ -14,17 +14,21 @@ class LanguageController {
     ];
   }
 
-  static $langAvailable = ['en','es','ca'];
-  static $defaultLang = 'es';
+  private static $langAvailable = ['en','es','ca'];
+  private static $defaultLang = 'es';
 
-  public function getLang() {
-    $clientLang = $_SESSION['displayLang'] ?? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-    $lang = in_array($clientLang, self::$langAvailable) ? $clientLang : self::$defaultLang;
-    self::setLang($lang);
-    return array(
-      'language' => $lang
-    );
+  public function getLangs() {
+    return self::$langAvailable;
   }
+
+  // public function getLangs() {
+  //   $clientLang = $_SESSION['displayLang'] ?? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+  //   $lang = in_array($clientLang, self::$langAvailable) ? $clientLang : self::$defaultLang;
+  //   self::setLang($lang);
+  //   return array(
+  //     'language' => $lang
+  //   );
+  // }
 
   public function setLang($language) {
     $lang = in_array($language, self::$langAvailable) ? $language : self::$defaultLang;
