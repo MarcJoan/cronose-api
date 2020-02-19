@@ -16,7 +16,7 @@ class OfferController {
 
     if ($offers) return [
       "status" => "success",
-      "offers" => $offers
+      "works" => $offers
     ];
     else return [
       "status" => "error",
@@ -32,7 +32,7 @@ class OfferController {
 
     if ($offers) return [
       "status" => "success",
-      "offers" => $offers
+      "works" => $offers
     ];
     else return [
       "status" => "error",
@@ -53,7 +53,7 @@ class OfferController {
     
     if ($offers) return [
       "status" => "success",
-      "offers" => $offers
+      "works" => $offers
     ];
     else return [
       "status" => "error",
@@ -74,7 +74,7 @@ class OfferController {
 
     if ($offers) return [
       "status" => "success",
-      "offers" => $offers
+      "works" => $offers
     ];
     else return [
       "status" => "error",
@@ -86,7 +86,7 @@ class OfferController {
     $offers = OfferModel::getOffersByIdAndLang($id, $lang);
     if ($offers) return [
       "status" => "success",
-      "offers" => $offers
+      "works" => $offers
     ];
     else return [
       "status" => "error",
@@ -98,7 +98,7 @@ class OfferController {
     $offer = OfferModel::getOffer($userInitials,$userTag,$offerEsp);
     if ($offer) return [
       "status" => "success",
-      "offers" => $offer
+      "works" => $offer
     ];
     else return [
       "status" => "error",
@@ -127,7 +127,7 @@ class OfferController {
 
     if ($offers) return [
       "status" => "success",
-      "offers" => $offers
+      "works" => $offers
     ];
     else return [
       "status" => "error",

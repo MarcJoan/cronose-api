@@ -1,6 +1,9 @@
 <?php
 // Headers
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
+header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
 session_start();
 
@@ -41,8 +44,8 @@ $method = strtolower($_SERVER['REQUEST_METHOD']);
 
 /*-----User logged------*/
 if (isset($_SESSION['user'])) $user = json_decode($_SESSION['user']);
-if ($uri[0] == 'api') {
 
+if ($uri[0] == 'api') {
   switch ($uri[1]) {
 
     case 'categories':
@@ -77,8 +80,10 @@ if ($uri[0] == 'api') {
       break;
 
     case 'login':
+      $_POST = json_decode($_POST);
+      var_dump($_POST);
       if ($method == 'post') {
-        echo json_encode(UserController::userLogin($_POST['username'], $_POST['password']), JSON_PRETTY_PRINT);
+        echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));
       }
       break;
 
