@@ -177,7 +177,7 @@ if ($uri[0] == 'api') {
 
       if ($method == 'post') {
         $user_id = UserController::getId($uri[2], $uri[3]);
-        echo json_encode(AchievementController::setAchievement($user_id['user']['id'], $uri[4]));
+        echo json_encode(AchievementController::setAchievement($user_id['id'], $uri[4]));
       }
       break;
 

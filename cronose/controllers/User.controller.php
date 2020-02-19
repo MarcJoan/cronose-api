@@ -8,57 +8,23 @@ require_once '../utilities/Logger.php';
 
 class UserController {
 
-  /*public static function getProfileInfo($username) {
-    $profile = UserModel::getUserByUsername($username);
-    if ($profile) $achievement = AchievementController::getAllByUser($profile['id']);
-
-    if ($profile) return [
-      "status" => "success",
-      "profile" => $profile,
-      "achievement" => $achievement
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "That profile doesn't exists!"
-    ];
-  }*/
-
   public static function getUserByInitialsAndTag($initials, $tag) {
     $profile = UserModel::getUserByInitialsAndTag($initials, $tag);
     $achievement = AchievementController::getAllByUser($profile['id']);
     if ($profile) return [
-      "status" => "success",
       "profile" => $profile,
       "achievement" => $achievement
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "That profile doesn't exists!"
     ];
   }
 
   public static function getId($initials, $tag) {
     $id = UserModel::getId($initials, $tag);
-    if ($id) return [
-      "status" => "success",
-      "user" => $id,
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "That user doesn't exists!"
-    ];
+    if ($id) return $id;
   }
 
   public static function getUsersBySearch($text) {
     $users = UserModel::getUsersBySearch($text);
-    if ($users) return [
-      "status" => "success",
-      "users" => $users
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "That user doesn't exists!"
-    ];
+    if ($users) return $users;
   }
 
 

@@ -4,16 +4,12 @@ require_once 'DAO.php';
 
 class UserDAO extends DAO {
 
-  public static function getUserByDni($dni) {
-    $sql = "SELECT * FROM User WHERE dni = '${dni}';";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
-  }
+  private static $returnFields = "id, name, surname, surname_2, tag, initials, coins, avatar_id";
 
-  public static function getUserByUsername($username) {
-    $sql = "SELECT * FROM User WHERE name = '${username}';";
+  public static function getUserByDni($dni) {
+    $sql = "SELECT * FROM User WHERE dni = :dni;";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':dni', $dni, PDO::PARAM_STR);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
@@ -27,29 +23,39 @@ class UserDAO extends DAO {
   }
 
   public static function getUserByTag($tag) {
-    $sql = "SELECT * FROM User WHERE tag = ${tag};";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE tag = :tag;";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
   public static function getUserByInitialsAndTag($initials, $tag) {
-    $sql = "SELECT * FROM User WHERE initials = '${initials}' and tag = ${tag};";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE initials = :initials and tag = :tag;";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':initials', $initials, PDO::PARAM_STR);
+    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
   public static function getUsersBySearch($text) {
-    $sql = "SELECT * FROM User WHERE initials LIKE '%${text}%' or tag LIKE '%${text}%' or name LIKE '%${text}%' or surname LIKE '%${text}%';";
+    $text = '%'.$text.'%';
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE initials LIKE :text or tag LIKE :text or name LIKE :text or surname LIKE :text;";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':text', $text, PDO::PARAM_STR);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public static function getId($initials, $tag) {
-    $sql = "SELECT id FROM User WHERE initials = '${initials}' and tag = ${tag};";
+    $sql = "SELECT id FROM User WHERE initials = :initials and tag = :tag;";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':initials', $initials, PDO::PARAM_STR);
+    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
@@ -90,7 +96,7 @@ class UserDAO extends DAO {
   }
 
   public static function getAllDirections() {
-    $sql = "select distinct City.name,City.longitude,City.latitude  from City,User";
+    $sql = "select distinct City.name,City.longitude,City.latitude from City,User";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
