@@ -11,7 +11,7 @@ class OfferController {
   public static function getAllOffers() {
     $offers = OfferModel::getAllOffers();
     foreach ($offers as $key => $value) {
-      $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+      $offers[$key]['translations'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
     return $offers;
   }
@@ -19,7 +19,7 @@ class OfferController {
   public static function getOffers($limit, $offset) {
     $offers = OfferModel::getOffers($limit, $offset);
     foreach ($offers as $key => $value) {
-      $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+      $offers[$key]['translations'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
     return $offers;
   }
@@ -28,11 +28,11 @@ class OfferController {
     $offers = OfferModel::getOffersByLang($limit, $offset, $lang);
 
     foreach ($offers as $key => $value) {
-      $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+      $offers[$key]['translations'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
 
     foreach ($offers as $key => $value) {
-      $offers[$key]['Offers'] = self::orderByLang($lang, $value['Offers']);
+      $offers[$key]['translations'] = self::orderByLang($lang, $value['translations']);
     }
     
     return $offers;
@@ -42,11 +42,11 @@ class OfferController {
     $offers = OfferModel::getOffers($limit, $offset);
 
     foreach ($offers as $key => $value) {
-      $offers[$key]['translation'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+      $offers[$key]['translations'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
 
     foreach ($offers as $key => $value) {
-      $offers[$key]['translation'] = self::orderByLang($lang, $value['translation']);
+      $offers[$key]['translations'] = self::orderByLang($lang, $value['translations']);
     }
 
     return $offers;
@@ -56,11 +56,11 @@ class OfferController {
     $offers = OfferModel::getFilteredOffers($filter);
 
     foreach ($offers as $key => $value) {
-      $offers[$key]['translation'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
+      $offers[$key]['translations'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
 
     foreach ($offers as $key => $value) {
-      $offers[$key]['translation'] = self::orderByLang($filter['defaultLang'], $value['translation']);
+      $offers[$key]['translations'] = self::orderByLang($filter['defaultLang'], $value['translations']);
     }
 
     return $offers;

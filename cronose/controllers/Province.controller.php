@@ -6,7 +6,7 @@ require_once 'City.controller.php';
 class ProvinceController {
 
   public static function getAll() {
-  	return $cities = ProvinceModel::getAll();
+  	return ProvinceModel::getAll();
   }
 
   public static function getById($id) {

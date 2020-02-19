@@ -5,39 +5,32 @@ require_once '../models/Achievement.model.php';
 class AchievementController {
 
   public static function getAll($lang) {
-  	$achievements = AchievementModel::getAll($lang);
-    return $achievements;
+  	return AchievementModel::getAll($lang);
   }
 
   public static function getById($id, $lang) {
-    $achievements = AchievementModel::getById($id, $lang);
-    return $achievements;
+    return AchievementModel::getById($id, $lang);
   }
 
   public static function getAllByLang($lang) {
-  	$achievements = AchievementModel::getAll();
-    return $achievements;
+  	return AchievementModel::getAll();
   }
 
   public static function getAllByUser($id) {
-  	$achievements = AchievementModel::getAllByUser($id);
-    return $achievements;
+  	return AchievementModel::getAllByUser($id);
   }
 
   public static function getDescription($lang) {
-    $achievements = AchievementModel::getDescription($lang);
-    return $achievements;
+    return AchievementModel::getDescription($lang);
   }
 
-  public static function setAchievement($user_id, $achi_id){
-    $achievements = AchievementModel::setAchievement($user_id, $achi_id);
-    return $achievements;
+  public static function setAchievement($user_id, $achi_id) {
+    return AchievementModel::setAchievement($user_id, $achi_id);
   }
 
-  public static function haveAchi($user_id, $achi_id){
+  public static function haveAchi($user_id, $achi_id) {
     $achievements = AchievementModel::haveAchi($user_id, $achi_id);
     if ($achievements) return true;
-
     return false;
   }
 

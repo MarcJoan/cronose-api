@@ -3,19 +3,16 @@ require_once '../models/Language.model.php';
 
 class LanguageController {
 
+  private static $langAvailable = ['en','es','ca'];
+  private static $defaultLang = 'es';
+
   public static function getAll($lang) {
     return LanguageModel::getAll($lang);
   }
 
   public static function getOfferLangs() {
-    $lang = LanguageModel::getOfferLangs();
-    return [
-      'lang' => $lang
-    ];
+    return LanguageModel::getOfferLangs();
   }
-
-  private static $langAvailable = ['en','es','ca'];
-  private static $defaultLang = 'es';
 
   public function getLangs() {
     return self::$langAvailable;

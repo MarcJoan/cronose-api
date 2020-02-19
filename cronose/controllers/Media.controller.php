@@ -4,9 +4,9 @@ require_once '../models/Media.model.php';
 
 class MediaController {
 
+  // CREC QUE AIXÓ ESTÀ MALAMENT jaja
   public static function getAll() {
-  	$cities = ProvinceModel::getAll();
-    return $cities;
+  	return ProvinceModel::getAll();
   }
 
   public static function getById($id) {

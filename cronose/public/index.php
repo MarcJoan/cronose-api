@@ -99,23 +99,34 @@ $router->get('/user/{initials}/{tag}', function($initial, $tag) {
 });
 
 // Offers
-$router->get('/offers', function() {
+$router->get('/works', function() {
   echo json_encode(OfferController::getAllOffers());
 });
-$router->get('/offers/filter/{filter}', function($filter) {
+$router->get('/works/filter/{filter}', function($filter) {
   echo json_encode(OfferController::getFilteredOffers($_REQUEST['filter']));
 });
-$router->get('/offers/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {
+$router->get('/works/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {
   echo json_encode(OfferController::getOffersDefaultLang($limit, $offset, $lang));
 });
-$router->get('/offers/{lang}/{offset}/{limit}', function($lang, $offset, $limit) {
+$router->get('/works/{lang}/{offset}/{limit}', function($lang, $offset, $limit) {
   echo json_encode(OfferController::getOffersByLang($limit, $offset, $lang));
 });
-$router->get('/offers/{offset}/{limit}', function($offset, $limit) {
+$router->get('/works/{offset}/{limit}', function($offset, $limit) {
   echo json_encode(OfferController::getOffers($limit, $offset));
 });
-$router->get('/offer/{initials}/{tag}/{specialization}', function($initials, $tag, $specialization) {
+$router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag, $specialization) {
   echo json_encode(OfferController::getOffer($initials, $tag, $specialization));
+});
+
+// Chat
+$router->get('/chats/{user_id}', function($user_id) {
+  echo json_encode(ChatController::showChats($user_id));
+});
+$router->get('/chat/{sender_id}/{reciver_id}', function($sender_id, $reciver_id) {
+  echo json_encode(ChatController::showChat($sender_id, $reciver_id));
+});
+$router->post('/chat/{sender_id}/{reciver_id}', function($sender_id, $reciver_id) {
+  ChatController::sendMSG($sender_id, $reciver_id, $_POST['msg']);
 });
 
 // Error 404
@@ -123,7 +134,6 @@ $router->set404(function() {
   header('HTTP/1.1 404 Not Found');
   echo "Error 404, Not Found";
 });
-
 
 // if ($uri[0] == 'api') {
 //   switch ($uri[1]) {
@@ -201,38 +211,38 @@ $router->set404(function() {
 // //       }
 // //     break;
 
-//     case 'myWorks':
-//       if ($method == 'get') {
-//         if (count($uri) == 2) echo json_encode(OfferController::getOffersByIdAndLang($user->id, $displayLang));
-//       }
-//       break;
+// //     case 'myWorks':
+// //       if ($method == 'get') {
+// //         if (count($uri) == 2) echo json_encode(OfferController::getOffersByIdAndLang($user->id, $displayLang));
+// //       }
+// //       break;
 
-//     case 'category':
-//        if ($method == 'get') {
-//          if (count($uri) == 2) echo json_encode(CategoryController::getCountSpecialization($_SESSION['displayLang']));
-//       }
-//     break;
+// //     case 'category':
+// //        if ($method == 'get') {
+// //          if (count($uri) == 2) echo json_encode(CategoryController::getCountSpecialization($_SESSION['displayLang']));
+// //       }
+// //     break;
 
 //     case 'directions':
 //       if ($method == 'get') {
 //         if (count($uri) == 2) echo json_encode(UserController::getAllDirections());
 //       }
 
-//     case 'chat':
-//     // var_dump($uri);
-//       if ($method == 'get') {
-//         if (count($uri) == 2){
-//           echo json_encode(ChatController::showChats($user->id));
-//         }
-//         if (count($uri) == 4){
-//           echo json_encode(ChatController::showChat($uri[2], $uri[3]));
-//         };
-//       }
+// //     case 'chat':
+// //     // var_dump($uri);
+// //       if ($method == 'get') {
+// //         if (count($uri) == 2){
+// //           echo json_encode(ChatController::showChats($user->id));
+// //         }
+// //         if (count($uri) == 4){
+// //           echo json_encode(ChatController::showChat($uri[2], $uri[3]));
+// //         };
+// //       }
 
-//       if (count($uri) == 5 && $uri[2] == 'send' && $method == 'post') {
-//         echo ChatController::sendMSG($uri[3], $uri[4], $_POST['msg']);
-//       }
-//       break;
+// //       if (count($uri) == 5 && $uri[2] == 'send' && $method == 'post') {
+// //         echo ChatController::sendMSG($uri[3], $uri[4], $_POST['msg']);
+// //       }
+// //       break;
 
 //     case 'achievements':
 
