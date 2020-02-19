@@ -6,6 +6,23 @@ class UserDAO extends DAO {
 
   private static $returnFields = "id, name, surname, surname_2, tag, initials, coins, avatar_id";
 
+  public static function getAll() {
+    $sql = "SELECT * FROM User";
+    $statement = self::$DB->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public static function getUserByInitialsAndTag($initials, $tag) {
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE initials = :initials and tag = :tag;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':initials', $initials, PDO::PARAM_STR);
+    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
   public static function getUserByDni($dni) {
     $sql = "SELECT * FROM User WHERE dni = :dni;";
     $statement = self::$DB->prepare($sql);
@@ -18,25 +35,6 @@ class UserDAO extends DAO {
     $sql = "SELECT * FROM User WHERE email = :email;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
-  }
-
-  public static function getUserByTag($tag) {
-    $fields = self::$returnFields;
-    $sql = "SELECT ${fields} FROM User WHERE tag = :tag;";
-    $statement = self::$DB->prepare($sql);
-    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
-  }
-
-  public static function getUserByInitialsAndTag($initials, $tag) {
-    $fields = self::$returnFields;
-    $sql = "SELECT ${fields} FROM User WHERE initials = :initials and tag = :tag;";
-    $statement = self::$DB->prepare($sql);
-    $statement->bindParam(':initials', $initials, PDO::PARAM_STR);
-    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
@@ -58,6 +56,15 @@ class UserDAO extends DAO {
     $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public static function getUserByTag($tag) {
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE tag = :tag;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public static function saveUser($user) {

@@ -13,15 +13,7 @@ class OfferController {
     foreach ($offers as $key => $value) {
       $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
-
-    if ($offers) return [
-      "status" => "success",
-      "works" => $offers
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
+    return $offers;
   }
 
   public static function getOffers($limit, $offset) {
@@ -29,15 +21,7 @@ class OfferController {
     foreach ($offers as $key => $value) {
       $offers[$key]['Offers'] = self::getOfferLangs($value['user_id'], $value['specialization_id']);
     }
-
-    if ($offers) return [
-      "status" => "success",
-      "works" => $offers
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
+    return $offers;
   }
 
   public static function getOffersByLang($limit, $offset, $lang) {
@@ -51,14 +35,7 @@ class OfferController {
       $offers[$key]['Offers'] = self::orderByLang($lang, $value['Offers']);
     }
     
-    if ($offers) return [
-      "status" => "success",
-      "works" => $offers
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
+    return $offers;
   }
 
   public static function getOffersDefaultLang($limit, $offset, $lang) {
@@ -72,46 +49,7 @@ class OfferController {
       $offers[$key]['translation'] = self::orderByLang($lang, $value['translation']);
     }
 
-    if ($offers) return [
-      "status" => "success",
-      "works" => $offers
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
-  }
-
-  public static function getOffersByIdAndLang($id, $lang) {
-    $offers = OfferModel::getOffersByIdAndLang($id, $lang);
-    if ($offers) return [
-      "status" => "success",
-      "works" => $offers
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
-  }
-
-  public static function getOffer($userInitials,$userTag,$offerEsp) {
-    $offer = OfferModel::getOffer($userInitials,$userTag,$offerEsp);
-    if ($offer) return [
-      "status" => "success",
-      "works" => $offer
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
-  }
-
-  public static function setNewOffer($offer, $user){
-    return OfferModel::setNewOffer($offer, $user);
-  }
-
-  public static function getNewOffer(){
-    return $offer;
+    return $offers;
   }
 
   public static function getFilteredOffers($filter) {
@@ -125,17 +63,24 @@ class OfferController {
       $offers[$key]['translation'] = self::orderByLang($filter['defaultLang'], $value['translation']);
     }
 
-    if ($offers) return [
-      "status" => "success",
-      "works" => $offers
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
-
+    return $offers;
   }
 
+  public static function getOffersByIdAndLang($id, $lang) {
+    return OfferModel::getOffersByIdAndLang($id, $lang);
+  }
+
+  public static function getOffer($userInitials,$userTag,$offerEsp) {
+    return OfferModel::getOffer($userInitials,$userTag,$offerEsp);
+  }
+
+  public static function setNewOffer($offer, $user){
+    return OfferModel::setNewOffer($offer, $user);
+  }
+
+  public static function getNewOffer(){
+    return $offer;
+  }
 
   // --------------------------------
 
@@ -149,7 +94,6 @@ class OfferController {
     }
     return $array;
   }
-
 
   public static function getOfferLangs($user_id, $specialization_id) {
     return OfferModel::getOfferLangs($user_id, $specialization_id);

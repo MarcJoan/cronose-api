@@ -12,8 +12,8 @@ class SpecializationModel{
     return SpecializationDAO::getAllByLang($lang);
   }
 
-  public static function getAllByIDAndLang($id, $lang) {
-    return SpecializationDAO::getAllByIDAndLang($id, $lang);
+  public static function getByIDAndLang($id, $lang) {
+    return SpecializationDAO::getByIDAndLang($id, $lang);
   }
 
 }

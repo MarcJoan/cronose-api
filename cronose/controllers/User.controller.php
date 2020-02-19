@@ -8,41 +8,33 @@ require_once '../utilities/Logger.php';
 
 class UserController {
 
+  public static function getAll() {
+    return UserModel::getAll();
+  }
+
   public static function getUserByInitialsAndTag($initials, $tag) {
     $profile = UserModel::getUserByInitialsAndTag($initials, $tag);
-    $achievement = AchievementController::getAllByUser($profile['id']);
-    if ($profile) return [
-      "profile" => $profile,
-      "achievement" => $achievement
-    ];
+    $profile['achievements'] = AchievementController::getAllByUser($profile['id']);
+    return $profile;
   }
 
   public static function getId($initials, $tag) {
-    $id = UserModel::getId($initials, $tag);
-    if ($id) return $id;
+    return UserModel::getId($initials, $tag);
   }
 
   public static function getUsersBySearch($text) {
-    $users = UserModel::getUsersBySearch($text);
-    if ($users) return $users;
+    return UserModel::getUsersBySearch($text);
   }
-
 
   public static function register($user) {
     $user = UserModel::saveUser($user);
-    if (!$user) return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
+    if (!$user) return "Something went wrong!";
 
     $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
     $message = "Hello ${fullName},\nNice to see you on our platform, I hope you make some profit with it!";
     Mailer::sendMailTo("Welcome to Cronose", $message, $user['email']);
 
-    return [
-      "status" => "success",
-      "user" => $user
-    ];
+    return $user;
   }
 
   public static function isValid($email, $password) {
@@ -55,18 +47,12 @@ class UserController {
 
   public static function userLogin($email, $password) {
     $user = self::isValid($email, $password);
-    if (!$user) return [
-      "status" => "error",
-      "msg" => "Something go wrong!"
-    ];
+    if (!$user) return "Something go wrong!";
 
     $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
     Mailer::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email);
 
-    return [
-      "status" => "success",
-      "msg" => "Successfully logged!"
-    ];
+    return "Successfully logged!";
   }
 
   public static function userLogout() {
@@ -74,15 +60,7 @@ class UserController {
   }
 
   public static function getAllDirections() {
-    $directions = UserModel::getAllDirections();
-    if ($directions) return [
-      "status" => "success",
-      "direction" => $directions
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
+    return UserModel::getAllDirections();
   }
 
 }

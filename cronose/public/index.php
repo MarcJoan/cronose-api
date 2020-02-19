@@ -41,7 +41,7 @@ $auxUriString = implode("/", $auxUri);
 
 /*-------Language-------*/
 // $langController = LanguageController::getLang();
-$displayLang = $langController['language'];
+// $displayLang = $langController['language'];
 
 //Method
 $method = strtolower($_SERVER['REQUEST_METHOD']);
@@ -49,37 +49,109 @@ $method = strtolower($_SERVER['REQUEST_METHOD']);
 /*-----User logged------*/
 if (isset($_SESSION['user'])) $user = json_decode($_SESSION['user']);
 
+
+// Categories
 $router->get('/categories', function() {
   echo json_encode(CategoryController::getAll());
 });
+$router->get('/categories/{lang}', function($lang) {
+  echo json_encode(CategoryController::getAllByLang($lang));
+});
+
+// Specialization
+$router->get('/specialization', function() {
+  echo json_encode(SpecializationController::getAll());
+});
+$router->get('/specialization/{lang}', function($lang) {
+  echo json_encode(SpecializationController::getAllByLang($lang));
+});
+
+// Provinces
+$router->get('/provinces', function() {
+  echo json_encode(ProvinceController::getAll());
+});
+$router->get('/province/{id}', function($id) {
+  echo json_encode(ProvinceController::getById($id));
+});
+
+// Cities
+$router->get('/cities', function() {
+  echo json_encode(CityController::getAll());
+});
+$router->get('/city/{id}', function($id) {
+  echo json_encode(CityController::getByCp($id));
+});
+
+// User
+$router->get('/users', function() {
+  echo json_encode(UserController::getAll());
+});
+          /***REVISAR***/
+$router->get('/users/{search}', function($search) {
+  echo json_encode(UserController::getUsersBySearch($search));
+});
+          /*************/
+$router->get('/user/{initials}/{tag}/id', function($initial, $tag) {
+  echo json_encode(UserController::getId($initial, $tag));
+});
+$router->get('/user/{initials}/{tag}', function($initial, $tag) {
+  echo json_encode(UserController::getUserByInitialsAndTag($initial, $tag));
+});
+
+// Offers
+$router->get('/offers', function() {
+  echo json_encode(OfferController::getAllOffers());
+});
+$router->get('/offers/filter/{filter}', function($filter) {
+  echo json_encode(OfferController::getFilteredOffers($_REQUEST['filter']));
+});
+$router->get('/offers/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {
+  echo json_encode(OfferController::getOffersDefaultLang($limit, $offset, $lang));
+});
+$router->get('/offers/{lang}/{offset}/{limit}', function($lang, $offset, $limit) {
+  echo json_encode(OfferController::getOffersByLang($limit, $offset, $lang));
+});
+$router->get('/offers/{offset}/{limit}', function($offset, $limit) {
+  echo json_encode(OfferController::getOffers($limit, $offset));
+});
+$router->get('/offer/{initials}/{tag}/{specialization}', function($initials, $tag, $specialization) {
+  echo json_encode(OfferController::getOffer($initials, $tag, $specialization));
+});
+
+// Error 404
+$router->set404(function() {
+  header('HTTP/1.1 404 Not Found');
+  echo "Error 404, Not Found";
+});
+
 
 // if ($uri[0] == 'api') {
 //   switch ($uri[1]) {
 
-//     case 'categories':
-//       if (count($uri) == 2) echo json_encode(CategoryController::getAllByLang($displayLang));
-//       if (count($uri) == 3) echo json_encode(CategoryController::getAllByLang($uri[2]));
-//       break;
+// //     case 'categories':
+// //       if (count($uri) == 2) echo json_encode(CategoryController::getAllByLang($displayLang));
+// //       if (count($uri) == 3) echo json_encode(CategoryController::getAllByLang($uri[2]));
+// //       break;
 
-//     case 'specialization':
-//       if (count($uri) == 2) echo json_encode(SpecializationController::getAll());
-//       if (count($uri) == 3) echo json_encode(SpecializationController::getAllByLang($uri[2]));
-//       if (count($uri) == 4) echo json_encode(SpecializationController::getAllByIDAndLang($uri[2], $uri[3]));
-//       break;
+// //     case 'specialization':
+// //       if (count($uri) == 2) echo json_encode(SpecializationController::getAll());
+// //       if (count($uri) == 3) echo json_encode(SpecializationController::getAllByLang($uri[2]));
+// //       if (count($uri) == 4) echo json_encode(SpecializationController::getAllByIDAndLang($uri[2], $uri[3]));
+// //       break;
 
-//     case 'provinces':
-//       echo json_encode(ProvinceController::getAll());
-//       break;
+// //     case 'provinces':
+// //       echo json_encode(ProvinceController::getAll());
+// //       break;
 
-//     case 'cities':
-//       if ($method == 'get') {
-//         if (isset($uri[2]) && preg_match("/^province/", $uri[2], $match)) {
-//           echo json_encode(CityController::getByProvinceId($_GET['province_id']));
-//         } else {
-//           echo json_encode(CityController::getAll());
-//         }
-//       }
-//       break;
+// //     case 'cities':
+// //       if ($method == 'get') {
+// //         if (isset($uri[2]) && preg_match("/^province/", $uri[2], $match)) {
+// //           echo json_encode(CityController::getByProvinceId($_GET['province_id']));
+// //         } else {
+// //           echo json_encode(CityController::getAll());
+// //         }
+// //       }
+// //       break;
 
 //     case 'register':
 //       if ($method == 'post') {
@@ -95,39 +167,39 @@ $router->get('/categories', function() {
 //       }
 //       break;
 
-//     case 'user':
-//       if ($method == 'get') {
-//         if (count($uri) == 2) echo json_encode(UserController::getUserByInitialsAndTag($user->initials, $user->tag));
-//         if (count($uri) == 3) echo json_encode(UserController::getUsersBySearch($uri[2]));
-//         if (count($uri) == 4) echo json_encode(UserController::getUserByInitialsAndTag($uri[2], $uri[3]));
-//         if (count($uri) == 6) echo json_encode(UserController::getId($uri[4], $uri[5]));;
-//       }
-//       break;
+// //     case 'user':
+// //       if ($method == 'get') {
+// //         if (count($uri) == 2) echo json_encode(UserController::getUserByInitialsAndTag($user->initials, $user->tag));
+// //         if (count($uri) == 3) echo json_encode(UserController::getUsersBySearch($uri[2]));
+// //         if (count($uri) == 4) echo json_encode(UserController::getUserByInitialsAndTag($uri[2], $uri[3]));
+// //         if (count($uri) == 6) echo json_encode(UserController::getId($uri[4], $uri[5]));;
+// //       }
+// //       break;
 
-//     case 'profile':
-//       if ($method == 'get') {
-//         if (count($uri) == 2) echo json_encode(UserController::getUserByInitialsAndTag($user->initials, $user->tag));
-//         if (count($uri) == 3) echo json_encode(UserController::getProfileInfo($uri[2]));
-//       }
-//       break;
+// //     case 'profile':
+// //       if ($method == 'get') {
+// //         if (count($uri) == 2) echo json_encode(UserController::getUserByInitialsAndTag($user->initials, $user->tag));
+// //         if (count($uri) == 3) echo json_encode(UserController::getProfileInfo($uri[2]));
+// //       }
+// //       break;
 
-//     case 'works':
-//       if ($method == 'get') {
-//         if (count($uri) == 2) echo json_encode(OfferController::getAllOffers());
-//         if (count($uri) == 4 && $uri[2] > 0 && $uri[3] >= 0) echo json_encode(OfferController::getOffers($uri[2], $uri[3]));
-//         if (count($uri) == 5 && $uri[2] > 0 && $uri[3] >= 0 && $uri[3] != 'filter' ) echo json_encode(OfferController::getOffersByLang($uri[2], $uri[3], $uri[4]));
-//         if (count($uri) == 6 && $uri[4] == 'default') echo json_encode(OfferController::getOffersDefaultLang($uri[2], $uri[3], $uri[4]));
-//         if (count($uri) == 5 && $uri[3] == 'filter') echo json_encode(OfferController::getFilteredOffers($_REQUEST['filter']));
-//         //if (count($uri) == 4 && $uri[2] == 'lang') echo json_encode(OfferController::getAllOffersOrderedByLang($uri[3]));
-//       }
-//       break;
+// //     case 'works':
+// //       if ($method == 'get') {
+// //         if (count($uri) == 2) echo json_encode(OfferController::getAllOffers());
+// //         if (count($uri) == 4 && $uri[2] > 0 && $uri[3] >= 0) echo json_encode(OfferController::getOffers($uri[2], $uri[3]));
+// //         if (count($uri) == 5 && $uri[2] > 0 && $uri[3] >= 0 && $uri[3] != 'filter' ) echo json_encode(OfferController::getOffersByLang($uri[2], $uri[3], $uri[4]));
+// //         if (count($uri) == 6 && $uri[4] == 'default') echo json_encode(OfferController::getOffersDefaultLang($uri[2], $uri[3], $uri[4]));
+// //         if (count($uri) == 5 && $uri[3] == 'filter') echo json_encode(OfferController::getFilteredOffers($_REQUEST['filter']));
+// //         //if (count($uri) == 4 && $uri[2] == 'lang') echo json_encode(OfferController::getAllOffersOrderedByLang($uri[3]));
+// //       }
+// //       break;
 
-//     case 'work':
-//        if ($method == 'get') {
-//          if (count($uri) == 2) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
-//          if (count($uri) == 5) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
-//       }
-//     break;
+// //     case 'work':
+// //        if ($method == 'get') {
+// //          if (count($uri) == 2) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
+// //          if (count($uri) == 5) echo json_encode(OfferController::getOffer($uri[2],$uri[3],$uri[4]));
+// //       }
+// //     break;
 
 //     case 'myWorks':
 //       if ($method == 'get') {

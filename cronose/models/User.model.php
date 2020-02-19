@@ -5,6 +5,11 @@ require_once '../dao/User.dao.php';
 
 class UserModel extends Model {
 
+  
+  public static function getAll() {
+    return UserDAO::getAll();
+  }
+
   public static function getUserByUsername($username) {
     return UserDAO::getUserByUsername($username);
   }

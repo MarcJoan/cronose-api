@@ -32,7 +32,7 @@ class CategoryDAO extends DAO {
               WHERE Category.id = Category_Language.category_id AND Category_Language.language_id = '${lang}' AND Category.id = ${id}";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
   public static function getAllByLang($lang) {
