@@ -5,8 +5,7 @@ require_once 'DAO.php';
 class CategoryDAO extends DAO {
 
   public static function getAll(){
-    $sql = "SELECT Category.id, Category_Language.name, Category_Language.language_id, Category.coin_price FROM Category, Category_Language
-              WHERE Category.id = Category_Language.category_id";
+    $sql = "SELECT id, coin_price FROM Category";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -29,7 +28,7 @@ class CategoryDAO extends DAO {
   }
 
   public static function getByIdAndLang($id, $lang) {
-    $sql = "SELECT Category.id, Category_Language.name, Category_Language.language_id, Category.coin_price FROM Category, Category_Language
+    $sql = "SELECT Category_Language.name FROM Category, Category_Language
               WHERE Category.id = Category_Language.category_id AND Category_Language.language_id = '${lang}' AND Category.id = ${id}";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
