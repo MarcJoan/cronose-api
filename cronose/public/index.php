@@ -78,8 +78,8 @@ $router->get('/province/{id}', function($id) {
 $router->get('/cities', function() {
   echo json_encode(CityController::getAll());
 });
-$router->get('/city/{id}', function($id) {
-  echo json_encode(CityController::getByCp($id));
+$router->get('/city/{cp}', function($cp) {
+  echo json_encode(CityController::getByCp($cp));
 });
 
 // User
@@ -97,6 +97,28 @@ $router->get('/user/{initials}/{tag}/id', function($initial, $tag) {
 $router->get('/user/{initials}/{tag}', function($initial, $tag) {
   echo json_encode(UserController::getUserByInitialsAndTag($initial, $tag));
 });
+// Register
+$router->post('/register', function() {
+  echo json_encode(UserController::register($_POST['user']));
+});
+// Login
+$router->post('/login', function() {
+  echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));
+});
+
+//     case 'register':
+//       if ($method == 'post') {
+//         echo json_encode(UserController::register($_POST['user']));
+//       }
+//       break;
+
+//     case 'login':
+//       $_POST = json_decode($_POST);
+//       var_dump($_POST);
+//       if ($method == 'post') {
+//         echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));
+//       }
+//       break;
 
 // Offers
 $router->get('/works', function() {
@@ -128,6 +150,29 @@ $router->get('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_i
 $router->post('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
   ChatController::sendMSG($sender_id, $receiver_id, $_POST['msg']);
 });
+
+// Achievements
+$router->get('/achievement/{user_id}/{achievement}', function($user_id, $achievement) {
+  echo json_encode(AchievementController::haveAchi($user_id, $achievement));
+});
+$router->post('/achievement/{user_id}/{achievement}', function($user_id, $achievement) {
+  echo json_encode(AchievementController::setAchievement($user_id, $achievement));
+});
+$router->get('/achievements/{lang}', function($lang) {
+  echo json_encode(AchievementController::getAllByLang($lang));
+});
+$router->get('/achievements', function() {
+  echo json_encode(AchievementController::getAll());
+});
+
+// Veterany
+$router->get('/veterany/range/{user_id}', function($user_id) {
+  echo json_encode(VeteranyController::getRange($user_id));
+});
+$router->get('/veterany/{user_id}', function($user_id) {
+  echo json_encode(VeteranyController::getVet($user_id));
+});
+
 
 // Error 404
 $router->set404(function() {
@@ -244,40 +289,40 @@ $router->set404(function() {
 // //       }
 // //       break;
 
-//     case 'achievements':
+// //     case 'achievements':
 
-//       if ($method == 'get') {
+// //       if ($method == 'get') {
 
-//         switch(count($uri)){
-//           case 2:
-//             echo json_encode(AchievementController::getAll($displayLang));
-//             break;
+// //         switch(count($uri)){
+// //           case 2:
+// //             echo json_encode(AchievementController::getAll($displayLang));
+// //             break;
 
-//           case 3:
-//             echo json_encode(AchievementController::getById($uri[2], $displayLang));
-//             break;
+// //           case 3:
+// //             echo json_encode(AchievementController::getById($uri[2], $displayLang));
+// //             break;
 
-//           case 5:
-//             $user_id = UserController::getId($uri[3], $uri[4]);
-//             echo json_encode(AchievementController::haveAchi($user_id['user']['id'], $uri[2]));
-//             break;
+// //           case 5:
+// //             $user_id = UserController::getId($uri[3], $uri[4]);
+// //             echo json_encode(AchievementController::haveAchi($user_id['user']['id'], $uri[2]));
+// //             break;
 
-//         }
-//       }
+// //         }
+// //       }
 
-//       if ($method == 'post') {
-//         $user_id = UserController::getId($uri[2], $uri[3]);
-//         echo json_encode(AchievementController::setAchievement($user_id['id'], $uri[4]));
-//       }
-//       break;
+// //       if ($method == 'post') {
+// //         $user_id = UserController::getId($uri[2], $uri[3]);
+// //         echo json_encode(AchievementController::setAchievement($user_id['id'], $uri[4]));
+// //       }
+// //       break;
 
-//     case 'veterany':
-//       echo json_encode(VeteranyController::getVet($user->id));
-//       break;
+// //     case 'veterany':
+// //       echo json_encode(VeteranyController::getVet($user->id));
+// //       break;
 
-//     case 'veteranyRange':
-//       echo json_encode(VeteranyController::getRange($user->id));
-//       break;
+// //     case 'veteranyRange':
+// //       echo json_encode(VeteranyController::getRange($user->id));
+// //       break;
 
 //     case 'lang':
 //       if ($method == 'get' && count($uri) == 3 && $uri[2] == 'offers') echo json_encode(LanguageController::getOfferLangs());
