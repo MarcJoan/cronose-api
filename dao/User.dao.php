@@ -11,7 +11,7 @@ require_once '../utilities/Logger.php';
 
 class UserDAO extends DAO {
 
-  private static $returnFields = "id, name, surname, surname_2, email, tag, initials, coins, registration_date, points, avatar_id as avatar, private, city_cp as city, province_id as province";
+  private static $returnFields = "initials, tag, email, name, surname, surname_2, coins, registration_date, points, avatar_id as avatar, private, city_cp as city, province_id as province";
 
   private static function getUserCompleteData(&$user) {
     // Unset name in case of private user
@@ -19,7 +19,7 @@ class UserDAO extends DAO {
 
     $user['avatar'] = MediaController::getById($user['avatar']);
     $user['address'] =  AddressController::getUserAddress($user);
-    $user['veterany'] = VeteranyController::getRange($user['id']);
+    // $user['veterany'] = VeteranyController::getRange($user);
 
     // Unset not necessary information
     unset($user['city'], $user['province'], $user['private']);
