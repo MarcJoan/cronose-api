@@ -4,10 +4,11 @@ require_once 'DAO.php';
 
 class UserDAO extends DAO {
 
-  private static $returnFields = "id, name, surname, surname_2, tag, initials, coins, avatar_id";
+  private static $returnFields = "id, name, surname, surname_2, email, tag, initials, coins, avatar_id";
 
   public static function getAll() {
-    $sql = "SELECT * FROM User";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -24,7 +25,8 @@ class UserDAO extends DAO {
   }
 
   public static function getUserByDni($dni) {
-    $sql = "SELECT * FROM User WHERE dni = :dni;";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE dni = :dni;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':dni', $dni, PDO::PARAM_STR);
     $statement->execute();
@@ -32,7 +34,8 @@ class UserDAO extends DAO {
   }
 
   public static function getUserByEmail($email) {
-    $sql = "SELECT * FROM User WHERE email = :email;";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM User WHERE email = :email;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
@@ -103,7 +106,7 @@ class UserDAO extends DAO {
   }
 
   public static function getAllDirections() {
-    $sql = "select distinct City.name,City.longitude,City.latitude from City,User";
+    $sql = "SELECT DISTINCT City.name,City.longitude,City.latitude FROM City, User";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
