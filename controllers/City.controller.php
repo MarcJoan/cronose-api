@@ -9,7 +9,7 @@ class CityController {
   }
 
   public static function getByCp($cp) {
-    $city = CityModel::getByCp($cp);
+    $city = CityDAO::getByCp($cp);
     $city['province'] = ProvinceController::getById($city['province_id']);
     unset($city['province_id'], $city['province']['cities']);
     return $city;
