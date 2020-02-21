@@ -1,13 +1,6 @@
 <?php
 
-require_once 'Model.php';
-
-class AdvertisementModel {
-
-  public static function modelValidation($body) {
-    $body = json_decode($body);
-    return true;
-  }
+class AdvertisementDAO {
 
   public static function getAll() {
     $sql = "SELECT * FROM Advertisement";

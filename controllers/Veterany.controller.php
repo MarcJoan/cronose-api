@@ -1,15 +1,15 @@
 <?php
 
-require_once '../models/Veterany.model.php';
+require_once '../dao/Veterany.dao.php';
 
 class VeteranyController {
 
   public static function getVet($id) {
-  	return VeteranyModel::getVet($id);
+    return VeteranyDAO::getVet($id);
   }
 
   public static function getRange($id) {
-    return VeteranyModel::getRange($id);
+    return VeteranyDAO::getRange($id);
   }
 
 }

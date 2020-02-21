@@ -1,19 +1,19 @@
 <?php
 
-require_once '../models/City.model.php';
+require_once '../dao/City.dao.php';
 
 class CityController {
 
   public static function getAll() {
-  	return CityModel::getAll();
+  	return CityDAO::getAll();
   }
 
   public static function getByCp($cp) {
-    return CityModel::getByCp($cp);
+    return CityDAO::getByCp($cp);
   }
 
   public static function getByProvinceId($province) {
-    return CityModel::getByProvinceId($province);
+    return CityDAO::getByProvinceId($province);
   }
 
 }

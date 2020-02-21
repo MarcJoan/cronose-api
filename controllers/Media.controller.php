@@ -1,16 +1,15 @@
 <?php
 
-require_once '../models/Media.model.php';
+require_once '../dao/Media.dao.php';
 
 class MediaController {
 
-  // CREC QUE AIXÓ ESTÀ MALAMENT jaja
   public static function getAll() {
-  	return ProvinceModel::getAll();
+  	return MediaDAO::getAll();
   }
 
   public static function getById($id) {
-    return ProvinceModel::getById($id);
+    return MediaDAO::getById($id);
   }
 
 }

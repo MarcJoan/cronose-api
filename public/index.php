@@ -9,7 +9,7 @@ session_start();
 
 // Controllers
 require_once '../controllers/Language.controller.php';
-require_once '../controllers/Offer.controller.php';
+require_once '../controllers/Work.controller.php';
 require_once '../controllers/User.controller.php';
 require_once '../controllers/Chat.controller.php';
 require_once '../controllers/Achievement.controller.php';
@@ -106,24 +106,24 @@ $router->post('/login', function() {
   echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));
 });
 
-// Offers
+// Works
 $router->get('/works', function() {
-  echo json_encode(OfferController::getAllOffers());
+  echo json_encode(WorkController::getAllWorks());
 });
 $router->get('/works/filter/{filter}', function($filter) {
-  echo json_encode(OfferController::getFilteredOffers($_REQUEST['filter']));
+  echo json_encode(WorkController::getFilteredWorks($_REQUEST['filter']));
 });
 $router->get('/works/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {
-  echo json_encode(OfferController::getOffersDefaultLang($limit, $offset, $lang));
+  echo json_encode(WorkController::getWorksDefaultLang($limit, $offset, $lang));
 });
 $router->get('/works/{lang}/{offset}/{limit}', function($lang, $offset, $limit) {
-  echo json_encode(OfferController::getOffersByLang($limit, $offset, $lang));
+  echo json_encode(WorkController::getWorksByLang($limit, $offset, $lang));
 });
 $router->get('/works/{offset}/{limit}', function($offset, $limit) {
-  echo json_encode(OfferController::getOffers($limit, $offset));
+  echo json_encode(WorkController::getWorks($limit, $offset));
 });
 $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag, $specialization) {
-  echo json_encode(OfferController::getOffer($initials, $tag, $specialization));
+  echo json_encode(WorkController::getWork($initials, $tag, $specialization));
 });
 
 // Chat
