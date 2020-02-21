@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/Veterany.model.php';
+require_once '../dao/Veterany.dao.php';
 
 class VeteranyController {
 
@@ -9,7 +9,7 @@ class VeteranyController {
   }
 
   public static function getRange($id) {
-    return VeteranyModel::getRange($id);
+    return VeteranyDAO::getRange($id);
   }
 
 }

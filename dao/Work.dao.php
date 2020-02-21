@@ -2,9 +2,9 @@
 
 require_once 'DAO.php';
 
-class OfferDAO extends DAO {
+class WorkDAO extends DAO {
 
-  public static function getAllOffersByLang($lang) {
+  public static function getAllWorksByLang($lang) {
     $sql = "SELECT Offer.specialization_id,CONCAT(User.initials,User.tag)AS tag_user ,User.tag,User.initials,Offer.user_id,Offer_Language.language_id,User.name,Offer_Language.title,Offer_Language.description,Offer.personal_valoration,Offer.valoration_avg,Offer.coin_price
       FROM Offer,Offer_Language,User 
       WHERE Offer.user_id = Offer_Language.user_id
@@ -16,7 +16,7 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function getOffersByIdANDLang($id, $lang) {
+  public static function getWorksByIdANDLang($id, $lang) {
     $sql = "SELECT Offer.specialization_id,CONCAT(User.initials,User.tag)AS tag_user,User.tag,User.initials,Offer.user_id,Offer_Language.language_id,User.name,Offer_Language.title,Offer_Language.description,Offer.personal_valoration,Offer.valoration_avg,Offer.coin_price
       FROM Offer,Offer_Language,User 
       WHERE Offer.user_id = Offer_Language.user_id
@@ -29,13 +29,13 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getOffer($userInitials,$userTag,$offerEsp) {
+    public static function getWork($userInitials,$userTag,$workEsp) {
     $sql = "SELECT Offer.specialization_id,User.tag,User.initials,Offer.user_id,Offer_Language.language_id,User.name,Offer_Language.title,Offer_Language.description,Offer.personal_valoration,Offer.valoration_avg,Offer.coin_price
       FROM Offer,Offer_Language,User 
       WHERE Offer.user_id = Offer_Language.user_id
       AND Offer.specialization_id = Offer_Language.specialization_id 
       AND User.id = Offer.user_id
-      AND Offer.specialization_id = $offerEsp
+      AND Offer.specialization_id = $workEsp
       AND User.tag= $userTag
       AND User.initials = '$userInitials'";
     $statement = self::$DB->prepare($sql);
@@ -45,7 +45,7 @@ class OfferDAO extends DAO {
 
   // ---------------------------------
 
-  public static function getAllOffers() {
+  public static function getAllWorks() {
     $sql = "SELECT Offer.user_id, Offer.specialization_id, User.initials, User.tag, User.name, User.surname, Offer.offered_at, Offer.coin_price, Offer.personal_valoration,Offer.valoration_avg, Offer.visibility 
       FROM User,Offer 
       WHERE User.id = Offer.user_id";
@@ -54,7 +54,7 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function getOffers($limit, $offset) {
+  public static function getWorks($limit, $offset) {
     $sql = "SELECT Offer.user_id, Offer.specialization_id, User.initials, User.tag, User.name, User.surname, Offer.offered_at, Offer.coin_price, Offer.personal_valoration,Offer.valoration_avg 
       FROM User,Offer 
       WHERE User.id = Offer.user_id 
@@ -67,7 +67,7 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function getOffersByLang($limit, $offset, $lang) {
+  public static function getWorksByLang($limit, $offset, $lang) {
     $sql = "SELECT Offer.user_id, Offer.specialization_id, User.initials, User.tag, User.name, User.surname, Offer.offered_at, Offer.coin_price, Offer.personal_valoration,Offer.valoration_avg 
       FROM Offer,Offer_Language,User 
       WHERE Offer.visibility = true 
@@ -84,7 +84,7 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function getOfferLangs($user_id, $specialization_id) {
+  public static function getWorkLangs($user_id, $specialization_id) {
     $sql = "SELECT Offer_Language.language_id,Offer_Language.title,Offer_Language.description
       FROM Offer,Offer_Language 
       WHERE Offer.user_id = Offer_Language.user_id
@@ -98,7 +98,7 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function getFilteredOffers($filter) {
+  public static function getFilteredWorks($filter) {
     
     $sql = "SELECT Offer.user_id, Offer.specialization_id, User.initials, User.tag, User.name, User.surname, Offer.offered_at, Offer.coin_price, Offer.personal_valoration,Offer.valoration_avg
     FROM Offer, Offer_Language, User, Specialization 
@@ -126,12 +126,12 @@ class OfferDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function setNewOffer($offer, $user){
+  public static function setNewWork($work, $user){
 
-    self::setNewOfferLang($offer, $user);
+    self::setNewWorkLang($work, $user);
 
-    $sp = $offer['specialization'];
-    $val = $offer['valoration'] * 20;
+    $sp = $work['specialization'];
+    $val = $work['valoration'] * 20;
     $coin_price = self::getCoinPrice($sp);
     $coin_price = $coin_price['coin_price'];
 
@@ -149,12 +149,12 @@ class OfferDAO extends DAO {
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
-  public static function setNewOfferLang($offer, $user){
+  public static function setNewWorkLang($work, $user){
     $id = $user->id;
-    $lang = $offer['lang'];
-    $sp = $offer['specialization'];
-    $title = $offer['title'];
-    $description = $offer['description'];
+    $lang = $work['lang'];
+    $sp = $work['specialization'];
+    $title = $work['title'];
+    $description = $work['description'];
 
     $sql = "INSERT into Offer_language VALUES ('$lang', $id, $sp, '$title','$description');";
     $statement = self::$DB->prepare($sql);

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/User.model.php';
+require_once '../dao/User.dao.php';
 
 // Utilities
 require_once '../utilities/Mailer.php';
@@ -9,25 +9,25 @@ require_once '../utilities/Logger.php';
 class UserController {
 
   public static function getAll() {
-    return UserModel::getAll();
+    return UserDAO::getAll();
   }
 
   public static function getUserByInitialsAndTag($initials, $tag) {
-    $profile = UserModel::getUserByInitialsAndTag($initials, $tag);
+    $profile = UserDAO::getUserByInitialsAndTag($initials, $tag);
     $profile['achievements'] = AchievementController::getAllByUser($profile['id']);
     return $profile;
   }
 
   public static function getId($initials, $tag) {
-    return UserModel::getId($initials, $tag);
+    return UserDAO::getId($initials, $tag);
   }
 
   public static function getUsersBySearch($text) {
-    return UserModel::getUsersBySearch($text);
+    return UserDAO::getUsersBySearch($text);
   }
 
   public static function register($user) {
-    $user = UserModel::saveUser($user);
+    $user = UserDAO::saveUser($user);
     if (!$user) return "Something went wrong!";
 
     $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
@@ -38,7 +38,7 @@ class UserController {
   }
 
   public static function isValid($email, $password) {
-    $user = UserModel::getUserByEmail($email);
+    $user = UserDAO::getUserByEmail($email);
     if (!$user) return false;
     if ($user['password'] != $password) return false;
     $_SESSION['user'] = json_encode($user);
@@ -60,7 +60,7 @@ class UserController {
   }
 
   public static function getAllDirections() {
-    return UserModel::getAllDirections();
+    return UserDAO::getAllDirections();
   }
 
 }

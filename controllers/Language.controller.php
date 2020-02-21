@@ -1,5 +1,5 @@
 <?php
-require_once '../models/Language.model.php';
+require_once '../dao/Language.dao.php';
 
 class LanguageController {
 
@@ -7,25 +7,16 @@ class LanguageController {
   private static $defaultLang = 'es';
 
   public static function getAll($lang) {
-    return LanguageModel::getAll($lang);
+    return LanguageDAO::getAll($lang);
   }
 
   public static function getOfferLangs() {
-    return LanguageModel::getOfferLangs();
+    return LanguageDAO::getOfferLangs();
   }
 
   public function getLangs() {
     return self::$langAvailable;
   }
-
-  // public function getLangs() {
-  //   $clientLang = $_SESSION['displayLang'] ?? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-  //   $lang = in_array($clientLang, self::$langAvailable) ? $clientLang : self::$defaultLang;
-  //   self::setLang($lang);
-  //   return array(
-  //     'language' => $lang
-  //   );
-  // }
 
   public function setLang($language) {
     $lang = in_array($language, self::$langAvailable) ? $language : self::$defaultLang;

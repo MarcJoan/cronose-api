@@ -112,7 +112,7 @@ create table if not exists `DNI_Photo` (
 )ENGINE = InnoDB;
 
 create table if not exists `User` (
-    id int auto_increment primary key,
+    id int auto_increment,
     dni varchar(9) not null unique,
     name varchar(45) not null,
     surname varchar(45) not null,
@@ -129,6 +129,8 @@ create table if not exists `User` (
     province_id int not null,
     avatar_id int,
     dni_photo_id int not null,
+    validated boolean not null,
+    primary key (initials, tag),
     foreign key (city_cp) references `City`(cp),
     foreign key (province_id) references `Province`(id),
     foreign key (avatar_id) references `Media`(id),
@@ -137,10 +139,12 @@ create table if not exists `User` (
 
 create table if not exists `User_Language` (
     language_id varchar(2) not null,
-    user_id int not null,
+    user_initals varchar(5) not null,
+    user_tag int(4) not null,
     foreign key (language_id) references `Language`(id),
-    foreign key (user_id) references `User`(id),
-    primary key(language_id, user_id)
+    foreign key (user_initals) references `User`(initials),
+    foreign key (user_tag) references `User`(tag),
+    primary key(language_id, user_initals)
 )ENGINE = InnoDB;
 
 create table if not exists `Blocks` (
@@ -235,28 +239,28 @@ create table if not exists `Obtain` (
     primary key(achievement_id, user_id)
 )ENGINE = InnoDB;
 
-create table if not exists `Veteranity` (
+create table if not exists `Veterany` (
     level int not null primary key,
     points int not null,
     debt_quantity int not null
 )ENGINE = InnoDB;
 
-create table if not exists `Veteranity_Language`(
+create table if not exists `Veterany_Language`(
     language_id varchar(2) not null,
     level_id int not null,
     name varchar(45) not null,
     foreign key (language_id) references `Language`(id),
-    foreign key (level_id) references `Veteranity`(level),
+    foreign key (level_id) references `Veterany`(level),
     primary key(language_id, level_id)
 )ENGINE = InnoDB;
 
-create table if not exists `Change_Veteranity` (
-    veteranity_level int not null,
+create table if not exists `Change_Veterany` (
+    veterany_level int not null,
     user_id int not null,
     changed_at date not null,
-    foreign key (veteranity_level) references `Veteranity`(level),
+    foreign key (veterany_level) references `Veterany`(level),
     foreign key (user_id) references `User`(id),
-    primary key (veteranity_level, user_id)
+    primary key (veterany_level, user_id)
 )ENGINE = InnoDB;
 
 create table if not exists `Offer` (
