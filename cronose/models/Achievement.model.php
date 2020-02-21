@@ -4,14 +4,13 @@ require_once 'Model.php';
 require_once '../dao/Achievement.dao.php';
 
 class AchievementModel {
-
-  public static function modelValidation($body) {
-    $body = json_decode($body);
-    return true;
+  
+  public static function getAll() {
+    return AchievementDAO::getAll();
   }
 
-  public static function getAll($lang) {
-    return AchievementDAO::getAll($lang);
+  public static function getAllByLang($lang) {
+    return AchievementDAO::getAllByLang($lang);
   }
 
   public static function getById($id, $lang) {

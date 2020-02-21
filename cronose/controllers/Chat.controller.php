@@ -5,38 +5,20 @@ require_once 'Achievement.controller.php';
 
 class ChatController {
 
-  public static function showChat($sender, $reciver) {
-    $response = ChatModel::showChat($sender, $reciver);
-    if ($response) return [
-      "status" => "success",
-      "msg" => $response
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Ops!"
-    ];
+  public static function showChat($sender, $receiver) {
+    return ChatModel::showChat($sender, $receiver);
   }
 
-  public static function sendMSG($sender, $reciver, $msg) {
-    $response = ChatModel::sendMSG($sender, $reciver, $msg);
+  public static function sendMSG($sender, $receiver, $msg) {
+    $response = ChatModel::sendMSG($sender, $receiver, $msg);
     $achi_id = 2;
     if ( !AchievementController::haveAchi($sender, $achi_id) ) {
       AchievementController::setAchievement($sender, $achi_id);
     }
-    return json_encode($response);
   }
 
-  public static function showChats($reciver) {
-    $response = ChatModel::showChats($reciver);
-
-    if ($response) return [
-      "status" => "success",
-      "users" => $response
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Ops!"
-    ];
+  public static function showChats($receiver) {
+    return ChatModel::showChats($receiver);
   }
 
 }

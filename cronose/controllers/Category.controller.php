@@ -17,20 +17,11 @@ class CategoryController {
   }
 
   public static function getAllByLang($lang) {
-  	$categories = CategoryModel::getAllByLang($lang);
-    return $categories;
+  	return CategoryModel::getAllByLang($lang);
   }
 
   public static function getCountSpecialization($lang) {
-    $categories = CategoryModel::getCountSpecialization($lang);
-    if ($categories) return [
-      "status" => "success",
-      "offers" => $categories
-    ];
-    else return [
-      "status" => "error",
-      "msg" => "Something went wrong!"
-    ];
+    return CategoryModel::getCountSpecialization($lang);
   }
 
 }

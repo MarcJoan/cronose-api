@@ -5,16 +5,16 @@ require_once '../dao/Chat.dao.php';
 
 class ChatModel extends Model {
 
-  public static function showChat($sender, $reciver) {
-    return ChatDAO::showChat($sender, $reciver);
+  public static function showChat($sender, $receiver) {
+    return ChatDAO::showChat($sender, $receiver);
   }
 
-  public static function sendMSG($sender, $reciver, $msg) {
-    return ChatDAO::sendMSG($sender, $reciver, $msg);
+  public static function sendMSG($sender, $receiver, $msg) {
+    return ChatDAO::sendMSG($sender, $receiver, $msg);
   }
 
-	public static function showChats($reciver) {
-    return ChatDAO::showChats($reciver);
+	public static function showChats($receiver) {
+    return ChatDAO::showChats($receiver);
   }
 
 }

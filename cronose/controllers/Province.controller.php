@@ -1,16 +1,18 @@
 <?php
 
 require_once '../models/Province.model.php';
+require_once 'City.controller.php';
 
 class ProvinceController {
 
   public static function getAll() {
-  	$cities = ProvinceModel::getAll();
-    return $cities;
+  	return ProvinceModel::getAll();
   }
 
   public static function getById($id) {
-    return ProvinceModel::getById($id);
+    $province = ProvinceModel::getById($id);
+    $province['cities'] = CityController::getByProvinceId($id);
+    return $province;
   }
 
 }

@@ -4,9 +4,18 @@ require_once 'DAO.php';
 
 class AchievementDAO extends DAO {
 
-  public static function getAll($lang){
-    $sql = "SELECT * FROM Achievement_Language WHERE language_id = '" . $lang . "'";
+  public static function getAll(){
+    $sql = "SELECT * FROM Achievement";
     $statement = self::$DB->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public static function getAllByLang($lang){
+    $sql = "SELECT * FROM Achievement_Language 
+      WHERE language_id = :lang;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':lang', $lang, PDO::PARAM_STR);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
@@ -26,7 +35,7 @@ class AchievementDAO extends DAO {
   }
 
   public static function getByIdAndLang($id, $lang) {
-    $sql = "SELECT * FROM Achievement_Language WHERE language_id = :lang AND achievement_id = :id;";
+    $sql = "SELECT name, description, language_id FROM Achievement_Language WHERE language_id = :lang AND achievement_id = :id;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->bindParam(':lang', $lang, PDO::PARAM_STR);

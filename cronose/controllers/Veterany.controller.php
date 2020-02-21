@@ -5,13 +5,11 @@ require_once '../models/Veterany.model.php';
 class VeteranyController {
 
   public static function getVet($id) {
-  	$achievements = VeteranyModel::getVet($id);
-    return $achievements;
+  	return VeteranyModel::getVet($id);
   }
 
   public static function getRange($id) {
-    $range = VeteranyModel::getRange($id);
-    return $range;
+    return VeteranyModel::getRange($id);
   }
 
 }
