@@ -5,8 +5,8 @@ require_once '../dao/Veterany.dao.php';
 
 class VeteranyModel extends Model {
 
-  public static function getVet($id) {
-    return VeteranyDAO::getVet($id);
+  public static function getVeterany($id) {
+    return VeteranyDAO::getVeterany($id);
   }
 
   public static function getRange($id) {

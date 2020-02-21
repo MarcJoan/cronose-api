@@ -2,16 +2,48 @@
 
 require_once 'DAO.php';
 
+require_once '../controllers/Media.controller.php';
+require_once '../controllers/Address.controller.php';
+require_once '../controllers/Veterany.controller.php';
+
+// Logger
+require_once '../utilities/Logger.php';
+
 class UserDAO extends DAO {
 
-  private static $returnFields = "id, name, surname, surname_2, email, tag, initials, coins, avatar_id";
+  private static $returnFields = "id, name, surname, surname_2, email, tag, initials, coins, registration_date, points, avatar_id as avatar, private, city_cp as city, province_id as province";
+
+  private static function getUserCompleteData(&$user) {
+    // Unset name in case of private user
+    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
+
+    $user['avatar'] = MediaController::getById($user['avatar']);
+    $user['address'] =  AddressController::getUserAddress($user);
+    $user['veterany'] = VeteranyController::getRange($user['id']);
+
+    // Unset not necessary information
+    unset($user['city'], $user['province'], $user['private']);
+  }
 
   public static function getAll() {
     $fields = self::$returnFields;
     $sql = "SELECT ${fields} FROM User";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+    $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($users as &$user) {
+      self::getUserCompleteData($user);
+    }
+    return $users;
+  }
+
+  public static function getId($initials, $tag) {
+    $sql = "SELECT id FROM User WHERE initials = :initials and tag = :tag;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':initials', $initials, PDO::PARAM_STR);
+    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
   public static function getUserByInitialsAndTag($initials, $tag) {
@@ -52,15 +84,6 @@ class UserDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function getId($initials, $tag) {
-    $sql = "SELECT id FROM User WHERE initials = :initials and tag = :tag;";
-    $statement = self::$DB->prepare($sql);
-    $statement->bindParam(':initials', $initials, PDO::PARAM_STR);
-    $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
-  }
-
   public static function getUserByTag($tag) {
     $fields = self::$returnFields;
     $sql = "SELECT ${fields} FROM User WHERE tag = :tag;";
@@ -89,7 +112,6 @@ class UserDAO extends DAO {
     $date = date("Y-m-d H:i:s");
     $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ${user['avatar']}, ${user['dni_photo_id']}";
     $sql = "INSERT INTO User (${fields}) VALUES (${values})";
-    Logger::log("DEBUG", $sql);
     /* SQL END CONSTRUCTION */
     $statement = self::$DB->prepare($sql);
     try {
@@ -103,13 +125,6 @@ class UserDAO extends DAO {
       Logger::log("ERROR", $e->getMessage());
       return null;
     }
-  }
-
-  public static function getAllDirections() {
-    $sql = "SELECT DISTINCT City.name,City.longitude,City.latitude FROM City, User";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
 }
