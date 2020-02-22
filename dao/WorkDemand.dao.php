@@ -3,7 +3,7 @@
 require_once 'DAO.php';
 require_once '../controllers/User.controller.php';
 
-class CardDAO extends DAO {
+class WorkDemandDAO extends DAO {
 
   public static function getCard($client_id, $worker_id, $specialization_id, $card_id) {
     $card['worker'] = UserController::getBasicUserById($worker_id);

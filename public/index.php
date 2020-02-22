@@ -18,7 +18,7 @@ require_once '../controllers/Specialization.controller.php';
 require_once '../controllers/Province.controller.php';
 require_once '../controllers/City.controller.php';
 require_once '../controllers/Veterany.controller.php';
-require_once '../controllers/Card.controller.php';
+require_once '../controllers/WorkDemand.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -127,13 +127,13 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
 
 // Cards
 $router->get('/card/{client_id}/{worker_id}/{specialization_id}/{card_id}', function($client_id, $worker_id, $specialization_id, $card_id) {
-  echo json_encode(CardController::getCard($client_id, $worker_id, $specialization_id, $card_id));
+  echo json_encode(WorkDemandController::getCard($client_id, $worker_id, $specialization_id, $card_id));
 });
 $router->get('/card/{status}/{user_id}', function($status, $user_id){
-  echo json_encode(CardController::getAllByStatus($user_id, $status));
+  echo json_encode(WorkDemandController::getAllByStatus($user_id, $status));
 });
 $router->get('/card/{user_id}', function($user_id){
-  echo json_encode(CardController::getAll($user_id));
+  echo json_encode(WorkDemandController::getAll($user_id));
 });
 
 // Chat
