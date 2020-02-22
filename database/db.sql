@@ -112,7 +112,7 @@ create table if not exists `DNI_Photo` (
 )ENGINE = InnoDB;
 
 create table if not exists `User` (
-    id int auto_increment,
+    id int auto_increment unique,
     dni varchar(9) not null unique,
     name varchar(45) not null,
     surname varchar(45) not null,
@@ -136,6 +136,14 @@ create table if not exists `User` (
     foreign key (avatar_id) references `Media`(id),
     foreign key (dni_photo_id) references `DNI_Photo`(id)
 )ENGINE = InnoDB;
+
+create table if not exists 'Token' (
+    id int auto_increment primary key,
+    user_id int not null,
+    token varchar(200) not null,
+    name enum('Restore_pswd', 'User_validate'),
+    foreign key (user_id) references 'User' (id)
+);
 
 create table if not exists `User_Language` (
     language_id varchar(2) not null,
