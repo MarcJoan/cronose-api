@@ -13,13 +13,15 @@ class UserController {
   }
 
   public static function getUserByInitialsAndTag($initials, $tag) {
-    $profile = UserDAO::getUserByInitialsAndTag($initials, $tag);
-    $profile['achievements'] = AchievementController::getAllByUser($profile['id']);
-    return $profile;
+    return UserDAO::getUserByInitialsAndTag($initials, $tag);
   }
 
   public static function getId($initials, $tag) {
     return UserDAO::getId($initials, $tag);
+  }
+
+  public static function getBasicUserById($id) {
+    return UserDAO::getBasicUserById($id);
   }
 
   public static function getUsersBySearch($text) {

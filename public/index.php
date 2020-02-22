@@ -86,11 +86,9 @@ $router->get('/city/{cp}', function($cp) {
 $router->get('/users', function() {
   echo json_encode(UserController::getAll());
 });
-          /***REVISAR***/
 $router->get('/users/{search}', function($search) {
   echo json_encode(UserController::getUsersBySearch($search));
 });
-          /*************/
 $router->get('/user/{initials}/{tag}/id', function($initial, $tag) {
   echo json_encode(UserController::getId($initial, $tag));
 });
@@ -130,8 +128,11 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
 $router->get('/chats/{user_id}', function($user_id) {
   echo json_encode(ChatController::showChats($user_id));
 });
+$router->get('/chat/{sender_id}/{receiver_id}/{offset}/{limit}', function($sender_id, $receiver_id, $offset, $limit) {
+  echo json_encode(ChatController::showChat($sender_id, $receiver_id, $offset, $limit));
+});
 $router->get('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
-  echo json_encode(ChatController::showChat($sender_id, $receiver_id));
+  echo json_encode(ChatController::showAllChat($sender_id, $receiver_id));
 });
 $router->post('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
   ChatController::sendMSG($sender_id, $receiver_id, $_POST['msg']);

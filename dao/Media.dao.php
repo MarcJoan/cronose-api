@@ -15,7 +15,7 @@ class MediaDAO extends DAO {
     $sql = "SELECT * FROM Media WHERE Media.id = ${id}";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $statement->fetch(PDO::FETCH_ASSOC);
   }
-
+  
 }
