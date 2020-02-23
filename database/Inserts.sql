@@ -335,3 +335,7 @@ INSERT INTO `specialization_language`(`language_id`, `specialization_id`, `name`
 ('ca', 27, 'Estilista'),
 ('en', 27, 'Stylist'),
 ('es', 27, 'Estilista');
+
+INSERT INTO Veteranity VALUES (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
+
+INSERT INTO Change_Veteranity VALUES (2,1,date(now())),(1,2,date(now()));
