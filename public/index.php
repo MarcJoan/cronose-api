@@ -1,9 +1,6 @@
 <?php
-// Headers
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
-header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+//  Headers -> Implementar els headers al apache
 
 session_start();
 
@@ -33,22 +30,8 @@ require '../views/components/language.php';
 require_once '../utilities/Router.php';
 $router = new Router();
 
-//URI
-$uri = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
-$auxUri = $uri;
-array_splice($auxUri, 0, 1);
-$auxUriString = implode("/", $auxUri);
-
-/*-------Language-------*/
-// $langController = LanguageController::getLang();
-// $displayLang = $langController['language'];
-
-//Method
-$method = strtolower($_SERVER['REQUEST_METHOD']);
-
 /*-----User logged------*/
 if (isset($_SESSION['user'])) $user = json_decode($_SESSION['user']);
-
 
 // Categories
 $router->get('/categories', function() {
@@ -86,11 +69,9 @@ $router->get('/city/{cp}', function($cp) {
 $router->get('/users', function() {
   echo json_encode(UserController::getAll());
 });
-          /***REVISAR***/
 $router->get('/users/{search}', function($search) {
   echo json_encode(UserController::getUsersBySearch($search));
 });
-          /*************/
 $router->get('/user/{initials}/{tag}/id', function($initial, $tag) {
   echo json_encode(UserController::getId($initial, $tag));
 });
@@ -158,7 +139,6 @@ $router->get('/veterany/range/{user_id}', function($user_id) {
 $router->get('/veterany/{user_id}', function($user_id) {
   echo json_encode(VeteranyController::getVet($user_id));
 });
-
 
 // Error 404
 $router->set404(function() {
