@@ -39,22 +39,21 @@ class UserController {
     return $user;
   }
 
-  public static function isValid($email, $password) {
-    $user = UserDAO::getUserByEmail($email);
-    if (!$user) return false;
-    if ($user['password'] != $password) return false;
-    $_SESSION['user'] = json_encode($user);
-    return $user;
-  }
+  // public static function isValid($email, $password) {
+  //   $user = UserDAO::getUserByEmail($email);
+  //   if (!$user) return false;
+  //   $userPassword = UserDAO::getUserPassword($user);
+  //   if ($userPassword != $password) return false;
+  //   return $user;
+  // }
 
   public static function userLogin($email, $password) {
-    $user = self::isValid($email, $password);
-    if (!$user) return "Something go wrong!";
-
-    $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
-    Mailer::sendMailTo("Welcome to Cronose", "Hello ${fullName}, we're happy to see you back!", $email);
-
-    return "Successfully logged!";
+    $userPassword = UserDAO::getPassword($email);
+    if ($userPassword != $password) {
+      http_response_code(400);
+      return ["message" => "Invalid email or password"];
+    }
+    return ["message" => "Login"];
   }
 
   public static function userLogout() {

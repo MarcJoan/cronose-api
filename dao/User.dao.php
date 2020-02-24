@@ -83,13 +83,22 @@ class UserDAO extends DAO {
 
   public static function getUserByEmail($email) {
     $fields = self::$returnFields;
-    $sql = "SELECT ${fields} FROM User WHERE email = :email";
+    $sql = "SELECT ${fields}, password FROM User WHERE email = :email";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
     self::getUserCompleteData($user);
     return $user;
+  }
+
+  public static function getPassword($email) {
+    $sql = "SELECT password FROM User WHERE email = :email";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+    $password = $statement->fetch(PDO::FETCH_ASSOC);
+    return $password['password'];
   }
 
   public static function getBasicUserById($id) {
