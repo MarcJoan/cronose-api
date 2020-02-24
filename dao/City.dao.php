@@ -4,30 +4,30 @@ require_once 'DAO.php';
 
 class CityDAO extends DAO {
 
+  private static $returnFields = "cp, province_id as province, name, longitude, latitude";
+
   public static function getAll(){
-    $sql = "SELECT *
-      FROM City";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM City";
     $statement = self::$DB->prepare($sql);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public static function getByCp($cp) {
-    $sql = "SELECT *
-      FROM City
-      WHERE City.cp = :cp";
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM City WHERE City.cp = :cp";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
-  public static function getByProvinceId($province) {
-    $sql = "SELECT cp, name, longitude, latitude
-      FROM City
-      WHERE City.province_id = :province";
+  public static function getByProvince($id) {
+    $fields = self::$returnFields;
+    $sql = "SELECT ${fields} FROM City WHERE City.province_id = :id";
     $statement = self::$DB->prepare($sql);
-    $statement->bindParam(':province', $province, PDO::PARAM_INT);
+    $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }

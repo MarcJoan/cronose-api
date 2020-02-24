@@ -15,6 +15,7 @@ require_once '../controllers/Specialization.controller.php';
 require_once '../controllers/Province.controller.php';
 require_once '../controllers/City.controller.php';
 require_once '../controllers/Veterany.controller.php';
+require_once '../controllers/WorkDemand.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -107,12 +108,26 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
   echo json_encode(WorkController::getWork($initials, $tag, $specialization));
 });
 
+// Cards
+$router->get('/card/{client_id}/{worker_id}/{specialization_id}/{card_id}', function($client_id, $worker_id, $specialization_id, $card_id) {
+  echo json_encode(WorkDemandController::getCard($client_id, $worker_id, $specialization_id, $card_id));
+});
+$router->get('/card/{status}/{user_id}', function($status, $user_id){
+  echo json_encode(WorkDemandController::getAllByStatus($user_id, $status));
+});
+$router->get('/card/{user_id}', function($user_id){
+  echo json_encode(WorkDemandController::getAll($user_id));
+});
+
 // Chat
 $router->get('/chats/{user_id}', function($user_id) {
   echo json_encode(ChatController::showChats($user_id));
 });
+$router->get('/chat/{sender_id}/{receiver_id}/{offset}/{limit}', function($sender_id, $receiver_id, $offset, $limit) {
+  echo json_encode(ChatController::showChat($sender_id, $receiver_id, $offset, $limit));
+});
 $router->get('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
-  echo json_encode(ChatController::showChat($sender_id, $receiver_id));
+  echo json_encode(ChatController::showAllChat($sender_id, $receiver_id));
 });
 $router->post('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
   ChatController::sendMSG($sender_id, $receiver_id, $_POST['msg']);

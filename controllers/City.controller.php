@@ -9,7 +9,9 @@ class CityController {
   }
 
   public static function getByCp($cp) {
-    return CityDAO::getByCp($cp);
+    $city = CityDAO::getByCp($cp);
+    $city['province'] = ProvinceController::getById($city['province']);
+    return $city;
   }
 
   public static function getByProvinceId($province) {
