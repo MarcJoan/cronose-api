@@ -245,28 +245,28 @@ create table if not exists `Obtain` (
     primary key(achievement_id, user_id)
 )ENGINE = InnoDB;
 
-create table if not exists `Veterany` (
+create table if not exists `Seniority` (
     level int not null primary key,
     points int not null,
     debt_quantity int not null
 )ENGINE = InnoDB;
 
-create table if not exists `Veterany_Language`(
+create table if not exists `Seniority_Language`(
     language_id varchar(2) not null,
     level_id int not null,
     name varchar(45) not null,
     foreign key (language_id) references `Language`(id),
-    foreign key (level_id) references `Veterany`(level),
+    foreign key (level_id) references `Seniority`(level),
     primary key(language_id, level_id)
 )ENGINE = InnoDB;
 
-create table if not exists `Change_Veterany` (
-    veterany_level int not null,
+create table if not exists `Change_Seniority` (
+    seniority_level int not null,
     user_id int not null,
     changed_at date not null,
-    foreign key (veterany_level) references `Veterany`(level),
+    foreign key (seniority_level) references `Seniority`(level),
     foreign key (user_id) references `User`(id),
-    primary key (veterany_level, user_id)
+    primary key (seniority_level, user_id)
 )ENGINE = InnoDB;
 
 create table if not exists `Offer` (

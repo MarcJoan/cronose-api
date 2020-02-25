@@ -4,7 +4,7 @@ require_once 'DAO.php';
 
 require_once '../controllers/Media.controller.php';
 require_once '../controllers/Address.controller.php';
-require_once '../controllers/Veterany.controller.php';
+require_once '../controllers/Seniority.controller.php';
 require_once '../controllers/Achievement.controller.php';
 
 // Logger
@@ -21,7 +21,7 @@ class UserDAO extends DAO {
     $user['avatar'] = MediaController::getById($user['avatar']);
     $user['address'] =  AddressController::getUserAddress($user);
     $user['achievements'] = AchievementController::getAllByUser($user['id']);
-    // $user['veterany'] = VeteranyController::getRange($user);
+    // $user['Seniority'] = SeniorityController::getRange($user);
 
     // Unset not necessary information
     unset($user['id'], $user['city'], $user['province'], $user['private']);

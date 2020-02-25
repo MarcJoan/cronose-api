@@ -314,6 +314,6 @@ INSERT INTO `Media`(extension, url) VALUES ('.jpg','profesor'),('.jpg','fontaner
 
 INSERT INTO `Load_Media`(user_id, specialization_id, media_id) VALUES ('1', '1', '3'), ('1', '2', '4');
 
-INSERT INTO `Veterany` VALUES (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
+INSERT INTO `Seniority` VALUES (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
 
-INSERT INTO `Change_Veterany` VALUES (2,1,date(now())),(1,2,date(now()));
+INSERT INTO `Change_Seniority` VALUES (2,1,date(now())),(1,2,date(now()));
