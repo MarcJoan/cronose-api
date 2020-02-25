@@ -27,11 +27,11 @@ class UserDAO extends DAO {
     unset($user['id'], $user['city'], $user['province'], $user['private']);
   }
 
-  private static function getUserBasicData(&$user) {
+  private static function getUserBasicData(&$user, $avatar) {
     // Unset name in case of private user
     if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
 
-    $user['avatar'] = MediaController::getById($user['avatar_id']);
+    if ($avatar) $user['avatar'] = MediaController::getById($user['avatar_id']);
 
     // Unset not necessary information
     unset($user['id'], $user['avatar_id'], $user['private']);
@@ -101,14 +101,14 @@ class UserDAO extends DAO {
     return $password['password'];
   }
 
-  public static function getBasicUserById($id) {
+  public static function getBasicUserById($id, $avatar) {
     $fields = self::$returnFields;
     $sql = "SELECT initials,tag,name,surname,surname_2,avatar_id,private FROM User WHERE id = :id";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-    self::getUserBasicData($user);
+    self::getUserBasicData($user, $avatar);
     return $user;
   }
 

@@ -18,6 +18,7 @@ require_once '../controllers/Specialization.controller.php';
 require_once '../controllers/Province.controller.php';
 require_once '../controllers/City.controller.php';
 require_once '../controllers/Seniority.controller.php';
+require_once '../controllers/Valoration.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -154,6 +155,11 @@ $router->get('/seniority/range/{user_id}', function($user_id) {
 });
 $router->get('/seniority/{user_id}', function($user_id) {
   echo json_encode(SeniorityController::getVet($user_id));
+});
+
+// Valoration
+$router->get('/valorations/{user_id}/{specialization_id}', function($user_id, $specialization_id) {
+  echo json_encode(ValorationController::getWorkerValorations($user_id, $specialization_id));
 });
 
 // Error 404
