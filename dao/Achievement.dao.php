@@ -52,7 +52,7 @@ class AchievementDAO extends DAO {
   }
 
   public static function getAllByUser($id) {
-    $sql = "SELECT * FROM Obtain WHERE user_id = :id;";
+    $sql = "SELECT achievement_id, obtained_at FROM Obtain WHERE user_id = :id;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
