@@ -1,6 +1,9 @@
 <?php
-
-//  Headers -> Implementar els headers al apache
+// Headers
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
+header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
 session_start();
 
@@ -14,8 +17,7 @@ require_once '../controllers/Category.controller.php';
 require_once '../controllers/Specialization.controller.php';
 require_once '../controllers/Province.controller.php';
 require_once '../controllers/City.controller.php';
-require_once '../controllers/Veterany.controller.php';
-require_once '../controllers/WorkDemand.controller.php';
+require_once '../controllers/Seniority.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -24,15 +26,26 @@ new DAO();
 // Logger
 require_once '../utilities/Logger.php';
 
-//Lang
-require '../views/components/language.php';
-
 //Router
 require_once '../utilities/Router.php';
 $router = new Router();
 
+//URI
+$uri = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
+$auxUri = $uri;
+array_splice($auxUri, 0, 1);
+$auxUriString = implode("/", $auxUri);
+
+/*-------Language-------*/
+// $langController = LanguageController::getLang();
+// $displayLang = $langController['language'];
+
+//Method
+$method = strtolower($_SERVER['REQUEST_METHOD']);
+
 /*-----User logged------*/
 if (isset($_SESSION['user'])) $user = json_decode($_SESSION['user']);
+
 
 // Categories
 $router->get('/categories', function() {
@@ -70,9 +83,11 @@ $router->get('/city/{cp}', function($cp) {
 $router->get('/users', function() {
   echo json_encode(UserController::getAll());
 });
+          /***REVISAR***/
 $router->get('/users/{search}', function($search) {
   echo json_encode(UserController::getUsersBySearch($search));
 });
+          /*************/
 $router->get('/user/{initials}/{tag}/id', function($initial, $tag) {
   echo json_encode(UserController::getId($initial, $tag));
 });
@@ -108,26 +123,12 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
   echo json_encode(WorkController::getWork($initials, $tag, $specialization));
 });
 
-// Cards
-$router->get('/card/{client_id}/{worker_id}/{specialization_id}/{card_id}', function($client_id, $worker_id, $specialization_id, $card_id) {
-  echo json_encode(WorkDemandController::getCard($client_id, $worker_id, $specialization_id, $card_id));
-});
-$router->get('/card/{status}/{user_id}', function($status, $user_id){
-  echo json_encode(WorkDemandController::getAllByStatus($user_id, $status));
-});
-$router->get('/card/{user_id}', function($user_id){
-  echo json_encode(WorkDemandController::getAll($user_id));
-});
-
 // Chat
 $router->get('/chats/{user_id}', function($user_id) {
   echo json_encode(ChatController::showChats($user_id));
 });
-$router->get('/chat/{sender_id}/{receiver_id}/{offset}/{limit}', function($sender_id, $receiver_id, $offset, $limit) {
-  echo json_encode(ChatController::showChat($sender_id, $receiver_id, $offset, $limit));
-});
 $router->get('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
-  echo json_encode(ChatController::showAllChat($sender_id, $receiver_id));
+  echo json_encode(ChatController::showChat($sender_id, $receiver_id));
 });
 $router->post('/chat/{sender_id}/{receiver_id}', function($sender_id, $receiver_id) {
   ChatController::sendMSG($sender_id, $receiver_id, $_POST['msg']);
@@ -147,12 +148,12 @@ $router->get('/achievements', function() {
   echo json_encode(AchievementController::getAll());
 });
 
-// Veterany
-$router->get('/veterany/range/{user_id}', function($user_id) {
-  echo json_encode(VeteranyController::getRange($user_id));
+// Seniority
+$router->get('/seniority/range/{user_id}', function($user_id) {
+  echo json_encode(SeniorityController::getRange($user_id));
 });
-$router->get('/veterany/{user_id}', function($user_id) {
-  echo json_encode(VeteranyController::getVet($user_id));
+$router->get('/seniority/{user_id}', function($user_id) {
+  echo json_encode(SeniorityController::getVet($user_id));
 });
 
 // Error 404

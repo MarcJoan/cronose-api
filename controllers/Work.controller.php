@@ -5,7 +5,6 @@ require_once '../controllers/User.controller.php';
 
 class WorkController {
 
-
 // ----------------Get works--------------------
 
   public static function getAllWorks() {
