@@ -1,7 +1,7 @@
 .idea
 .vscode
 .htaccess
-!*.example
 *config*
+!*.example
 
 .idea/codeStyles/
