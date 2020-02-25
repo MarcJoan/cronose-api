@@ -104,8 +104,8 @@ INSERT INTO `Languages_Translation`(language_id, translation, language_translate
 ('ca', 'Twi', 'tw'), ('ca', 'ucraïnès', 'uk'), ('ca', 'urdu', 'ur'), ('ca', 'uzbek', 'uz'), ('ca', 'vietnamita', 'vi'),
 ('ca', 'Volapuk', 'vo'), ('ca', 'wolof', 'wo'), ('ca', 'zulu', 'zu');
 
-UPDATE `Languages_Translation`
-SET translation = CONCAT(UCASE(LEFT(translation, 1)), SUBSTRING(translation, 2));
+/*UPDATE `Languages_Translation`
+SET translation = CONCAT(UCASE(LEFT(translation, 1)), SUBSTRING(translation, 2));*/
 
 INSERT INTO `Province`(name) VALUES ('Illes Balears');
 
@@ -122,42 +122,6 @@ INSERT INTO `User`(dni, name, surname, surname_2, email, password, tag, initials
   VALUES ('87654321Z','Anastasia','Guiterrez','Marcos','Anastasi@cgmail.com','202cb962ac59075b964b07152d234b70',9875, 'AGC' ,0.00,date(now()),0,0,07500,1,1,1);
 INSERT INTO `User`(dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id)
   VALUES ('45612387J','Josep','Oliver','Sanso','josep.oliverr@gmail.com','202cb962ac59075b964b07152d234b70',1313, 'JOS',3.00,date(now()),0,0,07500,1,1,1);
-
-SELECT * FROM `User`;
-
-INSERT INTO `Category`(coin_price) VALUES (1.2),(1);
-
-INSERT INTO `Category_Language` VALUES
-('es',1,'Educación'),
-('ca',1,'Educació'),
-('en',1,'Education'),
-('es',2,'Mantenimiento'),
-('ca',2,'Manteniment'),
-('en',2,'Maintenance');
-
-SELECT * FROM `Category`;
-
-INSERT INTO `Specialization`(category_id) VALUES (1),(2);
-
-INSERT INTO `Specialization_Language` VALUES
-('es',1,'Profesor Programación'),('ca',1,'Professor Programació'),('en',1,'Programming Professor'),
-('es',2,'Fontanero'),('ca',2,'Lampista'),('en',2,'Plumber');
-
-INSERT INTO `Offer`(user_id, specialization_id, valoration_avg, personal_valoration, coin_price, offered_at, visibility) VALUES
-('1', '1', '90', '70', '1.2', '2019-12-21', '1'),
-('2', '2', '50', '50', '1', '2019-12-22', '1');
-
-INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
-('es', '1', '1', 'Profesor de programación', 'Programación básica de c++, Programación avanzada de Java, '),
-('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, '),
-('en', '1', '1', 'Programming Professor', 'Basic programming of c++, Advanced programming of Java, ');
-
-INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
-('es', '2', '2', 'Fontanero', 'No hay ni uno igual ');
-
-INSERT INTO `Media`(extension, url) VALUES ('.jpg','profesor'),('.jpg','fontanero');
-
-INSERT INTO `Load_Media`(user_id, specialization_id, media_id) VALUES ('1', '1', '3'), ('1', '2', '4');
 
 INSERT INTO `Achievement` VALUES (),(),(),(),();
 
@@ -182,8 +146,6 @@ INSERT INTO `Obtain`(`achievement_id`, `user_id`, `obtained_at`) VALUES
 (1, '1', '2020-01-08'),
 (3, '1', '2020-01-02');
 
-
-
 INSERT INTO `Category`(`id`, `coin_price`) VALUES
 (1, 1.2),
 (2, 1.0),
@@ -195,7 +157,7 @@ INSERT INTO `Category`(`id`, `coin_price`) VALUES
 (8, 1.0),
 (9, 0.8);
 
-INSERT INTO `Category_language`(`language_id`, `category_id`, `name`) VALUES
+INSERT INTO `Category_Language`(`language_id`, `category_id`, `name`) VALUES
 ('ca', 1, 'Educació'),
 ('en', 1, 'Education'),
 ('es', 1, 'Educación'),
@@ -253,7 +215,7 @@ INSERT INTO `Specialization`(`id`, `category_id`) VALUES
 (24, 9),
 (25, 9);
 
-INSERT INTO `specialization_language`(`language_id`, `specialization_id`, `name`) VALUES
+INSERT INTO `Specialization_Language`(`language_id`, `specialization_id`, `name`) VALUES
 ('ca', 1, 'Professor Programació'),
 ('es', 1, 'Profesor Programación'),
 ('en', 1, 'Programming Professor'),
@@ -335,6 +297,22 @@ INSERT INTO `specialization_language`(`language_id`, `specialization_id`, `name`
 ('ca', 27, 'Estilista'),
 ('en', 27, 'Stylist'),
 ('es', 27, 'Estilista');
+
+INSERT INTO `Offer`(user_id, specialization_id, valoration_avg, personal_valoration, coin_price, offered_at, visibility) VALUES
+('1', '1', '90', '70', '1.2', '2019-12-21', '1'),
+('2', '2', '50', '50', '1', '2019-12-22', '1');
+
+INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
+('es', '1', '1', 'Profesor de programación', 'Programación básica de c++, Programación avanzada de Java, '),
+('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, '),
+('en', '1', '1', 'Programming Professor', 'Basic programming of c++, Advanced programming of Java, ');
+
+INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
+('es', '2', '2', 'Fontanero', 'No hay ni uno igual ');
+
+INSERT INTO `Media`(extension, url) VALUES ('.jpg','profesor'),('.jpg','fontanero');
+
+INSERT INTO `Load_Media`(user_id, specialization_id, media_id) VALUES ('1', '1', '3'), ('1', '2', '4');
 
 INSERT INTO Veteranity VALUES (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
 

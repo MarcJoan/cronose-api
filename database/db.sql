@@ -130,29 +130,27 @@ create table if not exists `User` (
     avatar_id int,
     dni_photo_id int not null,
     validated boolean not null,
-    primary key (initials, tag),
+    primary key (id),
     foreign key (city_cp) references `City`(cp),
     foreign key (province_id) references `Province`(id),
     foreign key (avatar_id) references `Media`(id),
     foreign key (dni_photo_id) references `DNI_Photo`(id)
 )ENGINE = InnoDB;
 
-create table if not exists 'Token' (
+create table if not exists `Token` (
     id int auto_increment primary key,
     user_id int not null,
     token varchar(200) not null,
     name enum('Restore_pswd', 'User_validate'),
-    foreign key (user_id) references 'User' (id)
+    foreign key (user_id) references `User` (id)
 );
 
 create table if not exists `User_Language` (
     language_id varchar(2) not null,
-    user_initals varchar(5) not null,
-    user_tag int(4) not null,
+    user_id int not null,
     foreign key (language_id) references `Language`(id),
-    foreign key (user_initals) references `User`(initials),
-    foreign key (user_tag) references `User`(tag),
-    primary key(language_id, user_initals)
+    foreign key (user_id) references `User`(id),
+    primary key(language_id, user_id)
 )ENGINE = InnoDB;
 
 create table if not exists `Blocks` (
