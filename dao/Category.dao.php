@@ -51,4 +51,12 @@ class CategoryDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public static function getPriceBySpecialization($id){
+    $sql = "Select Category.coin_price FROM Category, Specialization WHERE Specialization.id = :id AND Category.id = Specialization.category_id;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':id', $id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
 }

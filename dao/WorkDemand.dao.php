@@ -5,20 +5,6 @@ require_once '../controllers/User.controller.php';
 
 class WorkDemandDAO extends DAO {
 
-  // public static function getCard($client_id, $worker_id, $specialization_id, $card_id) {
-  //   $card['worker'] = UserController::getBasicUserById($worker_id);
-  //   $card['client'] = UserController::getBasicUserById($client_id);
-  //   $sql = "SELECT * From Card WHERE client_id = :client_id AND worker_id = :worker_id AND specialization_id = :specialization_id AND id = :card_id;";
-  //   $statement = self::$DB->prepare($sql);
-  //   $statement->bindParam(':client_id', $client_id, PDO::PARAM_INT);
-  //   $statement->bindParam(':worker_id', $worker_id, PDO::PARAM_INT);
-  //   $statement->bindParam(':specialization_id', $specialization_id, PDO::PARAM_INT);
-  //   $statement->bindParam(':card_id', $card_id, PDO::PARAM_INT);
-  //   $statement->execute();
-  //   $card['card'] = $statement->fetch(PDO::FETCH_ASSOC);
-  //   return $card;
-  // }
-
   public static function getCard($card_id) {
     $sql = "SELECT * From Card WHERE id = :card_id;";
     $statement = self::$DB->prepare($sql);
@@ -60,7 +46,7 @@ class WorkDemandDAO extends DAO {
 
   public static function getAllByStatus($user_id, $status) {
 
-    $sql = "SELECT * From Card WHERE (client_id = :user_id) OR (worker_id = :user_id) AND status = :status;";
+    $sql = "SELECT * From Card INNER JOIN Demands ON demands.id = Card.demand_id AND (demands.worker_id = :user_id OR demands.client_id = :user_id) AND card.status = :status;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->bindParam(':status', $status, PDO::PARAM_STR);
