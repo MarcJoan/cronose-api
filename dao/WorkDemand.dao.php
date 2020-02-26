@@ -23,6 +23,7 @@ class WorkDemandDAO extends DAO {
   public static function getAll($user_id) {
 
     $sql = "SELECT * From Card WHERE client_id = :user_id;";
+    $sql = "SELECT * From Card WHERE (client_id = :user_id) OR (worker_id = :user_id);";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->execute();
@@ -33,6 +34,7 @@ class WorkDemandDAO extends DAO {
   public static function getAllByStatus($user_id, $status) {
 
     $sql = "SELECT * From Card WHERE client_id = :user_id AND status = :status;";
+    $sql = "SELECT * From Card WHERE (client_id = :user_id) OR (worker_id = :user_id) AND status = :status;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->bindParam(':status', $status, PDO::PARAM_STR);

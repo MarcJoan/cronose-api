@@ -24,6 +24,10 @@ class UserController {
     return UserDAO::getBasicUserById($id);
   }
 
+  public static function getUserById($user_id) {
+    return UserDAO::getUserById($user_id);
+  }
+
   public static function getUsersBySearch($text) {
     return UserDAO::getUsersBySearch($text);
   }

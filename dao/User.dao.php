@@ -160,4 +160,12 @@ class UserDAO extends DAO {
     }
   }
 
+  public static function getUserById($user_id) {
+    $sql = "SELECT * FROM User where id = :user_id;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);;
+  }
+
 }
