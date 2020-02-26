@@ -1,9 +1,4 @@
 <?php
-// Headers
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
-header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
 session_start();
 
@@ -119,7 +114,7 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
 
 // Cards
 $router->get('/cards/{worker_id}/{client_id}/{specialization_id}', function($worker_id, $client_id, $specialization_id) {
-  echo json_encode(WorkDemandController::getCards($worker_id, $client_id, $specialization_id));
+  echo json_encode(WorkDemandController::getAllCards($worker_id, $client_id, $specialization_id));
 });
 $router->get('/card/{card_id}', function($card_id) {
   echo json_encode(WorkDemandController::getCard($card_id));
@@ -129,6 +124,10 @@ $router->get('/card/{status}/{user_id}', function($status, $user_id){
 });
 $router->get('/cards/{user_id}', function($user_id){
   echo json_encode(WorkDemandController::getAll($user_id));
+});
+// Demands
+$router->post('/demand', function(){
+  echo json_encode(WorkDemandController::createDemands($_POST['worker_id'], $_POST['client_id'], $_POST['specialization_id']));
 });
 
 // Chat

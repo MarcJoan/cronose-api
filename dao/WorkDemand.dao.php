@@ -14,7 +14,7 @@ class WorkDemandDAO extends DAO {
     return $card;
   }
 
-  public static function getCards($worker_id, $client_id, $specialization_id) {
+  public static function getAllCards($worker_id, $client_id, $specialization_id) {
     $cards['worker'] = UserController::getBasicUserById($worker_id);
     $cards['client'] = UserController::getBasicUserById($client_id);
     $sql = "SELECT Card.id FROM Card,Demands WHERE Demands.id = Card.demand_id
@@ -53,6 +53,18 @@ class WorkDemandDAO extends DAO {
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 
+  }
+
+  // Demands
+  public static function createDemands($worker_id, $client_id, $specialization_id) {
+    $sql = "INSERT INTO Demands ('id', 'client_id', 'worker_id', 'specialization_id', 'demanded_at') 
+            VALUES (NULL, :client_id, :worker_id, :specialization_id, CURRENT_TIMESTAMP)";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':client_id', $client_id, PDO::PARAM_INT);
+    $statement->bindParam(':worker_id', $worker_id, PDO::PARAM_INT);
+    $statement->bindParam(':specialization_id', $specialization_id, PDO::PARAM_INT);
+    $statement->execute();
+    return "ok";
   }
 
 }
