@@ -1,11 +1,7 @@
 <?php
-// Headers
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT");
-header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
-session_start();
+// CORE
+require_once '../config/config.php';
 
 // Controllers
 require_once '../controllers/Language.controller.php';
@@ -28,12 +24,12 @@ new DAO();
 // Logger
 require_once '../utilities/Logger.php';
 
-//Router
-require_once '../utilities/Router.php';
-$router = new Router();
+/** JWT */
+require_once '../utilities/JWTManager.php';
 
-/*-----User logged------*/
-if (isset($_SESSION['user'])) $user = json_decode($_SESSION['user']);
+/** ROUTER */
+require_once '../libs/Router.php';
+$router = new Router();
 
 // Categories
 $router->get('/categories', function() {
@@ -88,7 +84,10 @@ $router->post('/register', function() {
 });
 // Login
 $router->post('/login', function() {
-  echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));
+  if ($_POST['jwt']) echo decodeJWT($_POST['jwt'], function($data) {
+    echo json_encode(UserController::userLogin($data['email'], $data['password']));
+  });
+  else echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));
 });
 
 // Works
