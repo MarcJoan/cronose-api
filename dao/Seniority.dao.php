@@ -2,10 +2,10 @@
 
 require_once 'DAO.php';
 
-class VeteranyDAO extends DAO {
+class SeniorityDAO extends DAO {
 
-  public static function getVeterany($id){
-    $sql = "SELECT * FROM Change_Veterany 
+  public static function getSeniority($id){
+    $sql = "SELECT * FROM Change_Seniority 
       WHERE user_id = :id;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
@@ -14,9 +14,9 @@ class VeteranyDAO extends DAO {
   }
 
   public static function getRange($id){
-    $sql = "SELECT Change_Veterany.veterany_level, Veterany.points 
-      FROM Change_Veterany,Veterany 
-      WHERE Change_Veterany.veterany_level = Veterany.level
+    $sql = "SELECT Change_Seniority.seniority_level, Seniority.points 
+      FROM Change_Seniority,Seniority 
+      WHERE Change_Seniority.seniority_level = Seniority.level
       AND user_id = :id;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);

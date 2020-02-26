@@ -4,8 +4,12 @@ require_once '../dao/WorkDemand.dao.php';
 
 class WorkDemandController {
 
-  public static function getCard($client_id, $worker_id, $specialization_id, $card_id) {
-    return WorkDemandDAO::getCard($client_id, $worker_id, $specialization_id, $card_id);
+  public static function getCard($card_id) {
+    return WorkDemandDAO::getCard($card_id);
+  }
+
+  public static function getCards($worker_id, $client_id, $specialization_id) {
+    return WorkDemandDAO::getCards($worker_id, $client_id, $specialization_id);
   }
 
   public static function getAll($user_id) {

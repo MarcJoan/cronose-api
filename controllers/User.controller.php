@@ -20,8 +20,8 @@ class UserController {
     return UserDAO::getId($initials, $tag);
   }
 
-  public static function getBasicUserById($id) {
-    return UserDAO::getBasicUserById($id);
+  public static function getBasicUserById($id, $avatar = false) {
+    return UserDAO::getBasicUserById($id, $avatar);
   }
 
   public static function getUserById($user_id) {

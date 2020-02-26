@@ -112,7 +112,7 @@ create table if not exists `DNI_Photo` (
 )ENGINE = InnoDB;
 
 create table if not exists `User` (
-    id int auto_increment,
+    id int auto_increment unique,
     dni varchar(9) not null unique,
     name varchar(45) not null,
     surname varchar(45) not null,
@@ -130,21 +130,27 @@ create table if not exists `User` (
     avatar_id int,
     dni_photo_id int not null,
     validated boolean not null,
-    primary key (initials, tag),
+    primary key (id),
     foreign key (city_cp) references `City`(cp),
     foreign key (province_id) references `Province`(id),
     foreign key (avatar_id) references `Media`(id),
     foreign key (dni_photo_id) references `DNI_Photo`(id)
 )ENGINE = InnoDB;
 
+create table if not exists `Token` (
+    id int auto_increment primary key,
+    user_id int not null,
+    token varchar(200) not null,
+    name enum('Restore_pswd', 'User_validate'),
+    foreign key (user_id) references `User` (id)
+);
+
 create table if not exists `User_Language` (
     language_id varchar(2) not null,
-    user_initals varchar(5) not null,
-    user_tag int(4) not null,
+    user_id int not null,
     foreign key (language_id) references `Language`(id),
-    foreign key (user_initals) references `User`(initials),
-    foreign key (user_tag) references `User`(tag),
-    primary key(language_id, user_initals)
+    foreign key (user_id) references `User`(id),
+    primary key(language_id, user_id)
 )ENGINE = InnoDB;
 
 create table if not exists `Blocks` (
@@ -239,28 +245,28 @@ create table if not exists `Obtain` (
     primary key(achievement_id, user_id)
 )ENGINE = InnoDB;
 
-create table if not exists `Veterany` (
+create table if not exists `Seniority` (
     level int not null primary key,
     points int not null,
     debt_quantity int not null
 )ENGINE = InnoDB;
 
-create table if not exists `Veterany_Language`(
+create table if not exists `Seniority_Language`(
     language_id varchar(2) not null,
     level_id int not null,
     name varchar(45) not null,
     foreign key (language_id) references `Language`(id),
-    foreign key (level_id) references `Veterany`(level),
+    foreign key (level_id) references `Seniority`(level),
     primary key(language_id, level_id)
 )ENGINE = InnoDB;
 
-create table if not exists `Change_Veterany` (
-    veterany_level int not null,
+create table if not exists `Change_Seniority` (
+    seniority_level int not null,
     user_id int not null,
     changed_at date not null,
-    foreign key (veterany_level) references `Veterany`(level),
+    foreign key (seniority_level) references `Seniority`(level),
     foreign key (user_id) references `User`(id),
-    primary key (veterany_level, user_id)
+    primary key (seniority_level, user_id)
 )ENGINE = InnoDB;
 
 create table if not exists `Offer` (
@@ -315,6 +321,7 @@ create table if not exists `QR_Code` (
 )ENGINE = InnoDB;
 
 create table if not exists `Demands` (
+	id int auto_increment primary key not null,
     client_id int not null,
     worker_id int not null,
     specialization_id int not null,
@@ -322,7 +329,7 @@ create table if not exists `Demands` (
     foreign key (client_id) references `User`(id),
     foreign key (worker_id) references `Offer`(user_id),
     foreign key (specialization_id) references `Offer`(specialization_id),
-    primary key (client_id, worker_id, specialization_id, demanded_at)
+    unique key (client_id, worker_id, specialization_id, demanded_at)
 )ENGINE = InnoDB;
 
 
@@ -332,16 +339,10 @@ create table if not exists `Card` (
     work_date datetime not null,
     qr_code_id int,
     cancelation_policy_id int not null,
-    client_id int not null,
-    worker_id int not null,
-    specialization_id int not null,
-    demand_date timestamp not null unique,
+    demand_id int not null,
     foreign key (qr_code_id) references `QR_Code`(id),
     foreign key (cancelation_policy_id) references `Cancelation_Policy`(id),
-    foreign key (client_id) references `Demands`(client_id),
-    foreign key (worker_id) references `Demands`(worker_id),
-    foreign key (specialization_id) references `Demands`(specialization_id),
-    foreign key (demand_date) references `Demands`(demanded_at)
+    foreign key (demand_id) references `Demands`(id)
 )ENGINE = InnoDB;
 
 
