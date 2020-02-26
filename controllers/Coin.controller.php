@@ -28,6 +28,8 @@ class CoinController {
 
         $actualCoin -= floatval($job['coin_price']['coin_price']);
       }
+
+      $historial[$job['id']]['work'] = $job;
     }
 
     return $historial;
