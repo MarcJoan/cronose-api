@@ -31,22 +31,8 @@ require_once '../utilities/Logger.php';
 require_once '../utilities/Router.php';
 $router = new Router();
 
-//URI
-$uri = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
-$auxUri = $uri;
-array_splice($auxUri, 0, 1);
-$auxUriString = implode("/", $auxUri);
-
-/*-------Language-------*/
-// $langController = LanguageController::getLang();
-// $displayLang = $langController['language'];
-
-//Method
-$method = strtolower($_SERVER['REQUEST_METHOD']);
-
 /*-----User logged------*/
 if (isset($_SESSION['user'])) $user = json_decode($_SESSION['user']);
-
 
 // Categories
 $router->get('/categories', function() {
