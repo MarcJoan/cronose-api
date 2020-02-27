@@ -46,7 +46,7 @@ class WorkDemandDAO extends DAO {
 
   public static function getAllByStatus($user_id, $status) {
 
-    $sql = "SELECT * From Card INNER JOIN Demands ON demands.id = Card.demand_id AND (demands.worker_id = :user_id OR demands.client_id = :user_id) AND card.status = :status;";
+    $sql = "SELECT *, Demands.id as Demand_id From Card INNER JOIN Demands ON demands.id = Card.demand_id AND (demands.worker_id = :user_id OR demands.client_id = :user_id) AND card.status = :status;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->bindParam(':status', $status, PDO::PARAM_STR);
