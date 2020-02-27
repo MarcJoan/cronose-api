@@ -336,7 +336,7 @@ INSERT INTO `Valoration_Label` (`id`) VALUES (NULL);
 
 INSERT INTO `Valoration_Label_Language` (`language_id`, `valoration_label_id`, `aspect`) VALUES 
 ('ca', '1', 'Puntualitat'),
-('en', '1', 'Puntualidad'),
+('en', '1', 'Puntualidad'), 
 ('es', '1', 'Puntuality');
 
 INSERT INTO `Worker_Valoration` (`valoration_id`, `card_id`, `comment_id`, `puntuation`) VALUES ('1', '1', '1', '98');

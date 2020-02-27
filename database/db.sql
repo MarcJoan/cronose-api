@@ -129,7 +129,7 @@ create table if not exists `User` (
     province_id int not null,
     avatar_id int,
     dni_photo_id int not null,
-    validated boolean not null,
+    validated boolean not null default 0,
     primary key (id),
     foreign key (city_cp) references `City`(cp),
     foreign key (province_id) references `Province`(id),

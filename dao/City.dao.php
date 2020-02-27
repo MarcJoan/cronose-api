@@ -23,7 +23,7 @@ class CityDAO extends DAO {
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
-  public static function getByProvince($id) {
+  public static function getByProvinceId($id) {
     $fields = self::$returnFields;
     $sql = "SELECT ${fields} FROM City WHERE City.province_id = :id";
     $statement = self::$DB->prepare($sql);
