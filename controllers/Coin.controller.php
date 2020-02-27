@@ -3,6 +3,7 @@
 require_once '../controllers/User.controller.php';
 require_once '../controllers/WorkDemand.controller.php';
 require_once '../controllers/Category.controller.php';
+require_once '../controllers/Specialization.controller.php';
 
 class CoinController {
 
@@ -15,7 +16,7 @@ class CoinController {
     foreach ($jobs as $job) {
       
       $job['coin_price'] = categoryController::getPriceBySpecialization($job['specialization_id']);
-      $historial[$job['id']]['date'] = $job['work_date'];
+      $historial[$job['id']]['work_date'] = $job['work_date'];
       
       if($job['worker_id'] === $user_id){
 
@@ -29,11 +30,16 @@ class CoinController {
         $historial[$job['id']]['new_coins'] = number_format(floatval($historial[$job['id']]['new_coins']), 2, '.', ',');
         $actualCoin -= floatval($job['coin_price']['coin_price']);
       }
-      $demand['id'] = $job['Demand_id'];
-      $demand['client_id'] = $job['client_id'];
-      $demand['worker_id'] = $job['worker_id'];
-      $demand['specialization_id'] = $job['specialization_id'];
+
+      $client = UserController::getBasicUserById($job['client_id'], false);
+      $worker = UserController::getBasicUserById($job['worker_id'], false);
+      $specialization = SpecializationController::getAllByIDAndLang($job['id'], 'es');
+
+      $demand['demand_id'] = $job['Demand_id'];
       $demand['demanded_at'] = $job['demanded_at'];
+      $demand['client'] = $client;
+      $demand['worker'] = $worker;
+      $demand['specialization'] = $specialization;
 
       $work['id'] = $job['id'];
       $work['status'] = $job['status'];
@@ -42,7 +48,7 @@ class CoinController {
       $work['cancelation_policy'] = $job['cancelation_policy_id'];
 
       $historial[$job['id']]['demand'] = $demand;
-      $historial[$job['id']]['work'] = $work;
+      $historial[$job['id']]['work_demand'] = $work;
     }
 
     return $historial;

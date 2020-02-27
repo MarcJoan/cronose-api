@@ -47,8 +47,8 @@ $router->get('/specialization/{lang}', function($lang) {
   echo json_encode(SpecializationController::getAllByLang($lang));
 });
 
-//Coins
-$router->get('/coin/{user_id}', function($user_id) {
+//Coins (wallet perquè a n'en Twaia li fa ilusiò)
+$router->get('/wallet/{user_id}', function($user_id) {
   echo json_encode(CoinController::getCoinHistory($user_id));
 });
 
