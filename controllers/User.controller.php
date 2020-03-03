@@ -2,6 +2,9 @@
 
 require_once '../dao/User.dao.php';
 
+// JWT
+require_once '../utilities/JWTManager.php';
+
 // Utilities
 require_once '../utilities/Mailer.php';
 require_once '../utilities/Logger.php';
@@ -42,11 +45,10 @@ class UserController {
       http_response_code(400);
       return ["message" => "Invalid email or password"];
     }
-    return ["message" => "Login"];
-  }
-
-  public static function userLogout() {
-    $_SESSION['user'] = null;
+    return [
+      "message" => "Login",
+      "jwt" => createJWT(["email" => $email, "password" => $password])
+    ];
   }
 
   public static function getAllDirections() {
