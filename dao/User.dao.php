@@ -7,6 +7,7 @@ require_once '../controllers/Address.controller.php';
 require_once '../controllers/Seniority.controller.php';
 require_once '../controllers/Achievement.controller.php';
 require_once '../controllers/Image.controller.php';
+require_once '../controllers/Token.controller.php';
 
 // Logger
 require_once '../utilities/Logger.php';
@@ -160,6 +161,9 @@ class UserDAO extends DAO {
       $statement->execute();
       $errors = $statement->errorInfo();
       if ($errors[1]) return Logger::log("ERROR", $errors);
+      $userId = self::getId($initials, $tag);
+      TokenController::createNewUser($userId['id'], "User_validate");
+      TokenController::sendVerificationEmail($userId['id']);
       Logger::log("INFO", "New User saved with dni = ${user['dni']}");
       return self::getUserByDni($user['dni']);
     } catch (PDOException $e) {
