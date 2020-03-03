@@ -162,8 +162,7 @@ class UserDAO extends DAO {
       $errors = $statement->errorInfo();
       if ($errors[1]) return Logger::log("ERROR", $errors);
       $userId = self::getId($initials, $tag);
-      TokenController::createNewUser($userId['id'], "User_validate");
-      TokenController::sendVerificationEmail($userId['id']);
+      TokenController::createNewUser($userId['id'], $user['email']);
       Logger::log("INFO", "New User saved with dni = ${user['dni']}");
       return self::getUserByDni($user['dni']);
     } catch (PDOException $e) {

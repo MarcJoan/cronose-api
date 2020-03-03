@@ -5,9 +5,12 @@ require_once '../utilities/Mailer.php';
 
 class TokenController {
 
-  public static function createNewUser($userId, $type) {
-    $token = self::createToken($userId, $type);
+  public static function createNewUser($userId, $email) {
+    $token = self::createToken($userId, "User_validate");
 
+    $subject = "User validate";
+    $message = "$token";
+    Mailer::sendMailTo($subject, $message, $email, $from = null, $headers = "");
   }
 
   public static function createToken($userId, $type) {
