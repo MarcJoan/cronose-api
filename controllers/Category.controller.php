@@ -24,4 +24,8 @@ class CategoryController {
     return CategoryDAO::getCountSpecialization($lang);
   }
 
+  public static function getPriceBySpecialization($id){
+    return CategoryDAO::getPriceBySpecialization($id);
+  }
+
 }

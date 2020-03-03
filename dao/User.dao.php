@@ -6,6 +6,8 @@ require_once '../controllers/Media.controller.php';
 require_once '../controllers/Address.controller.php';
 require_once '../controllers/Seniority.controller.php';
 require_once '../controllers/Achievement.controller.php';
+require_once '../controllers/Image.controller.php';
+require_once '../controllers/Token.controller.php';
 
 // Logger
 require_once '../utilities/Logger.php';
@@ -66,7 +68,6 @@ class UserDAO extends DAO {
     $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-    self::getUserCompleteData($user);
     return $user;
   }
 
@@ -126,24 +127,33 @@ class UserDAO extends DAO {
     return $users;
   }
 
-  public static function saveUser($user) {
+  public static function saveUser($user, $fiels) {
+
     /* DEFAULT VALUES */
     $user['surname_2'] = $user['surname_2'] ?? "";
-    $user['private'] = $user['private'] ?? true;
+    $user['private'] = (isset($user['private'])) ? 1 : 0;
     $user['avatar'] = $user['avatar'] ?? 'null';
     /* SAVE FILES */
 
-    /* SQL BEGIN CONSTRUCTION */
-    $fields = "dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id";
-    $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
-    $tag = mt_rand(1000, 9999);
+    /* INITIALS ANS TAG GENERATE */
     $words = preg_split("/\s+/", "${user['name']} ${user['surname']} ${user['surname_2']}");
     $initials = "";
     foreach ($words as $w) {
       $initials .= $w[0];
-    }
+    };
+    do{
+    $tag = mt_rand(1000, 9999);
+    } while(self::getUserByInitialsAndTag($initials, $tag));
+
+    $img = ImageController::saveImages($initials, $tag, $fiels);
+
+    /* SQL BEGIN CONSTRUCTION */
+    $fields = "dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id";
+    $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
+    
     $date = date("Y-m-d H:i:s");
-    $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ${user['avatar']}, ${user['dni_photo_id']}";
+    $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ";
+    $values .= $img['avatar']['id'] . ', ' . $img['dni_img']['id'];
     $sql = "INSERT INTO User (${fields}) VALUES (${values})";
     /* SQL END CONSTRUCTION */
     $statement = self::$DB->prepare($sql);
@@ -151,6 +161,8 @@ class UserDAO extends DAO {
       $statement->execute();
       $errors = $statement->errorInfo();
       if ($errors[1]) return Logger::log("ERROR", $errors);
+      $userId = self::getId($initials, $tag);
+      TokenController::createNewUser($userId['id'], $user['email']);
       Logger::log("INFO", "New User saved with dni = ${user['dni']}");
       return self::getUserByDni($user['dni']);
     } catch (PDOException $e) {
@@ -158,6 +170,14 @@ class UserDAO extends DAO {
       Logger::log("ERROR", $e->getMessage());
       return null;
     }
+  }
+
+  public static function getUserById($user_id) {
+    $sql = "SELECT * FROM User where id = :user_id;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);;
   }
 
 }

@@ -16,6 +16,8 @@ require_once '../controllers/City.controller.php';
 require_once '../controllers/Seniority.controller.php';
 require_once '../controllers/Valoration.controller.php';
 require_once '../controllers/WorkDemand.controller.php';
+require_once '../controllers/Coin.controller.php';
+require_once '../controllers/Image.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -47,6 +49,11 @@ $router->get('/specialization/{lang}', function($lang) {
   echo json_encode(SpecializationController::getAllByLang($lang));
 });
 
+//Coins (wallet perquè a n'en Twaia li fa ilusiò)
+$router->get('/wallet/{user_id}', function($user_id) {
+  echo json_encode(CoinController::getCoinHistory($user_id));
+});
+
 // Provinces
 $router->get('/provinces', function() {
   echo json_encode(ProvinceController::getAll());
@@ -56,6 +63,9 @@ $router->get('/province/{id}', function($id) {
 });
 
 // Cities
+$router->get('/cities/{province_id}', function($province_id) {
+  echo json_encode(ProvinceController::getProvinceCities($province_id));
+});
 $router->get('/cities', function() {
   echo json_encode(CityController::getAll());
 });
@@ -80,7 +90,7 @@ $router->get('/user/{initials}/{tag}', function($initial, $tag) {
 });
 // Register
 $router->post('/register', function() {
-  echo json_encode(UserController::register($_POST['user']));
+  echo json_encode(UserController::register($_POST, $_FILES));
 });
 // Login
 $router->post('/login', function() {
@@ -112,7 +122,7 @@ $router->get('/work/{initials}/{tag}/{specialization}', function($initials, $tag
 
 // Cards
 $router->get('/cards/{worker_id}/{client_id}/{specialization_id}', function($worker_id, $client_id, $specialization_id) {
-  echo json_encode(WorkDemandController::getCards($worker_id, $client_id, $specialization_id));
+  echo json_encode(WorkDemandController::getAllCards($worker_id, $client_id, $specialization_id));
 });
 $router->get('/card/{card_id}', function($card_id) {
   echo json_encode(WorkDemandController::getCard($card_id));
@@ -122,6 +132,10 @@ $router->get('/card/{status}/{user_id}', function($status, $user_id){
 });
 $router->get('/cards/{user_id}', function($user_id){
   echo json_encode(WorkDemandController::getAll($user_id));
+});
+// Demands
+$router->post('/demand', function(){
+  echo json_encode(WorkDemandController::createDemands($_POST['worker_id'], $_POST['client_id'], $_POST['specialization_id']));
 });
 
 // Chat

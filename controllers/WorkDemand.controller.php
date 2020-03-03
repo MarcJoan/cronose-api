@@ -8,7 +8,7 @@ class WorkDemandController {
     return WorkDemandDAO::getCard($card_id);
   }
 
-  public static function getCards($worker_id, $client_id, $specialization_id) {
+  public static function getAllCards($worker_id, $client_id, $specialization_id) {
     return WorkDemandDAO::getCards($worker_id, $client_id, $specialization_id);
   }
 
@@ -18,6 +18,11 @@ class WorkDemandController {
 
   public static function getAllByStatus($user_id, $status) {
     return WorkDemandDAO::getAllByStatus($user_id, $status);
+  }
+
+  // Demands
+  public static function createDemands($worker_id, $client_id, $specialization_id) {
+    return WorkDemandDAO::createDemands($worker_id, $client_id, $specialization_id);
   }
 
 }

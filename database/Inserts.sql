@@ -321,7 +321,7 @@ INSERT INTO `Change_Seniority` VALUES (2,1,date(now())),(1,2,date(now()));
 INSERT INTO `Cancelation_Policy` () VALUES ();
 
 INSERT INTO `Demands` (`id`, `client_id`, `worker_id`, `specialization_id`, `demanded_at`) VALUES (NULL, '2', '1', '1', CURRENT_TIMESTAMP);
-INSERT INTO `Demands` (`id`, `client_id`, `worker_id`, `specialization_id`, `demanded_at`) VALUES (NULL, '3', '1', '1', CURRENT_TIMESTAMP);
+INSERT INTO `Demands` (`id`, `client_id`, `worker_id`, `specialization_id`, `demanded_at`) VALUES (NULL, '3', '1', '1', '2020-02-18 00:15:15');
 
 INSERT INTO `Card` (`id`, `status`, `work_date`, `qr_code_id`, `cancelation_policy_id`, `demand_id`) VALUES (NULL, 'accepted', '2020-01-19 00:00:00', NULL, '1', '1');
 INSERT INTO `Card` (`id`, `status`, `work_date`, `qr_code_id`, `cancelation_policy_id`, `demand_id`) VALUES (NULL, 'accepted', '2020-01-19 00:00:00', NULL, '1', '2');
@@ -336,8 +336,9 @@ INSERT INTO `Valoration_Label` (`id`) VALUES (NULL);
 
 INSERT INTO `Valoration_Label_Language` (`language_id`, `valoration_label_id`, `aspect`) VALUES 
 ('ca', '1', 'Puntualitat'),
-('en', '1', 'Puntualidad'),
+('en', '1', 'Puntualidad'), 
 ('es', '1', 'Puntuality');
 
 INSERT INTO `Worker_Valoration` (`valoration_id`, `card_id`, `comment_id`, `puntuation`) VALUES ('1', '1', '1', '98');
 INSERT INTO `Worker_Valoration` (`valoration_id`, `card_id`, `comment_id`, `puntuation`) VALUES ('1', '2', '2', '75');
+
