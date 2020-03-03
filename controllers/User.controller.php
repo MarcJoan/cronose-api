@@ -51,6 +51,10 @@ class UserController {
     ];
   }
 
+  public static function validateUser($token) {
+    UserDAO::validateUser($token);
+  }
+
   public static function getAllDirections() {
     return UserDAO::getAllDirections();
   }

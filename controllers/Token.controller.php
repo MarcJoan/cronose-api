@@ -9,7 +9,7 @@ class TokenController {
     $token = self::createToken($userId, "User_validate");
 
     $subject = "User validate";
-    $message = "$token";
+    $message = "http://devapi.cronose.dawman.info/validate/$token";
     Mailer::sendMailTo($subject, $message, $email, $from = null, $headers = "");
   }
 

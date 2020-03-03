@@ -172,6 +172,16 @@ class UserDAO extends DAO {
     }
   }
 
+  public static function validateUser($token) {
+    $sql = "UPDATE User,Token 
+            SET User.validated=1 
+            WHERE User.id = Token.user_id 
+            AND Token.token = :token";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':token', $token, PDO::PARAM_STR);
+    $statement->execute();
+  }
+
   public static function getUserById($user_id) {
     $sql = "SELECT * FROM User where id = :user_id;";
     $statement = self::$DB->prepare($sql);

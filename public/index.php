@@ -92,6 +92,9 @@ $router->get('/user/{initials}/{tag}', function($initial, $tag) {
 $router->post('/register', function() {
   echo json_encode(UserController::register($_POST, $_FILES));
 });
+$router->get('/validate/{token}', function($token) {
+  UserController::validateUser($token);
+});
 // Login
 $router->post('/login', function() {
   if ($_POST['jwt']) echo decodeJWT($_POST['jwt'], function($data) {
