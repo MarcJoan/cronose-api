@@ -7,8 +7,8 @@ class TokenController {
 
   public static function createNewUser($userId, $email) {
     
-    $subject = "User validate";
-    $title = "User_validate";
+    $title = "User validate";
+    $subject = "User_validate";
     $message = "Haga click en el siguiente enlace para validar su cuenta: ";
 
     self::sendToken($userId, $email, $subject, $message, $title);
@@ -21,7 +21,7 @@ class TokenController {
     $subject = "Restore_pswd";
     $message = "Haga click en el siguiente enlace para resetear su contraseña: ";
 
-    self::sendToken($userId, $email, $subject, $message, $title);
+    return self::sendToken($userId, $email, $subject, $message, $title);
   }
 
   public static function createToken($userId, $type) {
@@ -29,11 +29,10 @@ class TokenController {
   }
 
   public static function sendToken($userId, $email, $subject, $message, $title) {
-
     $token = self::createToken($userId, $subject);
 
-    $completeMessage = $message + "http://devapi.cronose.dawman.info/validate/$token";
-
+    $completeMessage = $message . "http://devapi.cronose.dawman.info/validate/$token";
+    return $title;
     Mailer::sendMailTo($title, $completeMessage, $email, $from = null, $headers = "");
   }
 
