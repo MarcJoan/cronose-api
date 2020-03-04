@@ -18,6 +18,7 @@ require_once '../controllers/Valoration.controller.php';
 require_once '../controllers/WorkDemand.controller.php';
 require_once '../controllers/Coin.controller.php';
 require_once '../controllers/Image.controller.php';
+require_once '../controllers/Token.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -71,6 +72,11 @@ $router->get('/cities', function() {
 });
 $router->get('/city/{cp}', function($cp) {
   echo json_encode(CityController::getByCp($cp));
+});
+
+// Prueba
+$router->get('/prueba/{email}', function($email) {
+  echo json_encode(TokenController::resetPassword($email));
 });
 
 // User

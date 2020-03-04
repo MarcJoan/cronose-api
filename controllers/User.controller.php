@@ -59,6 +59,10 @@ class UserController {
     return UserDAO::getAllDirections();
   }
 
+  public static function getIdByEmail($email){
+    return UserDAO::getIdByEmail($email);
+  }
+
 }
 
 ?>

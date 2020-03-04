@@ -187,7 +187,15 @@ class UserDAO extends DAO {
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);;
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public static function getIdByEmail($email) {
+    $sql = "SELECT id FROM User WHERE email = :email;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
 }
