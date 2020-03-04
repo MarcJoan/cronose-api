@@ -28,7 +28,7 @@ class TokenController {
     return TokenDAO::createToken($userId, $type);
   }
 
-  public static function sendToken($userId, $emai, $subject, $message, $title) {
+  public static function sendToken($userId, $email, $subject, $message, $title) {
 
     $token = self::createToken($userId, $subject);
 
