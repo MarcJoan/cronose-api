@@ -32,7 +32,7 @@ class TokenController {
 
     $token = self::createToken($userId, $subject);
 
-    $completeMessage = $message + "http://devapi.cronose.dawman.info/validate/&token=$token";
+    $completeMessage = $message + "http://devapi.cronose.dawman.info/validate/$token";
 
     Mailer::sendMailTo($title, $completeMessage, $email, $from = null, $headers = "");
   }
