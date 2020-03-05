@@ -75,7 +75,7 @@ class WorkController {
 
   public static function setNewWork($data){
     WorkDAO::setNewWork($data);
-    
+    WorkDAO::setNewWorkLang($data);
   }
 
   public static function getNewWork(){

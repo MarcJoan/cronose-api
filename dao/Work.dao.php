@@ -138,22 +138,6 @@ class WorkDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  // public static function setNewWork($work, $user){
-
-  //   self::setNewWorkLang($work, $user);
-
-  //   $sp = $work['specialization'];
-  //   $val = $work['valoration'] * 20;
-  //   $coin_price = self::getCoinPrice($sp);
-  //   $coin_price = $coin_price['coin_price'];
-
-  //   $sql = "INSERT INTO `Offer` 
-  //   (`user_id`, `specialization_id`, `valoration_avg`, `personal_valoration`, `coin_price`, `offered_at`, `visibility`)
-  //   VALUES ($user->id, $sp, 0, $val, $coin_price, now(), 1 ); ";
-  //   $statement = self::$DB->prepare($sql);
-  //   $statement->execute();
-  // }
-
   public static function setNewWork($data){
     $coin = self::getCoinPrice($data['specialization_id']);
     $sql = "INSERT INTO `Offer` 
@@ -166,12 +150,13 @@ class WorkDAO extends DAO {
   }
 
   public static function setNewWorkLang($data){
-    $sql = "INSERT INTO `Offer_Language` VALUES 
-            ('ca', '3', '25', 'No se', 'Buola')";
+    $sql = "INSERT INTO `Offer_Language` (`language_id`, `user_id`, `specialization_id`, `title`, `description`) VALUES 
+            ('ca', :user_id, :specialization_id, :workTitle, :workDescription)";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
     $statement->bindParam(':specialization_id', $data['specialization_id'], PDO::PARAM_INT);
-    $statement->bindParam(':coin_price', $coin['coin_price'], PDO::PARAM_STR);
+    $statement->bindParam(':workTitle', $data['workTitle'], PDO::PARAM_STR);
+    $statement->bindParam(':workDescription', $data['workDescription'], PDO::PARAM_STR);
     $statement->execute();
   }
 
@@ -181,17 +166,4 @@ class WorkDAO extends DAO {
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
-
-  // public static function setNewWorkLang($work, $user){
-  //   $id = $user->id;
-  //   $lang = $work['lang'];
-  //   $sp = $work['specialization'];
-  //   $title = $work['title'];
-  //   $description = $work['description'];
-
-  //   $sql = "INSERT into Offer_language VALUES ('$lang', $id, $sp, '$title','$description');";
-  //   $statement = self::$DB->prepare($sql);
-  //   $statement->execute();
-  // }
-
 }
