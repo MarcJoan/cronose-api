@@ -182,16 +182,16 @@ class WorkDAO extends DAO {
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
-  public static function setNewWorkLang($work, $user){
-    $id = $user->id;
-    $lang = $work['lang'];
-    $sp = $work['specialization'];
-    $title = $work['title'];
-    $description = $work['description'];
+  // public static function setNewWorkLang($work, $user){
+  //   $id = $user->id;
+  //   $lang = $work['lang'];
+  //   $sp = $work['specialization'];
+  //   $title = $work['title'];
+  //   $description = $work['description'];
 
-    $sql = "INSERT into Offer_language VALUES ('$lang', $id, $sp, '$title','$description');";
-    $statement = self::$DB->prepare($sql);
-    $statement->execute();
-  }
+  //   $sql = "INSERT into Offer_language VALUES ('$lang', $id, $sp, '$title','$description');";
+  //   $statement = self::$DB->prepare($sql);
+  //   $statement->execute();
+  // }
 
 }
