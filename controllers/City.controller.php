@@ -5,7 +5,11 @@ require_once '../dao/City.dao.php';
 class CityController {
 
   public static function getAll() {
-  	return CityDAO::getAll();
+    $cities = CityDAO::getAll();
+    foreach($cities as &$city) {
+      $city['province'] = ProvinceController::getById($city['province']);
+    }
+    return $cities;
   }
 
   public static function getByCp($cp) {
