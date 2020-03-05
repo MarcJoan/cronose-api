@@ -51,7 +51,7 @@ class CoinController {
       $history[$job['id']]['work_demand'] = $work;
     }
 
-    return $history;
+    return $history ?? [];
   }
 
 }
