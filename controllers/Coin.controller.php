@@ -11,7 +11,7 @@ class CoinController {
     $actualCoin = UserController::getUserById($user_id);
     $actualCoin = $actualCoin['coins'];
     $jobs = WorkDemandController::getAllByStatus($user_id, 'done');
-    $history = [];
+    $history = null;
 
     foreach ($jobs as $job) {
       
@@ -51,7 +51,7 @@ class CoinController {
       $history[$job['id']]['work_demand'] = $work;
     }
 
-    return $history ?? [];
+    return $history;
   }
 
 }
