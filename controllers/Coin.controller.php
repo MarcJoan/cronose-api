@@ -10,7 +10,7 @@ class CoinController {
   public function getCoinHistory($user_id) {
     $actualCoin = UserController::getUserById($user_id);
     $actualCoin = $actualCoin['coins'];
-    $jobs = WorkDemandController::getAllByStatus($user_id, 'accepted');
+    $jobs = WorkDemandController::getAllByStatus($user_id, 'done');
     $historial;
 
     foreach ($jobs as $job) {
