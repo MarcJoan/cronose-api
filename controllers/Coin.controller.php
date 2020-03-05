@@ -11,23 +11,23 @@ class CoinController {
     $actualCoin = UserController::getUserById($user_id);
     $actualCoin = $actualCoin['coins'];
     $jobs = WorkDemandController::getAllByStatus($user_id, 'done');
-    $historial;
+    $history = [];
 
     foreach ($jobs as $job) {
       
       $job['coin_price'] = categoryController::getPriceBySpecialization($job['specialization_id']);
-      $historial[$job['id']]['work_date'] = $job['work_date'];
+      $history[$job['id']]['work_date'] = $job['work_date'];
       
       if($job['worker_id'] === $user_id){
 
-        $historial[$job['id']]['new_coins'] = $actualCoin + floatval($job['coin_price']['coin_price']);
-        $historial[$job['id']]['new_coins'] = number_format(floatval($historial[$job['id']]['new_coins']), 2, '.', ',');
+        $history[$job['id']]['new_coins'] = $actualCoin + floatval($job['coin_price']['coin_price']);
+        $history[$job['id']]['new_coins'] = number_format(floatval($history[$job['id']]['new_coins']), 2, '.', ',');
         $actualCoin += floatval($job['coin_price']['coin_price']);
 
       }else{
 
-        $historial[$job['id']]['new_coins'] = $actualCoin - $job['coin_price']['coin_price'];
-        $historial[$job['id']]['new_coins'] = number_format(floatval($historial[$job['id']]['new_coins']), 2, '.', ',');
+        $history[$job['id']]['new_coins'] = $actualCoin - $job['coin_price']['coin_price'];
+        $history[$job['id']]['new_coins'] = number_format(floatval($history[$job['id']]['new_coins']), 2, '.', ',');
         $actualCoin -= floatval($job['coin_price']['coin_price']);
       }
 
@@ -47,11 +47,11 @@ class CoinController {
       $work['qr_code_id'] = $job['qr_code_id'];
       $work['cancelation_policy'] = $job['cancelation_policy_id'];
 
-      $historial[$job['id']]['demand'] = $demand;
-      $historial[$job['id']]['work_demand'] = $work;
+      $history[$job['id']]['demand'] = $demand;
+      $history[$job['id']]['work_demand'] = $work;
     }
 
-    return $historial;
+    return $history ?? [];
   }
 
 }
