@@ -106,7 +106,7 @@ $router->get('/validate/{token}', function($token) {
 });
 // Login
 $router->post('/login', function() {
-  if ($_POST['jwt']) echo decodeJWT($_POST['jwt'], function($data) {
+  if (isset($_POST['jwt'])) echo decodeJWT($_POST['jwt'], function($data) {
     echo json_encode(UserController::userLogin($data['email'], $data['password']));
   });
   else echo json_encode(UserController::userLogin($_POST['email'], $_POST['password']));

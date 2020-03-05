@@ -49,7 +49,7 @@ class UserController {
       return ["message" => "You have to validate yout email!"];
     }
     return [
-      "message" => "Login",
+      "user" => UserDAO::getUserCompleteData($user),
       "jwt" => createJWT(["email" => $email, "password" => $password])
     ];
   }

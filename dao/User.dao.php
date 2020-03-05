@@ -16,7 +16,7 @@ class UserDAO extends DAO {
 
   private static $returnFields = "id, initials, tag, email, name, surname, surname_2, coins, registration_date, points, avatar_id as avatar, private, city_cp as city, province_id as province";
 
-  private static function getUserCompleteData(&$user) {
+  public static function getUserCompleteData(&$user) {
     // Unset name in case of private user
     if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
 
@@ -26,7 +26,8 @@ class UserDAO extends DAO {
     // $user['Seniority'] = SeniorityController::getRange($user);
 
     // Unset not necessary information
-    unset($user['id'], $user['city'], $user['province'], $user['private']);
+    unset($user['city'], $user['province'], $user['private'], $user['password'], $user['validated']);
+    return $user;
   }
 
   private static function getUserBasicData(&$user, $avatar) {
@@ -94,7 +95,8 @@ class UserDAO extends DAO {
   }
 
   public static function getPassword($email) {
-    $sql = "SELECT password,validated FROM User WHERE email = :email";
+    $fields = self::$returnFields;
+    $sql = "SELECT password,validated,${fields} FROM User WHERE email = :email";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
