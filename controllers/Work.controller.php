@@ -98,5 +98,9 @@ class WorkController {
     return WorkDAO::getWorkLangs($user_id, $specialization_id);
   }
 
+  public static function getAllWorksByUser($user_id) {
+    return WorkDAO::getAllWorksByUser($user_id);
+  }
+
 // -----------------------------------------------------
 }

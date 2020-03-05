@@ -15,6 +15,10 @@ class UserController {
     return UserDAO::getAll();
   }
 
+  public static function getAllWorksByUser($user_id) {
+    return UserDAO::getAllWorksByUser($user_id);
+  }
+
   public static function getUserByInitialsAndTag($initials, $tag) {
     return UserDAO::getUserByInitialsAndTag($initials, $tag);
   }
