@@ -116,9 +116,8 @@ $router->post('/login', function() {
 $router->get('/works', function() {
   echo json_encode(WorkController::getAllWorks());
 });
-$router->post('/works/filter', function($filter) {
-  echo $_REQUEST;
-  // echo json_encode(WorkController::getFilteredWorks($_REQUEST['filter']));
+$router->post('/works/filter', function() {
+  echo json_encode(WorkController::getFilteredWorks($_REQUEST['filter']));
 });
 $router->get('/works/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {
   echo json_encode(WorkController::getWorksDefaultLang($limit, $offset, $lang));
