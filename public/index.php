@@ -116,7 +116,7 @@ $router->post('/login', function() {
 $router->get('/works', function() {
   echo json_encode(WorkController::getAllWorks());
 });
-$router->get('/works/user/{id}', function($user_id) {
+$router->get('/works/user/{user_id}', function($user_id) {
   echo json_encode(WorkController::getAllWorksByUser($user_id));
 });
 $router->post('/works/filter', function() {
