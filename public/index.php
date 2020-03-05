@@ -46,6 +46,9 @@ $router->get('/categories/{lang}', function($lang) {
 $router->get('/specialization', function() {
   echo json_encode(SpecializationController::getAll());
 });
+$router->get('/specialization/{lang}/{category_id}', function($lang, $category_id) {
+  echo json_encode(SpecializationController::getByLangAndCategory($lang, $category_id));
+});
 $router->get('/specialization/{lang}', function($lang) {
   echo json_encode(SpecializationController::getAllByLang($lang));
 });
@@ -113,8 +116,9 @@ $router->post('/login', function() {
 $router->get('/works', function() {
   echo json_encode(WorkController::getAllWorks());
 });
-$router->get('/works/filter/{filter}', function($filter) {
-  echo json_encode(WorkController::getFilteredWorks($_REQUEST['filter']));
+$router->post('/works/filter', function($filter) {
+  echo $_REQUEST;
+  // echo json_encode(WorkController::getFilteredWorks($_REQUEST['filter']));
 });
 $router->get('/works/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {
   echo json_encode(WorkController::getWorksDefaultLang($limit, $offset, $lang));
