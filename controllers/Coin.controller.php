@@ -11,10 +11,9 @@ class CoinController {
     $actualCoin = UserController::getUserById($user_id);
     $actualCoin = $actualCoin['coins'];
     $jobs = WorkDemandController::getAllByStatus($user_id, 'done');
-    $history = null;
+    $history = [];
 
     foreach ($jobs as $job) {
-      
       $job['coin_price'] = categoryController::getPriceBySpecialization($job['specialization_id']);
       $history[$job['id']]['work_date'] = $job['work_date'];
       
@@ -24,8 +23,7 @@ class CoinController {
         $history[$job['id']]['new_coins'] = number_format(floatval($history[$job['id']]['new_coins']), 2, '.', ',');
         $actualCoin += floatval($job['coin_price']['coin_price']);
 
-      }else{
-
+      } else {
         $history[$job['id']]['new_coins'] = $actualCoin - $job['coin_price']['coin_price'];
         $history[$job['id']]['new_coins'] = number_format(floatval($history[$job['id']]['new_coins']), 2, '.', ',');
         $actualCoin -= floatval($job['coin_price']['coin_price']);
