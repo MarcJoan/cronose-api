@@ -303,9 +303,7 @@ INSERT INTO `Offer`(user_id, specialization_id, valoration_avg, personal_valorat
 ('2', '2', '50', '50', '1', '2019-12-22', '1');
 
 INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
-('es', '1', '1', 'Profesor de programación', 'Programación básica de c++, Programación avanzada de Java, '),
-('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, '),
-('en', '1', '1', 'Programming Professor', 'Basic programming of c++, Advanced programming of Java, ');
+('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, ');
 
 INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
 ('es', '2', '2', 'Fontanero', 'No hay ni uno igual ');
