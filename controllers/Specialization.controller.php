@@ -23,4 +23,8 @@ class SpecializationController {
     return $specializations = SpecializationDAO::getAllByIDAndLang($id, $lang);
   }
 
+  public static function getByLangAndCategory($lang, $category_id) {
+    return $specializations = SpecializationDAO::getByLangAndCategory($lang, $category_id);
+  }
+
 }

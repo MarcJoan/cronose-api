@@ -18,6 +18,7 @@ require_once '../controllers/Valoration.controller.php';
 require_once '../controllers/WorkDemand.controller.php';
 require_once '../controllers/Coin.controller.php';
 require_once '../controllers/Image.controller.php';
+require_once '../controllers/Token.controller.php';
 
 // DAO
 require_once '../dao/DAO.php';
@@ -44,6 +45,9 @@ $router->get('/categories/{lang}', function($lang) {
 // Specialization
 $router->get('/specialization', function() {
   echo json_encode(SpecializationController::getAll());
+});
+$router->get('/specialization/{lang}/{category_id}', function($lang, $category_id) {
+  echo json_encode(SpecializationController::getByLangAndCategory($lang, $category_id));
 });
 $router->get('/specialization/{lang}', function($lang) {
   echo json_encode(SpecializationController::getAllByLang($lang));
@@ -73,6 +77,11 @@ $router->get('/city/{cp}', function($cp) {
   echo json_encode(CityController::getByCp($cp));
 });
 
+// Prueba
+$router->get('/prueba/{email}', function($email) {
+  echo json_encode(TokenController::resetPassword($email));
+});
+
 // User
 $router->get('/users', function() {
   echo json_encode(UserController::getAll());
@@ -92,6 +101,9 @@ $router->get('/user/{initials}/{tag}', function($initial, $tag) {
 $router->post('/register', function() {
   echo json_encode(UserController::register($_POST, $_FILES));
 });
+$router->get('/validate/{token}', function($token) {
+  UserController::validateUser($token);
+});
 // Login
 $router->post('/login', function() {
   if ($_POST['jwt']) echo decodeJWT($_POST['jwt'], function($data) {
@@ -104,7 +116,7 @@ $router->post('/login', function() {
 $router->get('/works', function() {
   echo json_encode(WorkController::getAllWorks());
 });
-$router->get('/works/filter/{filter}', function($filter) {
+$router->post('/works/filter', function() {
   echo json_encode(WorkController::getFilteredWorks($_REQUEST['filter']));
 });
 $router->get('/works/{offset}/{limit}/default/{lang}', function($offset, $limit, $lang) {

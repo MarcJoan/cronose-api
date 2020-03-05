@@ -94,12 +94,12 @@ class UserDAO extends DAO {
   }
 
   public static function getPassword($email) {
-    $sql = "SELECT password FROM User WHERE email = :email";
+    $sql = "SELECT password,validated FROM User WHERE email = :email";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
     $password = $statement->fetch(PDO::FETCH_ASSOC);
-    return $password['password'];
+    return $password;
   }
 
   public static function getBasicUserById($id, $avatar) {
@@ -172,12 +172,30 @@ class UserDAO extends DAO {
     }
   }
 
+  public static function validateUser($token) {
+    $sql = "UPDATE User,Token 
+            SET User.validated=1 
+            WHERE User.id = Token.user_id 
+            AND Token.token = :token";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':token', $token, PDO::PARAM_STR);
+    $statement->execute();
+  }
+
   public static function getUserById($user_id) {
     $sql = "SELECT * FROM User where id = :user_id;";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);;
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public static function getIdByEmail($email) {
+    $sql = "SELECT id FROM User WHERE email = :email;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
 }
