@@ -73,8 +73,9 @@ class WorkController {
     return WorkDAO::getWork($userInitials,$userTag,$workEsp);
   }
 
-  public static function setNewWork($work, $user){
-    return WorkDAO::setNewWork($work, $user);
+  public static function setNewWork($data){
+    WorkDAO::setNewWork($data);
+    
   }
 
   public static function getNewWork(){

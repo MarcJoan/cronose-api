@@ -113,6 +113,9 @@ $router->post('/login', function() {
 });
 
 // Works
+$router->post('/work', function() {
+  echo json_encode(WorkController::setNewWork($_REQUEST['data']));
+});
 $router->get('/works', function() {
   echo json_encode(WorkController::getAllWorks());
 });

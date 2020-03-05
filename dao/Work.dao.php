@@ -126,19 +126,40 @@ class WorkDAO extends DAO {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function setNewWork($work, $user){
+  // public static function setNewWork($work, $user){
 
-    self::setNewWorkLang($work, $user);
+  //   self::setNewWorkLang($work, $user);
 
-    $sp = $work['specialization'];
-    $val = $work['valoration'] * 20;
-    $coin_price = self::getCoinPrice($sp);
-    $coin_price = $coin_price['coin_price'];
+  //   $sp = $work['specialization'];
+  //   $val = $work['valoration'] * 20;
+  //   $coin_price = self::getCoinPrice($sp);
+  //   $coin_price = $coin_price['coin_price'];
 
+  //   $sql = "INSERT INTO `Offer` 
+  //   (`user_id`, `specialization_id`, `valoration_avg`, `personal_valoration`, `coin_price`, `offered_at`, `visibility`)
+  //   VALUES ($user->id, $sp, 0, $val, $coin_price, now(), 1 ); ";
+  //   $statement = self::$DB->prepare($sql);
+  //   $statement->execute();
+  // }
+
+  public static function setNewWork($data){
+    $coin = self::getCoinPrice($data['specialization_id']);
     $sql = "INSERT INTO `Offer` 
-    (`user_id`, `specialization_id`, `valoration_avg`, `personal_valoration`, `coin_price`, `offered_at`, `visibility`)
-    VALUES ($user->id, $sp, 0, $val, $coin_price, now(), 1 ); ";
+    VALUES (:user_id, :specialization_id, 90, 100, :coin_price, now(), 1) ";
     $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
+    $statement->bindParam(':specialization_id', $data['specialization_id'], PDO::PARAM_INT);
+    $statement->bindParam(':coin_price', $coin['coin_price'], PDO::PARAM_STR);
+    $statement->execute();
+  }
+
+  public static function setNewWorkLang($data){
+    $sql = "INSERT INTO `Offer_Language` VALUES 
+            ('ca', '3', '25', 'No se', 'Buola')";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
+    $statement->bindParam(':specialization_id', $data['specialization_id'], PDO::PARAM_INT);
+    $statement->bindParam(':coin_price', $coin['coin_price'], PDO::PARAM_STR);
     $statement->execute();
   }
 
