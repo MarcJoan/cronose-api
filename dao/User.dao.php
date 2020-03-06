@@ -132,7 +132,7 @@ class UserDAO extends DAO {
   public static function saveUser($user, $fiels) {
 
     /* DEFAULT VALUES */
-    $user['surname_2'] = $user['surname_2'] ?? "";
+    $surname = ucfirst($user['surname_2']) ?? "";
     $user['private'] = (isset($user['private'])) ? 1 : 0;
     $user['avatar'] = $user['avatar'] ?? 'null';
     /* SAVE FILES */
@@ -148,10 +148,12 @@ class UserDAO extends DAO {
     } while(self::getUserByInitialsAndTag($initials, $tag));
 
     $img = ImageController::saveImages($initials, $tag, $fiels);
+    $name = ucfirst($user['name']);
+    $surname = ucfirst($user['surname']);
 
     /* SQL BEGIN CONSTRUCTION */
     $fields = "dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id";
-    $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
+    $values = "'${user['dni']}', '${name}', '${surname}', '${surname_2}', '${user['email']}', '${user['password']}', ";
     
     $date = date("Y-m-d H:i:s");
     $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ";

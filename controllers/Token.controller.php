@@ -31,7 +31,7 @@ class TokenController {
   public static function sendToken($userId, $email, $subject, $message, $title) {
     $token = self::createToken($userId, $subject);
 
-    $completeMessage = $message . "http://devapi.cronose.dawman.info/validate/$token";
+    $completeMessage = $message . "https://api.cronose.dawman.info/validate/$token";
  
     Mailer::sendMailTo($title, $completeMessage, $email, $from = null, $headers = "");
   }
