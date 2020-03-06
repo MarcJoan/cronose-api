@@ -23,6 +23,7 @@ class UserDAO extends DAO {
     $user['avatar'] = MediaController::getById($user['avatar']);
     $user['address'] =  AddressController::getUserAddress($user);
     $user['achievements'] = AchievementController::getAllByUser($user['id']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
     // $user['Seniority'] = SeniorityController::getRange($user);
 
     // Unset not necessary information
@@ -35,6 +36,7 @@ class UserDAO extends DAO {
     if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
 
     if ($avatar) $user['avatar'] = MediaController::getById($user['avatar_id']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
 
     // Unset not necessary information
     unset($user['id'], $user['avatar_id'], $user['private']);
