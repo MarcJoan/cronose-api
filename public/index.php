@@ -103,6 +103,7 @@ $router->post('/register', function() {
 });
 $router->get('/validate/{token}', function($token) {
   UserController::validateUser($token);
+  header('Location: https://cronose.dawman.info/userValidator');
 });
 // Login
 $router->post('/login', function() {
@@ -196,7 +197,7 @@ $router->get('/valorations/{user_id}/{specialization_id}', function($user_id, $s
 
 // Error 404
 $router->set404(function() {
-  header('HTTP/1.1 404 Not Found');
+  header('HTTP/1.1 404 Not Found');https://github.com/MarcJoan/cronose.git
   echo "Error 404, Not Found";
 });
 
