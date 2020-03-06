@@ -70,7 +70,10 @@ class WorkController {
   }
 
   public static function getWork($userInitials,$userTag,$workEsp) {
-    return WorkDAO::getWork($userInitials,$userTag,$workEsp);
+    $work = WorkDAO::getWork($userInitials,$userTag,$workEsp);
+    $work['user'] = UserController::getBasicUserById($work['user_id'], true);
+    unset($work['user_id']);
+    return $work;
   }
 
   public static function setNewWork($data){
