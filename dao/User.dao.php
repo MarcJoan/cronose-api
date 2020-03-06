@@ -34,10 +34,10 @@ class UserDAO extends DAO {
 
   private static function getUserBasicData(&$user, $avatar) {
     // Unset name in case of private user
-    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
+    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2'], $user['full_name']);
 
     if ($avatar) $user['avatar'] = MediaController::getById($user['avatar_id']);
-    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
 
     // Unset not necessary information
     unset($user['id'], $user['avatar_id'], $user['private']);
