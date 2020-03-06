@@ -18,7 +18,8 @@ class UserDAO extends DAO {
 
   public static function getUserCompleteData(&$user) {
     // Unset name in case of private user
-    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
+    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2'], $user['full_name']);
 
     $user['avatar'] = MediaController::getById($user['avatar']);
     $user['address'] =  AddressController::getUserAddress($user);
