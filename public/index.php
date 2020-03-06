@@ -103,7 +103,7 @@ $router->post('/register', function() {
 });
 $router->get('/validate/{token}', function($token) {
   UserController::validateUser($token);
-  header('Location: https://cronose.dawman.info/userValidator');
+  header('Location: https://www.cronose.dawman.info/userValidator');
 });
 // Login
 $router->post('/login', function() {
