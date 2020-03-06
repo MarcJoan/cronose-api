@@ -18,11 +18,13 @@ class UserDAO extends DAO {
 
   public static function getUserCompleteData(&$user) {
     // Unset name in case of private user
-    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
+    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2'], $user['full_name']);
 
-    $user['avatar'] = MediaController::getById($user['avatar']);
+    $user['avatar'] = MediaController::getById($user['avatar']) ?? 'sample_avatar';
     $user['address'] =  AddressController::getUserAddress($user);
     $user['achievements'] = AchievementController::getAllByUser($user['id']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
     // $user['Seniority'] = SeniorityController::getRange($user);
 
     // Unset not necessary information
@@ -32,7 +34,8 @@ class UserDAO extends DAO {
 
   private static function getUserBasicData(&$user, $avatar) {
     // Unset name in case of private user
-    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
+    $user['full_name'] = "${user['name']} ${user['surname']} ${user['surname_2']}";
+    if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2'], $user['full_name']);
 
     if ($avatar) $user['avatar'] = MediaController::getById($user['avatar_id']);
 
