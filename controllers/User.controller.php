@@ -2,6 +2,9 @@
 
 require_once '../dao/User.dao.php';
 
+// JWT
+require_once '../utilities/JWTManager.php';
+
 // Utilities
 require_once '../utilities/Mailer.php';
 require_once '../utilities/Logger.php';
@@ -12,6 +15,10 @@ class UserController {
     return UserDAO::getAll();
   }
 
+  public static function getAllWorksByUser($user_id) {
+    return UserDAO::getAllWorksByUser($user_id);
+  }
+
   public static function getUserByInitialsAndTag($initials, $tag) {
     return UserDAO::getUserByInitialsAndTag($initials, $tag);
   }
@@ -20,48 +27,47 @@ class UserController {
     return UserDAO::getId($initials, $tag);
   }
 
-  public static function getBasicUserById($id) {
-    return UserDAO::getBasicUserById($id);
+  public static function getBasicUserById($id, $avatar = false) {
+    return UserDAO::getBasicUserById($id, $avatar);
+  }
+
+  public static function getUserById($user_id) {
+    return UserDAO::getUserById($user_id);
   }
 
   public static function getUsersBySearch($text) {
     return UserDAO::getUsersBySearch($text);
   }
 
-  public static function register($user) {
-    $user = UserDAO::saveUser($user);
-    if (!$user) return "Something went wrong!";
-
-    $fullName = "${user['name']} ${user['surname']} ${user['surname_2']}";
-    $message = "Hello ${fullName},\nNice to see you on our platform, I hope you make some profit with it!";
-    Mailer::sendMailTo("Welcome to Cronose", $message, $user['email']);
-
-    return $user;
+  public static function register($user, $files) {
+    return $user = UserDAO::saveUser($user, $files);
   }
-
-  // public static function isValid($email, $password) {
-  //   $user = UserDAO::getUserByEmail($email);
-  //   if (!$user) return false;
-  //   $userPassword = UserDAO::getUserPassword($user);
-  //   if ($userPassword != $password) return false;
-  //   return $user;
-  // }
-
+  
   public static function userLogin($email, $password) {
-    $userPassword = UserDAO::getPassword($email);
-    if ($userPassword != $password) {
+    $user = UserDAO::getPassword($email);
+    if ($user['password'] != $password) {
       http_response_code(400);
       return ["message" => "Invalid email or password"];
+    } else if ($user['validated'] != '1') {
+      http_response_code(400);
+      return ["message" => "You have to validate yout email!"];
     }
-    return ["message" => "Login"];
+    return [
+      "user" => UserDAO::getUserCompleteData($user),
+      "jwt" => createJWT(["email" => $email, "password" => $password])
+    ];
   }
 
-  public static function userLogout() {
-    $_SESSION['user'] = null;
+  public static function validateUser($token) {
+    UserDAO::validateUser($token);
   }
 
   public static function getAllDirections() {
     return UserDAO::getAllDirections();
+  }
+
+  public static function getIdByEmail($email){
+    return UserDAO::getIdByEmail($email);
   }
 
 }

@@ -14,9 +14,8 @@ class ProvinceController {
   }
 
   public static function getProvinceCities($id) {
-    $province = ProvinceDAO::getById($id);
-    $province['cities'] = CityController::getByProvinceId($id);
-    return $province;
+    $cities = CityController::getByProvinceId($id);
+    return $cities;
   }
 
 }

@@ -303,9 +303,7 @@ INSERT INTO `Offer`(user_id, specialization_id, valoration_avg, personal_valorat
 ('2', '2', '50', '50', '1', '2019-12-22', '1');
 
 INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
-('es', '1', '1', 'Profesor de programación', 'Programación básica de c++, Programación avanzada de Java, '),
-('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, '),
-('en', '1', '1', 'Programming Professor', 'Basic programming of c++, Advanced programming of Java, ');
+('ca', '1', '1', 'Professor de programació', 'Programació básica de c++, Programació avançada de Java, ');
 
 INSERT INTO `Offer_Language`(language_id, user_id, specialization_id, title, description) VALUES
 ('es', '2', '2', 'Fontanero', 'No hay ni uno igual ');
@@ -317,3 +315,28 @@ INSERT INTO `Load_Media`(user_id, specialization_id, media_id) VALUES ('1', '1',
 INSERT INTO `Seniority` VALUES (1,100,0),(2,250,0),(3,450,0),(4,700,0),(5,1000,0);
 
 INSERT INTO `Change_Seniority` VALUES (2,1,date(now())),(1,2,date(now()));
+
+INSERT INTO `Cancelation_Policy` () VALUES ();
+
+INSERT INTO `Demands` (`id`, `client_id`, `worker_id`, `specialization_id`, `demanded_at`) VALUES (NULL, '2', '1', '1', CURRENT_TIMESTAMP);
+INSERT INTO `Demands` (`id`, `client_id`, `worker_id`, `specialization_id`, `demanded_at`) VALUES (NULL, '3', '1', '1', '2020-02-18 00:15:15');
+
+INSERT INTO `Card` (`id`, `status`, `work_date`, `qr_code_id`, `cancelation_policy_id`, `demand_id`) VALUES (NULL, 'accepted', '2020-01-19 00:00:00', NULL, '1', '1');
+INSERT INTO `Card` (`id`, `status`, `work_date`, `qr_code_id`, `cancelation_policy_id`, `demand_id`) VALUES (NULL, 'accepted', '2020-01-19 00:00:00', NULL, '1', '2');
+
+INSERT INTO `Comment`() VALUES (),();
+
+INSERT INTO `Comment_Language` (`language_id`, `comment_id`, `text`) VALUES ('ca', '1', 'Perfecte!');
+INSERT INTO `Comment_Language` (`language_id`, `comment_id`, `text`) VALUES ('es', '1', 'Perfecto!');
+INSERT INTO `Comment_Language` (`language_id`, `comment_id`, `text`) VALUES ('ca', '2', 'meeh');
+
+INSERT INTO `Valoration_Label` (`id`) VALUES (NULL);
+
+INSERT INTO `Valoration_Label_Language` (`language_id`, `valoration_label_id`, `aspect`) VALUES 
+('ca', '1', 'Puntualitat'),
+('en', '1', 'Puntualidad'), 
+('es', '1', 'Puntuality');
+
+INSERT INTO `Worker_Valoration` (`valoration_id`, `card_id`, `comment_id`, `puntuation`) VALUES ('1', '1', '1', '98');
+INSERT INTO `Worker_Valoration` (`valoration_id`, `card_id`, `comment_id`, `puntuation`) VALUES ('1', '2', '2', '75');
+

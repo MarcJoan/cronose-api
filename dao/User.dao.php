@@ -6,6 +6,8 @@ require_once '../controllers/Media.controller.php';
 require_once '../controllers/Address.controller.php';
 require_once '../controllers/Seniority.controller.php';
 require_once '../controllers/Achievement.controller.php';
+require_once '../controllers/Image.controller.php';
+require_once '../controllers/Token.controller.php';
 
 // Logger
 require_once '../utilities/Logger.php';
@@ -14,7 +16,7 @@ class UserDAO extends DAO {
 
   private static $returnFields = "id, initials, tag, email, name, surname, surname_2, coins, registration_date, points, avatar_id as avatar, private, city_cp as city, province_id as province";
 
-  private static function getUserCompleteData(&$user) {
+  public static function getUserCompleteData(&$user) {
     // Unset name in case of private user
     if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
 
@@ -24,14 +26,15 @@ class UserDAO extends DAO {
     // $user['Seniority'] = SeniorityController::getRange($user);
 
     // Unset not necessary information
-    unset($user['id'], $user['city'], $user['province'], $user['private']);
+    unset($user['city'], $user['province'], $user['private'], $user['password'], $user['validated']);
+    return $user;
   }
 
-  private static function getUserBasicData(&$user) {
+  private static function getUserBasicData(&$user, $avatar) {
     // Unset name in case of private user
     if ($user['private']) unset($user['name'], $user['surname'], $user['surname_2']);
 
-    $user['avatar'] = MediaController::getById($user['avatar_id']);
+    if ($avatar) $user['avatar'] = MediaController::getById($user['avatar_id']);
 
     // Unset not necessary information
     unset($user['id'], $user['avatar_id'], $user['private']);
@@ -66,7 +69,6 @@ class UserDAO extends DAO {
     $statement->bindParam(':tag', $tag, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-    self::getUserCompleteData($user);
     return $user;
   }
 
@@ -93,22 +95,23 @@ class UserDAO extends DAO {
   }
 
   public static function getPassword($email) {
-    $sql = "SELECT password FROM User WHERE email = :email";
+    $fields = self::$returnFields;
+    $sql = "SELECT password,validated,${fields} FROM User WHERE email = :email";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
     $password = $statement->fetch(PDO::FETCH_ASSOC);
-    return $password['password'];
+    return $password;
   }
 
-  public static function getBasicUserById($id) {
+  public static function getBasicUserById($id, $avatar) {
     $fields = self::$returnFields;
     $sql = "SELECT initials,tag,name,surname,surname_2,avatar_id,private FROM User WHERE id = :id";
     $statement = self::$DB->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-    self::getUserBasicData($user);
+    self::getUserBasicData($user, $avatar);
     return $user;
   }
 
@@ -126,24 +129,33 @@ class UserDAO extends DAO {
     return $users;
   }
 
-  public static function saveUser($user) {
+  public static function saveUser($user, $fiels) {
+
     /* DEFAULT VALUES */
     $user['surname_2'] = $user['surname_2'] ?? "";
-    $user['private'] = $user['private'] ?? true;
+    $user['private'] = (isset($user['private'])) ? 1 : 0;
     $user['avatar'] = $user['avatar'] ?? 'null';
     /* SAVE FILES */
 
-    /* SQL BEGIN CONSTRUCTION */
-    $fields = "dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id";
-    $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
-    $tag = mt_rand(1000, 9999);
+    /* INITIALS ANS TAG GENERATE */
     $words = preg_split("/\s+/", "${user['name']} ${user['surname']} ${user['surname_2']}");
     $initials = "";
     foreach ($words as $w) {
       $initials .= $w[0];
-    }
+    };
+    do{
+    $tag = mt_rand(1000, 9999);
+    } while(self::getUserByInitialsAndTag($initials, $tag));
+
+    $img = ImageController::saveImages($initials, $tag, $fiels);
+
+    /* SQL BEGIN CONSTRUCTION */
+    $fields = "dni, name, surname, surname_2, email, password, tag, initials, coins, registration_date, points, private, city_cp, province_id, avatar_id, dni_photo_id";
+    $values = "'${user['dni']}', '${user['name']}', '${user['surname']}', '${user['surname_2']}', '${user['email']}', '${user['password']}', ";
+    
     $date = date("Y-m-d H:i:s");
-    $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ${user['avatar']}, ${user['dni_photo_id']}";
+    $values = $values."${tag}, '${initials}', 0, '${date}', 0, ${user['private']}, ${user['city_cp']}, ${user['province_id']}, ";
+    $values .= $img['avatar']['id'] . ', ' . $img['dni_img']['id'];
     $sql = "INSERT INTO User (${fields}) VALUES (${values})";
     /* SQL END CONSTRUCTION */
     $statement = self::$DB->prepare($sql);
@@ -151,6 +163,8 @@ class UserDAO extends DAO {
       $statement->execute();
       $errors = $statement->errorInfo();
       if ($errors[1]) return Logger::log("ERROR", $errors);
+      $userId = self::getId($initials, $tag);
+      TokenController::createNewUser($userId['id'], $user['email']);
       Logger::log("INFO", "New User saved with dni = ${user['dni']}");
       return self::getUserByDni($user['dni']);
     } catch (PDOException $e) {
@@ -158,6 +172,32 @@ class UserDAO extends DAO {
       Logger::log("ERROR", $e->getMessage());
       return null;
     }
+  }
+
+  public static function validateUser($token) {
+    $sql = "UPDATE User,Token 
+            SET User.validated=1 
+            WHERE User.id = Token.user_id 
+            AND Token.token = :token";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':token', $token, PDO::PARAM_STR);
+    $statement->execute();
+  }
+
+  public static function getUserById($user_id) {
+    $sql = "SELECT * FROM User where id = :user_id;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public static function getIdByEmail($email) {
+    $sql = "SELECT id FROM User WHERE email = :email;";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
 }

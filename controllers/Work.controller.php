@@ -70,11 +70,15 @@ class WorkController {
   }
 
   public static function getWork($userInitials,$userTag,$workEsp) {
-    return WorkDAO::getWork($userInitials,$userTag,$workEsp);
+    $work = WorkDAO::getWork($userInitials,$userTag,$workEsp);
+    $work['user'] = UserController::getBasicUserById($work['user_id'], true);
+    unset($work['user_id']);
+    return $work;
   }
 
-  public static function setNewWork($work, $user){
-    return WorkDAO::setNewWork($work, $user);
+  public static function setNewWork($data){
+    WorkDAO::setNewWork($data);
+    WorkDAO::setNewWorkLang($data);
   }
 
   public static function getNewWork(){
@@ -96,6 +100,10 @@ class WorkController {
 
   public static function getWorkLangs($user_id, $specialization_id) {
     return WorkDAO::getWorkLangs($user_id, $specialization_id);
+  }
+
+  public static function getAllWorksByUser($user_id) {
+    return WorkDAO::getAllWorksByUser($user_id);
   }
 
 // -----------------------------------------------------

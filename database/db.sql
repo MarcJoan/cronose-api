@@ -129,7 +129,8 @@ create table if not exists `User` (
     province_id int not null,
     avatar_id int,
     dni_photo_id int not null,
-    validated boolean not null,
+    validated boolean not null default 0,
+    description varchar(400),
     primary key (id),
     foreign key (city_cp) references `City`(cp),
     foreign key (province_id) references `Province`(id),
@@ -321,6 +322,7 @@ create table if not exists `QR_Code` (
 )ENGINE = InnoDB;
 
 create table if not exists `Demands` (
+	id int auto_increment primary key not null,
     client_id int not null,
     worker_id int not null,
     specialization_id int not null,
@@ -328,7 +330,7 @@ create table if not exists `Demands` (
     foreign key (client_id) references `User`(id),
     foreign key (worker_id) references `Offer`(user_id),
     foreign key (specialization_id) references `Offer`(specialization_id),
-    primary key (client_id, worker_id, specialization_id, demanded_at)
+    unique key (client_id, worker_id, specialization_id, demanded_at)
 )ENGINE = InnoDB;
 
 
@@ -338,16 +340,10 @@ create table if not exists `Card` (
     work_date datetime not null,
     qr_code_id int,
     cancelation_policy_id int not null,
-    client_id int not null,
-    worker_id int not null,
-    specialization_id int not null,
-    demand_date timestamp not null unique,
+    demand_id int not null,
     foreign key (qr_code_id) references `QR_Code`(id),
     foreign key (cancelation_policy_id) references `Cancelation_Policy`(id),
-    foreign key (client_id) references `Demands`(client_id),
-    foreign key (worker_id) references `Demands`(worker_id),
-    foreign key (specialization_id) references `Demands`(specialization_id),
-    foreign key (demand_date) references `Demands`(demanded_at)
+    foreign key (demand_id) references `Demands`(id)
 )ENGINE = InnoDB;
 
 
