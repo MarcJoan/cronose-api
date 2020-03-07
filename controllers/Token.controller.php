@@ -14,7 +14,7 @@ class TokenController {
     self::sendToken($userId, $email, $subject, $message, $title);
   }
 
-  public static function resetPassword($email) {
+  public static function generateResetPassword($email) {
     $userId = UserController::getIdByEmail($email);
     
     $title = "Password reset";
@@ -24,6 +24,13 @@ class TokenController {
     self::sendToken($userId, $email, $subject, $message, $title);
   }
 
+  public static function resetPassword($password, $token) {
+
+    UserController::resetPassword($password, $token);
+    self::deleteToken($token);
+
+  }
+
   public static function createToken($userId, $type) {
     return TokenDAO::createToken($userId, $type);
   }
@@ -31,9 +38,14 @@ class TokenController {
   public static function sendToken($userId, $email, $subject, $message, $title) {
     $token = self::createToken($userId, $subject);
 
-    $completeMessage = $message . "https://api.cronose.dawman.info/validate/$token";
+    if ($subject == 'User_validate') $completeMessage = $message . "http://devapi.cronose.dawman.info/validate/${token}";
+    if ($subject == 'Restore_pswd') $completeMessage = $message . "http://dev.cronose.dawman.info/resetPassword?token=${$token}";
  
     Mailer::sendMailTo($title, $completeMessage, $email, $from = null, $headers = "");
+  }
+
+  public static function deleteToken($token) {
+    TokenDAO::deleteToken($token);
   }
 
 }

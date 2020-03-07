@@ -205,4 +205,15 @@ class UserDAO extends DAO {
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
+  public static function resetPassword($password, $token) {
+    $sql = "UPDATE User,Token 
+            SET User.password = :password
+            WHERE User.id = Token.user_id 
+            AND Token.token = :token";
+    $statement = self::$DB->prepare($sql);
+    $statement->bindParam(':password', $password, PDO::PARAM_STR);
+    $statement->bindParam(':token', $token, PDO::PARAM_STR);
+    $statement->execute();
+  }
+
 }

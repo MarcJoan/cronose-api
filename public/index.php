@@ -77,9 +77,12 @@ $router->get('/city/{cp}', function($cp) {
   echo json_encode(CityController::getByCp($cp));
 });
 
-// Prueba
-$router->get('/prueba/{email}', function($email) {
-  echo json_encode(TokenController::resetPassword($email));
+// Reset password
+$router->get('/reset_password/{email}', function($email) {
+  echo json_encode(TokenController::generateResetPassword($email));
+});
+$router->post('/reset_password', function() {
+  echo json_encode(TokenController::resetPassword($_POST['password'], $_POST['token']));
 });
 
 // User

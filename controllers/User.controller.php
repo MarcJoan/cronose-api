@@ -70,6 +70,10 @@ class UserController {
     return UserDAO::getIdByEmail($email);
   }
 
+  public static function resetPassword($token, $password) {
+    return UserDao::resetPassword($token, $password);
+  }
+
 }
 
 ?>
