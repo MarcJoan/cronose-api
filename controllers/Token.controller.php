@@ -39,8 +39,8 @@ class TokenController {
     $token = self::createToken($userId, $subject);
 
     if ($subject == 'User_validate') $completeMessage = $message . "http://devapi.cronose.dawman.info/validate/${token}";
-    if ($subject == 'Restore_pswd') $completeMessage = $message . "http://dev.cronose.dawman.info/resetPassword?token=${$token}";
- 
+    if ($subject == 'Restore_pswd') $completeMessage = $message . "http://dev.cronose.dawman.info/resetPassword?token=${token}";
+
     Mailer::sendMailTo($title, $completeMessage, $email, $from = null, $headers = "");
   }
 
