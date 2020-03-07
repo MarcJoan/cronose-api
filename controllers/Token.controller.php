@@ -21,7 +21,7 @@ class TokenController {
     $subject = "Restore_pswd";
     $message = "Haga click en el siguiente enlace para resetear su contraseña: ";
 
-    self::sendToken($userId, $email, $subject, $message, $title);
+    self::sendToken($userId['id'], $email, $subject, $message, $title);
   }
 
   public static function resetPassword($password, $token) {
